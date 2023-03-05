@@ -37,6 +37,8 @@ Rect = namedtuple('Rect', 'x y w h')
 Color = namedtuple('Color', 'r g b a')
 
 
+
+
 cdef class GameRenderer(Renderer):
     def __init__(self, resource_loader, Window window):
         Renderer.__init__(self, resource_loader)
@@ -121,15 +123,16 @@ cdef class GameRenderer(Renderer):
         free(capture_memory)
 
     def get_framebuffer(self, int width, int height):
-        capture_memory = <char*>malloc(width * height * 3)
+        capture_memory = <unsigned char*>malloc(width * height * 3)
 
         glBindTexture(GL_TEXTURE_2D, self.framebuffer.texture)
         glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, capture_memory)
         glBindTexture(GL_TEXTURE_2D, 0)
 
-        test = [list(capture_memory[i * 3:(i + width) * 3]) for i in range(width * (height - 1), -1, -width)]
+        copy = capture_memory[0:(width * height * 3)]
+
         free(capture_memory)
-        return test
+        return copy
 
     cdef bint render_game(self, Game game) except True:
         cdef long game_x, game_y
