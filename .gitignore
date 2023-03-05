@@ -20,5 +20,4 @@ tags
 *.so$
 *.pyd$
 build/
-scripts/
 PyTouhou.egg-info/
