@@ -3508,6 +3508,7 @@ static const char __pyx_k_TypeError[] = "TypeError";
 static const char __pyx_k_anmrunner[] = "anmrunner";
 static const char __pyx_k_fog_color[] = "fog_color";
 static const char __pyx_k_fog_scale[] = "fog_scale";
+static const char __pyx_k_greyscale[] = "greyscale";
 static const char __pyx_k_interface[] = "interface";
 static const char __pyx_k_itertools[] = "itertools";
 static const char __pyx_k_reduce_ex[] = "__reduce_ex__";
@@ -3555,6 +3556,7 @@ static PyObject *__pyx_n_s_fog_interpolator;
 static PyObject *__pyx_n_u_fog_scale;
 static PyObject *__pyx_n_s_game_pos;
 static PyObject *__pyx_n_s_getstate;
+static PyObject *__pyx_n_s_greyscale;
 static PyObject *__pyx_n_s_height;
 static PyObject *__pyx_n_s_import;
 static PyObject *__pyx_n_s_init;
@@ -3600,7 +3602,7 @@ static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_6l
 static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_8start(struct __pyx_obj_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *__pyx_v_self, PyObject *__pyx_v_common); /* proto */
 static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_10render(struct __pyx_obj_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *__pyx_v_self, struct __pyx_obj_8pytouhou_4game_4game_Game *__pyx_v_game); /* proto */
 static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_12capture(struct __pyx_obj_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *__pyx_v_self, PyObject *__pyx_v_filename, int __pyx_v_width, int __pyx_v_height); /* proto */
-static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_14get_framebuffer(struct __pyx_obj_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *__pyx_v_self, int __pyx_v_width, int __pyx_v_height); /* proto */
+static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_14get_framebuffer(struct __pyx_obj_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *__pyx_v_self, int __pyx_v_width, int __pyx_v_height, PyObject *__pyx_v_greyscale); /* proto */
 static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_16__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_18__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_tp_new_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
@@ -5179,7 +5181,7 @@ static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_12
  *         # Cleanup.
  *         free(capture_memory)             # <<<<<<<<<<<<<<
  * 
- *     def get_framebuffer(self, int width, int height):
+ *     def get_framebuffer(self, int width, int height, greyscale=False):
  */
   free(__pyx_v_capture_memory);
 
@@ -5212,9 +5214,9 @@ static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_12
 /* "pytouhou/ui/opengl/gamerenderer.pyx":125
  *         free(capture_memory)
  * 
- *     def get_framebuffer(self, int width, int height):             # <<<<<<<<<<<<<<
- *         capture_memory = <unsigned char*>malloc(width * height * 3)
- * 
+ *     def get_framebuffer(self, int width, int height, greyscale=False):             # <<<<<<<<<<<<<<
+ *         if greyscale:
+ *             capture_memory = <unsigned char*>malloc(width * height)
  */
 
 /* Python wrapper */
@@ -5222,6 +5224,7 @@ static PyObject *__pyx_pw_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_15
 static PyObject *__pyx_pw_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_15get_framebuffer(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   int __pyx_v_width;
   int __pyx_v_height;
+  PyObject *__pyx_v_greyscale = 0;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -5229,12 +5232,15 @@ static PyObject *__pyx_pw_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_15
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("get_framebuffer (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_width,&__pyx_n_s_height,0};
-    PyObject* values[2] = {0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_width,&__pyx_n_s_height,&__pyx_n_s_greyscale,0};
+    PyObject* values[3] = {0,0,0};
+    values[2] = ((PyObject *)Py_False);
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
         case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
         CYTHON_FALLTHROUGH;
         case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
@@ -5251,42 +5257,54 @@ static PyObject *__pyx_pw_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_15
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_height)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("get_framebuffer", 1, 2, 2, 1); __PYX_ERR(0, 125, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("get_framebuffer", 0, 2, 3, 1); __PYX_ERR(0, 125, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  2:
+        if (kw_args > 0) {
+          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_greyscale);
+          if (value) { values[2] = value; kw_args--; }
         }
       }
       if (unlikely(kw_args > 0)) {
         if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "get_framebuffer") < 0)) __PYX_ERR(0, 125, __pyx_L3_error)
       }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
-      goto __pyx_L5_argtuple_error;
     } else {
-      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+      switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        break;
+        default: goto __pyx_L5_argtuple_error;
+      }
     }
     __pyx_v_width = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_width == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 125, __pyx_L3_error)
     __pyx_v_height = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_height == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 125, __pyx_L3_error)
+    __pyx_v_greyscale = values[2];
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("get_framebuffer", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 125, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("get_framebuffer", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 125, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("pytouhou.ui.opengl.gamerenderer.GameRenderer.get_framebuffer", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_14get_framebuffer(((struct __pyx_obj_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *)__pyx_v_self), __pyx_v_width, __pyx_v_height);
+  __pyx_r = __pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_14get_framebuffer(((struct __pyx_obj_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *)__pyx_v_self), __pyx_v_width, __pyx_v_height, __pyx_v_greyscale);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_14get_framebuffer(struct __pyx_obj_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *__pyx_v_self, int __pyx_v_width, int __pyx_v_height) {
+static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_14get_framebuffer(struct __pyx_obj_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *__pyx_v_self, int __pyx_v_width, int __pyx_v_height, PyObject *__pyx_v_greyscale) {
   unsigned char *__pyx_v_capture_memory;
   PyObject *__pyx_v_copy = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -5294,14 +5312,102 @@ static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_14
 
   /* "pytouhou/ui/opengl/gamerenderer.pyx":126
  * 
- *     def get_framebuffer(self, int width, int height):
+ *     def get_framebuffer(self, int width, int height, greyscale=False):
+ *         if greyscale:             # <<<<<<<<<<<<<<
+ *             capture_memory = <unsigned char*>malloc(width * height)
+ *             glBindTexture(GL_TEXTURE_2D, self.framebuffer.texture)
+ */
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_greyscale); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 126, __pyx_L1_error)
+  if (__pyx_t_1) {
+
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":127
+ *     def get_framebuffer(self, int width, int height, greyscale=False):
+ *         if greyscale:
+ *             capture_memory = <unsigned char*>malloc(width * height)             # <<<<<<<<<<<<<<
+ *             glBindTexture(GL_TEXTURE_2D, self.framebuffer.texture)
+ *             glGetTexImage(GL_TEXTURE_2D, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, capture_memory)
+ */
+    __pyx_v_capture_memory = ((unsigned char *)malloc((__pyx_v_width * __pyx_v_height)));
+
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":128
+ *         if greyscale:
+ *             capture_memory = <unsigned char*>malloc(width * height)
+ *             glBindTexture(GL_TEXTURE_2D, self.framebuffer.texture)             # <<<<<<<<<<<<<<
+ *             glGetTexImage(GL_TEXTURE_2D, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, capture_memory)
+ *             glBindTexture(GL_TEXTURE_2D, 0)
+ */
+    glBindTexture(GL_TEXTURE_2D, __pyx_v_self->framebuffer->texture);
+
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":129
+ *             capture_memory = <unsigned char*>malloc(width * height)
+ *             glBindTexture(GL_TEXTURE_2D, self.framebuffer.texture)
+ *             glGetTexImage(GL_TEXTURE_2D, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, capture_memory)             # <<<<<<<<<<<<<<
+ *             glBindTexture(GL_TEXTURE_2D, 0)
+ *             copy = capture_memory[0:(width * height)]
+ */
+    glGetTexImage(GL_TEXTURE_2D, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, __pyx_v_capture_memory);
+
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":130
+ *             glBindTexture(GL_TEXTURE_2D, self.framebuffer.texture)
+ *             glGetTexImage(GL_TEXTURE_2D, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, capture_memory)
+ *             glBindTexture(GL_TEXTURE_2D, 0)             # <<<<<<<<<<<<<<
+ *             copy = capture_memory[0:(width * height)]
+ * 
+ */
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":131
+ *             glGetTexImage(GL_TEXTURE_2D, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, capture_memory)
+ *             glBindTexture(GL_TEXTURE_2D, 0)
+ *             copy = capture_memory[0:(width * height)]             # <<<<<<<<<<<<<<
+ * 
+ *             free(capture_memory)
+ */
+    __pyx_t_2 = __Pyx_PyBytes_FromStringAndSize(((const char*)__pyx_v_capture_memory) + 0, (__pyx_v_width * __pyx_v_height) - 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 131, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_v_copy = ((PyObject*)__pyx_t_2);
+    __pyx_t_2 = 0;
+
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":133
+ *             copy = capture_memory[0:(width * height)]
+ * 
+ *             free(capture_memory)             # <<<<<<<<<<<<<<
+ *             return copy
+ * 
+ */
+    free(__pyx_v_capture_memory);
+
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":134
+ * 
+ *             free(capture_memory)
+ *             return copy             # <<<<<<<<<<<<<<
+ * 
+ *         capture_memory = <unsigned char*>malloc(width * height * 3)
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(__pyx_v_copy);
+    __pyx_r = __pyx_v_copy;
+    goto __pyx_L0;
+
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":126
+ * 
+ *     def get_framebuffer(self, int width, int height, greyscale=False):
+ *         if greyscale:             # <<<<<<<<<<<<<<
+ *             capture_memory = <unsigned char*>malloc(width * height)
+ *             glBindTexture(GL_TEXTURE_2D, self.framebuffer.texture)
+ */
+  }
+
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":136
+ *             return copy
+ * 
  *         capture_memory = <unsigned char*>malloc(width * height * 3)             # <<<<<<<<<<<<<<
  * 
  *         glBindTexture(GL_TEXTURE_2D, self.framebuffer.texture)
  */
   __pyx_v_capture_memory = ((unsigned char *)malloc(((__pyx_v_width * __pyx_v_height) * 3)));
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":128
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":138
  *         capture_memory = <unsigned char*>malloc(width * height * 3)
  * 
  *         glBindTexture(GL_TEXTURE_2D, self.framebuffer.texture)             # <<<<<<<<<<<<<<
@@ -5310,7 +5416,7 @@ static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_14
  */
   glBindTexture(GL_TEXTURE_2D, __pyx_v_self->framebuffer->texture);
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":129
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":139
  * 
  *         glBindTexture(GL_TEXTURE_2D, self.framebuffer.texture)
  *         glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, capture_memory)             # <<<<<<<<<<<<<<
@@ -5319,7 +5425,7 @@ static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_14
  */
   glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, __pyx_v_capture_memory);
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":130
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":140
  *         glBindTexture(GL_TEXTURE_2D, self.framebuffer.texture)
  *         glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, capture_memory)
  *         glBindTexture(GL_TEXTURE_2D, 0)             # <<<<<<<<<<<<<<
@@ -5328,19 +5434,19 @@ static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_14
  */
   glBindTexture(GL_TEXTURE_2D, 0);
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":132
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":142
  *         glBindTexture(GL_TEXTURE_2D, 0)
  * 
  *         copy = capture_memory[0:(width * height * 3)]             # <<<<<<<<<<<<<<
  * 
  *         free(capture_memory)
  */
-  __pyx_t_1 = __Pyx_PyBytes_FromStringAndSize(((const char*)__pyx_v_capture_memory) + 0, ((__pyx_v_width * __pyx_v_height) * 3) - 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 132, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_v_copy = ((PyObject*)__pyx_t_1);
-  __pyx_t_1 = 0;
+  __pyx_t_2 = __Pyx_PyBytes_FromStringAndSize(((const char*)__pyx_v_capture_memory) + 0, ((__pyx_v_width * __pyx_v_height) * 3) - 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 142, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_v_copy = ((PyObject*)__pyx_t_2);
+  __pyx_t_2 = 0;
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":134
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":144
  *         copy = capture_memory[0:(width * height * 3)]
  * 
  *         free(capture_memory)             # <<<<<<<<<<<<<<
@@ -5349,7 +5455,7 @@ static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_14
  */
   free(__pyx_v_capture_memory);
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":135
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":145
  * 
  *         free(capture_memory)
  *         return copy             # <<<<<<<<<<<<<<
@@ -5364,14 +5470,14 @@ static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_14
   /* "pytouhou/ui/opengl/gamerenderer.pyx":125
  *         free(capture_memory)
  * 
- *     def get_framebuffer(self, int width, int height):             # <<<<<<<<<<<<<<
- *         capture_memory = <unsigned char*>malloc(width * height * 3)
- * 
+ *     def get_framebuffer(self, int width, int height, greyscale=False):             # <<<<<<<<<<<<<<
+ *         if greyscale:
+ *             capture_memory = <unsigned char*>malloc(width * height)
  */
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
   __Pyx_AddTraceback("pytouhou.ui.opengl.gamerenderer.GameRenderer.get_framebuffer", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
@@ -5381,7 +5487,7 @@ static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_14
   return __pyx_r;
 }
 
-/* "pytouhou/ui/opengl/gamerenderer.pyx":137
+/* "pytouhou/ui/opengl/gamerenderer.pyx":147
  *         return copy
  * 
  *     cdef bint render_game(self, Game game) except True:             # <<<<<<<<<<<<<<
@@ -5440,7 +5546,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("render_game", 0);
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":145
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":155
  *         cdef Matrix *mvp
  * 
  *         if use_debug_group:             # <<<<<<<<<<<<<<
@@ -5450,7 +5556,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
   __pyx_t_1 = (__pyx_v_8pytouhou_2ui_6opengl_7backend_use_debug_group != 0);
   if (__pyx_t_1) {
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":146
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":156
  * 
  *         if use_debug_group:
  *             glPushDebugGroup(GL_DEBUG_SOURCE_APPLICATION, 0, -1, "Game rendering")             # <<<<<<<<<<<<<<
@@ -5459,7 +5565,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
     glPushDebugGroup(GL_DEBUG_SOURCE_APPLICATION, 0, -1, ((char const *)"Game rendering"));
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":145
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":155
  *         cdef Matrix *mvp
  * 
  *         if use_debug_group:             # <<<<<<<<<<<<<<
@@ -5468,14 +5574,14 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
   }
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":148
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":158
  *             glPushDebugGroup(GL_DEBUG_SOURCE_APPLICATION, 0, -1, "Game rendering")
  * 
  *         game_x, game_y = game.interface.game_pos             # <<<<<<<<<<<<<<
  *         glViewport(game_x, game_y, game.width, game.height)
  *         glClear(GL_DEPTH_BUFFER_BIT)
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_game->interface, __pyx_n_s_game_pos); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_game->interface, __pyx_n_s_game_pos); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 158, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if ((likely(PyTuple_CheckExact(__pyx_t_2))) || (PyList_CheckExact(__pyx_t_2))) {
     PyObject* sequence = __pyx_t_2;
@@ -5483,7 +5589,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
     if (unlikely(size != 2)) {
       if (size > 2) __Pyx_RaiseTooManyValuesError(2);
       else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-      __PYX_ERR(0, 148, __pyx_L1_error)
+      __PYX_ERR(0, 158, __pyx_L1_error)
     }
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
     if (likely(PyTuple_CheckExact(sequence))) {
@@ -5496,15 +5602,15 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
     __Pyx_INCREF(__pyx_t_3);
     __Pyx_INCREF(__pyx_t_4);
     #else
-    __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 148, __pyx_L1_error)
+    __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 158, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 148, __pyx_L1_error)
+    __pyx_t_4 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 158, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     #endif
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else {
     Py_ssize_t index = -1;
-    __pyx_t_5 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 148, __pyx_L1_error)
+    __pyx_t_5 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 158, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_6 = Py_TYPE(__pyx_t_5)->tp_iternext;
@@ -5512,7 +5618,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
     __Pyx_GOTREF(__pyx_t_3);
     index = 1; __pyx_t_4 = __pyx_t_6(__pyx_t_5); if (unlikely(!__pyx_t_4)) goto __pyx_L4_unpacking_failed;
     __Pyx_GOTREF(__pyx_t_4);
-    if (__Pyx_IternextUnpackEndCheck(__pyx_t_6(__pyx_t_5), 2) < 0) __PYX_ERR(0, 148, __pyx_L1_error)
+    if (__Pyx_IternextUnpackEndCheck(__pyx_t_6(__pyx_t_5), 2) < 0) __PYX_ERR(0, 158, __pyx_L1_error)
     __pyx_t_6 = NULL;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     goto __pyx_L5_unpacking_done;
@@ -5520,17 +5626,17 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_t_6 = NULL;
     if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-    __PYX_ERR(0, 148, __pyx_L1_error)
+    __PYX_ERR(0, 158, __pyx_L1_error)
     __pyx_L5_unpacking_done:;
   }
-  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_3); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 148, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_3); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 158, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_8 = __Pyx_PyInt_As_long(__pyx_t_4); if (unlikely((__pyx_t_8 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 148, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyInt_As_long(__pyx_t_4); if (unlikely((__pyx_t_8 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 158, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_v_game_x = __pyx_t_7;
   __pyx_v_game_y = __pyx_t_8;
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":149
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":159
  * 
  *         game_x, game_y = game.interface.game_pos
  *         glViewport(game_x, game_y, game.width, game.height)             # <<<<<<<<<<<<<<
@@ -5539,7 +5645,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
   glViewport(__pyx_v_game_x, __pyx_v_game_y, __pyx_v_game->width, __pyx_v_game->height);
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":150
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":160
  *         game_x, game_y = game.interface.game_pos
  *         glViewport(game_x, game_y, game.width, game.height)
  *         glClear(GL_DEPTH_BUFFER_BIT)             # <<<<<<<<<<<<<<
@@ -5548,7 +5654,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
   glClear(GL_DEPTH_BUFFER_BIT);
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":151
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":161
  *         glViewport(game_x, game_y, game.width, game.height)
  *         glClear(GL_DEPTH_BUFFER_BIT)
  *         glScissor(game_x, game_y, game.width, game.height)             # <<<<<<<<<<<<<<
@@ -5557,7 +5663,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
   glScissor(__pyx_v_game_x, __pyx_v_game_y, __pyx_v_game->width, __pyx_v_game->height);
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":152
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":162
  *         glClear(GL_DEPTH_BUFFER_BIT)
  *         glScissor(game_x, game_y, game.width, game.height)
  *         glEnable(GL_SCISSOR_TEST)             # <<<<<<<<<<<<<<
@@ -5566,7 +5672,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
   glEnable(GL_SCISSOR_TEST);
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":154
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":164
  *         glEnable(GL_SCISSOR_TEST)
  * 
  *         if is_legacy:             # <<<<<<<<<<<<<<
@@ -5576,7 +5682,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
   __pyx_t_1 = (__pyx_v_8pytouhou_2ui_6opengl_7backend_is_legacy != 0);
   if (__pyx_t_1) {
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":155
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":165
  * 
  *         if is_legacy:
  *             glMatrixMode(GL_PROJECTION)             # <<<<<<<<<<<<<<
@@ -5585,7 +5691,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
     glMatrixMode(GL_PROJECTION);
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":156
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":166
  *         if is_legacy:
  *             glMatrixMode(GL_PROJECTION)
  *             glLoadIdentity()             # <<<<<<<<<<<<<<
@@ -5594,7 +5700,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
     glLoadIdentity();
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":154
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":164
  *         glEnable(GL_SCISSOR_TEST)
  * 
  *         if is_legacy:             # <<<<<<<<<<<<<<
@@ -5603,7 +5709,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
   }
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":158
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":168
  *             glLoadIdentity()
  * 
  *         if self.background_renderer is None:             # <<<<<<<<<<<<<<
@@ -5614,7 +5720,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
   __pyx_t_9 = (__pyx_t_1 != 0);
   if (__pyx_t_9) {
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":159
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":169
  * 
  *         if self.background_renderer is None:
  *             glClear(GL_COLOR_BUFFER_BIT)             # <<<<<<<<<<<<<<
@@ -5623,7 +5729,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
     glClear(GL_COLOR_BUFFER_BIT);
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":158
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":168
  *             glLoadIdentity()
  * 
  *         if self.background_renderer is None:             # <<<<<<<<<<<<<<
@@ -5633,7 +5739,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
     goto __pyx_L7;
   }
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":160
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":170
  *         if self.background_renderer is None:
  *             glClear(GL_COLOR_BUFFER_BIT)
  *         elif game is not None and game.spellcard_effect is not None:             # <<<<<<<<<<<<<<
@@ -5653,7 +5759,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
   __pyx_L8_bool_binop_done:;
   if (__pyx_t_9) {
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":161
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":171
  *             glClear(GL_COLOR_BUFFER_BIT)
  *         elif game is not None and game.spellcard_effect is not None:
  *             if is_legacy:             # <<<<<<<<<<<<<<
@@ -5663,7 +5769,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
     __pyx_t_9 = (__pyx_v_8pytouhou_2ui_6opengl_7backend_is_legacy != 0);
     if (__pyx_t_9) {
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":162
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":172
  *         elif game is not None and game.spellcard_effect is not None:
  *             if is_legacy:
  *                 glMatrixMode(GL_MODELVIEW)             # <<<<<<<<<<<<<<
@@ -5672,7 +5778,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
       glMatrixMode(GL_MODELVIEW);
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":163
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":173
  *             if is_legacy:
  *                 glMatrixMode(GL_MODELVIEW)
  *                 glLoadMatrixf(<GLfloat*>self.game_mvp)             # <<<<<<<<<<<<<<
@@ -5681,7 +5787,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
       glLoadMatrixf(((GLfloat *)__pyx_v_self->game_mvp));
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":164
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":174
  *                 glMatrixMode(GL_MODELVIEW)
  *                 glLoadMatrixf(<GLfloat*>self.game_mvp)
  *                 glDisable(GL_FOG)             # <<<<<<<<<<<<<<
@@ -5690,7 +5796,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
       glDisable(GL_FOG);
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":161
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":171
  *             glClear(GL_COLOR_BUFFER_BIT)
  *         elif game is not None and game.spellcard_effect is not None:
  *             if is_legacy:             # <<<<<<<<<<<<<<
@@ -5700,7 +5806,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
       goto __pyx_L10;
     }
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":166
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":176
  *                 glDisable(GL_FOG)
  *             else:
  *                 self.game_shader.bind()             # <<<<<<<<<<<<<<
@@ -5710,33 +5816,33 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
     /*else*/ {
       ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_6shader_Shader *)__pyx_v_self->game_shader->__pyx_vtab)->bind(__pyx_v_self->game_shader);
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":167
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":177
  *             else:
  *                 self.game_shader.bind()
  *                 self.game_shader.uniform_matrix('mvp', self.game_mvp)             # <<<<<<<<<<<<<<
  * 
  *             self.render_elements([game.spellcard_effect])
  */
-      __pyx_t_9 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_6shader_Shader *)__pyx_v_self->game_shader->__pyx_vtab)->uniform_matrix(__pyx_v_self->game_shader, __pyx_n_u_mvp, __pyx_v_self->game_mvp); if (unlikely(__pyx_t_9 == ((int)1))) __PYX_ERR(0, 167, __pyx_L1_error)
+      __pyx_t_9 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_6shader_Shader *)__pyx_v_self->game_shader->__pyx_vtab)->uniform_matrix(__pyx_v_self->game_shader, __pyx_n_u_mvp, __pyx_v_self->game_mvp); if (unlikely(__pyx_t_9 == ((int)1))) __PYX_ERR(0, 177, __pyx_L1_error)
     }
     __pyx_L10:;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":169
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":179
  *                 self.game_shader.uniform_matrix('mvp', self.game_mvp)
  * 
  *             self.render_elements([game.spellcard_effect])             # <<<<<<<<<<<<<<
  *         else:
  *             back = self.background
  */
-    __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 169, __pyx_L1_error)
+    __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 179, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_INCREF(((PyObject *)__pyx_v_game->spellcard_effect));
     __Pyx_GIVEREF(((PyObject *)__pyx_v_game->spellcard_effect));
     PyList_SET_ITEM(__pyx_t_2, 0, ((PyObject *)__pyx_v_game->spellcard_effect));
-    __pyx_t_9 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.render_elements(((struct __pyx_obj_8pytouhou_2ui_6opengl_8renderer_Renderer *)__pyx_v_self), __pyx_t_2); if (unlikely(__pyx_t_9 == ((int)1))) __PYX_ERR(0, 169, __pyx_L1_error)
+    __pyx_t_9 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.render_elements(((struct __pyx_obj_8pytouhou_2ui_6opengl_8renderer_Renderer *)__pyx_v_self), __pyx_t_2); if (unlikely(__pyx_t_9 == ((int)1))) __PYX_ERR(0, 179, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":160
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":170
  *         if self.background_renderer is None:
  *             glClear(GL_COLOR_BUFFER_BIT)
  *         elif game is not None and game.spellcard_effect is not None:             # <<<<<<<<<<<<<<
@@ -5746,7 +5852,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
     goto __pyx_L7;
   }
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":171
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":181
  *             self.render_elements([game.spellcard_effect])
  *         else:
  *             back = self.background             # <<<<<<<<<<<<<<
@@ -5759,16 +5865,16 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
     __pyx_v_back = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":172
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":182
  *         else:
  *             back = self.background
  *             x, y, z = back.position_interpolator.values             # <<<<<<<<<<<<<<
  *             dx, dy, dz = back.position2_interpolator.values
  *             fog_b, fog_g, fog_r, fog_start, fog_end = back.fog_interpolator.values
  */
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_back, __pyx_n_s_position_interpolator); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 172, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_back, __pyx_n_s_position_interpolator); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_values); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 172, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_values); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     if ((likely(PyTuple_CheckExact(__pyx_t_4))) || (PyList_CheckExact(__pyx_t_4))) {
@@ -5777,7 +5883,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
       if (unlikely(size != 3)) {
         if (size > 3) __Pyx_RaiseTooManyValuesError(3);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 172, __pyx_L1_error)
+        __PYX_ERR(0, 182, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -5793,17 +5899,17 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
       __Pyx_INCREF(__pyx_t_3);
       __Pyx_INCREF(__pyx_t_5);
       #else
-      __pyx_t_2 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 172, __pyx_L1_error)
+      __pyx_t_2 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 182, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_3 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 172, __pyx_L1_error)
+      __pyx_t_3 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 182, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_5 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 172, __pyx_L1_error)
+      __pyx_t_5 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 182, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       #endif
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_11 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 172, __pyx_L1_error)
+      __pyx_t_11 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 182, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_11);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __pyx_t_6 = Py_TYPE(__pyx_t_11)->tp_iternext;
@@ -5813,7 +5919,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
       __Pyx_GOTREF(__pyx_t_3);
       index = 2; __pyx_t_5 = __pyx_t_6(__pyx_t_11); if (unlikely(!__pyx_t_5)) goto __pyx_L11_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_5);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_6(__pyx_t_11), 3) < 0) __PYX_ERR(0, 172, __pyx_L1_error)
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_6(__pyx_t_11), 3) < 0) __PYX_ERR(0, 182, __pyx_L1_error)
       __pyx_t_6 = NULL;
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
       goto __pyx_L12_unpacking_done;
@@ -5821,29 +5927,29 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
       __pyx_t_6 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 172, __pyx_L1_error)
+      __PYX_ERR(0, 182, __pyx_L1_error)
       __pyx_L12_unpacking_done:;
     }
-    __pyx_t_12 = __pyx_PyFloat_AsFloat(__pyx_t_2); if (unlikely((__pyx_t_12 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 172, __pyx_L1_error)
+    __pyx_t_12 = __pyx_PyFloat_AsFloat(__pyx_t_2); if (unlikely((__pyx_t_12 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_13 = __pyx_PyFloat_AsFloat(__pyx_t_3); if (unlikely((__pyx_t_13 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 172, __pyx_L1_error)
+    __pyx_t_13 = __pyx_PyFloat_AsFloat(__pyx_t_3); if (unlikely((__pyx_t_13 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_14 = __pyx_PyFloat_AsFloat(__pyx_t_5); if (unlikely((__pyx_t_14 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 172, __pyx_L1_error)
+    __pyx_t_14 = __pyx_PyFloat_AsFloat(__pyx_t_5); if (unlikely((__pyx_t_14 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_v_x = __pyx_t_12;
     __pyx_v_y = __pyx_t_13;
     __pyx_v_z = __pyx_t_14;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":173
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":183
  *             back = self.background
  *             x, y, z = back.position_interpolator.values
  *             dx, dy, dz = back.position2_interpolator.values             # <<<<<<<<<<<<<<
  *             fog_b, fog_g, fog_r, fog_start, fog_end = back.fog_interpolator.values
  * 
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_back, __pyx_n_s_position2_interpolator); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 173, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_back, __pyx_n_s_position2_interpolator); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 183, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_values); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 173, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_values); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 183, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     if ((likely(PyTuple_CheckExact(__pyx_t_5))) || (PyList_CheckExact(__pyx_t_5))) {
@@ -5852,7 +5958,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
       if (unlikely(size != 3)) {
         if (size > 3) __Pyx_RaiseTooManyValuesError(3);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 173, __pyx_L1_error)
+        __PYX_ERR(0, 183, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -5868,17 +5974,17 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
       __Pyx_INCREF(__pyx_t_3);
       __Pyx_INCREF(__pyx_t_2);
       #else
-      __pyx_t_4 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 173, __pyx_L1_error)
+      __pyx_t_4 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 183, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_3 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 173, __pyx_L1_error)
+      __pyx_t_3 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 183, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_2 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 173, __pyx_L1_error)
+      __pyx_t_2 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 183, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       #endif
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_11 = PyObject_GetIter(__pyx_t_5); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 173, __pyx_L1_error)
+      __pyx_t_11 = PyObject_GetIter(__pyx_t_5); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 183, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_11);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __pyx_t_6 = Py_TYPE(__pyx_t_11)->tp_iternext;
@@ -5888,7 +5994,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
       __Pyx_GOTREF(__pyx_t_3);
       index = 2; __pyx_t_2 = __pyx_t_6(__pyx_t_11); if (unlikely(!__pyx_t_2)) goto __pyx_L13_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_2);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_6(__pyx_t_11), 3) < 0) __PYX_ERR(0, 173, __pyx_L1_error)
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_6(__pyx_t_11), 3) < 0) __PYX_ERR(0, 183, __pyx_L1_error)
       __pyx_t_6 = NULL;
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
       goto __pyx_L14_unpacking_done;
@@ -5896,29 +6002,29 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
       __pyx_t_6 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 173, __pyx_L1_error)
+      __PYX_ERR(0, 183, __pyx_L1_error)
       __pyx_L14_unpacking_done:;
     }
-    __pyx_t_14 = __pyx_PyFloat_AsFloat(__pyx_t_4); if (unlikely((__pyx_t_14 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 173, __pyx_L1_error)
+    __pyx_t_14 = __pyx_PyFloat_AsFloat(__pyx_t_4); if (unlikely((__pyx_t_14 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 183, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_13 = __pyx_PyFloat_AsFloat(__pyx_t_3); if (unlikely((__pyx_t_13 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 173, __pyx_L1_error)
+    __pyx_t_13 = __pyx_PyFloat_AsFloat(__pyx_t_3); if (unlikely((__pyx_t_13 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 183, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_12 = __pyx_PyFloat_AsFloat(__pyx_t_2); if (unlikely((__pyx_t_12 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 173, __pyx_L1_error)
+    __pyx_t_12 = __pyx_PyFloat_AsFloat(__pyx_t_2); if (unlikely((__pyx_t_12 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 183, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_dx = __pyx_t_14;
     __pyx_v_dy = __pyx_t_13;
     __pyx_v_dz = __pyx_t_12;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":174
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":184
  *             x, y, z = back.position_interpolator.values
  *             dx, dy, dz = back.position2_interpolator.values
  *             fog_b, fog_g, fog_r, fog_start, fog_end = back.fog_interpolator.values             # <<<<<<<<<<<<<<
  * 
  *             # Those two lines may come from the difference between Direct3D and
  */
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_back, __pyx_n_s_fog_interpolator); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 174, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_back, __pyx_n_s_fog_interpolator); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 184, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_values); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 174, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_values); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 184, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     if ((likely(PyTuple_CheckExact(__pyx_t_2))) || (PyList_CheckExact(__pyx_t_2))) {
@@ -5927,7 +6033,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
       if (unlikely(size != 5)) {
         if (size > 5) __Pyx_RaiseTooManyValuesError(5);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 174, __pyx_L1_error)
+        __PYX_ERR(0, 184, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -5953,7 +6059,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
         Py_ssize_t i;
         PyObject** temps[5] = {&__pyx_t_5,&__pyx_t_3,&__pyx_t_4,&__pyx_t_11,&__pyx_t_15};
         for (i=0; i < 5; i++) {
-          PyObject* item = PySequence_ITEM(sequence, i); if (unlikely(!item)) __PYX_ERR(0, 174, __pyx_L1_error)
+          PyObject* item = PySequence_ITEM(sequence, i); if (unlikely(!item)) __PYX_ERR(0, 184, __pyx_L1_error)
           __Pyx_GOTREF(item);
           *(temps[i]) = item;
         }
@@ -5963,7 +6069,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
     } else {
       Py_ssize_t index = -1;
       PyObject** temps[5] = {&__pyx_t_5,&__pyx_t_3,&__pyx_t_4,&__pyx_t_11,&__pyx_t_15};
-      __pyx_t_16 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 174, __pyx_L1_error)
+      __pyx_t_16 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 184, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_16);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_t_6 = Py_TYPE(__pyx_t_16)->tp_iternext;
@@ -5972,7 +6078,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
         __Pyx_GOTREF(item);
         *(temps[index]) = item;
       }
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_6(__pyx_t_16), 5) < 0) __PYX_ERR(0, 174, __pyx_L1_error)
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_6(__pyx_t_16), 5) < 0) __PYX_ERR(0, 184, __pyx_L1_error)
       __pyx_t_6 = NULL;
       __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
       goto __pyx_L16_unpacking_done;
@@ -5980,18 +6086,18 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
       __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
       __pyx_t_6 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 174, __pyx_L1_error)
+      __PYX_ERR(0, 184, __pyx_L1_error)
       __pyx_L16_unpacking_done:;
     }
-    __pyx_t_17 = __Pyx_PyInt_As_unsigned_char(__pyx_t_5); if (unlikely((__pyx_t_17 == (unsigned char)-1) && PyErr_Occurred())) __PYX_ERR(0, 174, __pyx_L1_error)
+    __pyx_t_17 = __Pyx_PyInt_As_unsigned_char(__pyx_t_5); if (unlikely((__pyx_t_17 == (unsigned char)-1) && PyErr_Occurred())) __PYX_ERR(0, 184, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_18 = __Pyx_PyInt_As_unsigned_char(__pyx_t_3); if (unlikely((__pyx_t_18 == (unsigned char)-1) && PyErr_Occurred())) __PYX_ERR(0, 174, __pyx_L1_error)
+    __pyx_t_18 = __Pyx_PyInt_As_unsigned_char(__pyx_t_3); if (unlikely((__pyx_t_18 == (unsigned char)-1) && PyErr_Occurred())) __PYX_ERR(0, 184, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_19 = __Pyx_PyInt_As_unsigned_char(__pyx_t_4); if (unlikely((__pyx_t_19 == (unsigned char)-1) && PyErr_Occurred())) __PYX_ERR(0, 174, __pyx_L1_error)
+    __pyx_t_19 = __Pyx_PyInt_As_unsigned_char(__pyx_t_4); if (unlikely((__pyx_t_19 == (unsigned char)-1) && PyErr_Occurred())) __PYX_ERR(0, 184, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_12 = __pyx_PyFloat_AsFloat(__pyx_t_11); if (unlikely((__pyx_t_12 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 174, __pyx_L1_error)
+    __pyx_t_12 = __pyx_PyFloat_AsFloat(__pyx_t_11); if (unlikely((__pyx_t_12 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 184, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-    __pyx_t_13 = __pyx_PyFloat_AsFloat(__pyx_t_15); if (unlikely((__pyx_t_13 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 174, __pyx_L1_error)
+    __pyx_t_13 = __pyx_PyFloat_AsFloat(__pyx_t_15); if (unlikely((__pyx_t_13 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 184, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
     __pyx_v_fog_b = __pyx_t_17;
     __pyx_v_fog_g = __pyx_t_18;
@@ -5999,7 +6105,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
     __pyx_v_fog_start = __pyx_t_12;
     __pyx_v_fog_end = __pyx_t_13;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":182
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":192
  *             #TODO: investigate, and use a variable to keep the near plane
  *             # distance at a single place.
  *             fog_start -= 101010101./2010101.             # <<<<<<<<<<<<<<
@@ -6008,7 +6114,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
     __pyx_v_fog_start = (__pyx_v_fog_start - (101010101. / 2010101.));
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":183
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":193
  *             # distance at a single place.
  *             fog_start -= 101010101./2010101.
  *             fog_end -= 101010101./2010101.             # <<<<<<<<<<<<<<
@@ -6017,7 +6123,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
     __pyx_v_fog_end = (__pyx_v_fog_end - (101010101. / 2010101.));
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":185
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":195
  *             fog_end -= 101010101./2010101.
  * 
  *             mvp = new_identity()             # <<<<<<<<<<<<<<
@@ -6026,7 +6132,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
     __pyx_v_mvp = __pyx_f_8pytouhou_5utils_6matrix_new_identity();
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":186
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":196
  * 
  *             mvp = new_identity()
  *             mvp_data = <GLfloat*>mvp             # <<<<<<<<<<<<<<
@@ -6035,7 +6141,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
     __pyx_v_mvp_data = ((GLfloat *)__pyx_v_mvp);
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":187
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":197
  *             mvp = new_identity()
  *             mvp_data = <GLfloat*>mvp
  *             mvp_data[12] = -x             # <<<<<<<<<<<<<<
@@ -6044,7 +6150,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
     (__pyx_v_mvp_data[12]) = (-__pyx_v_x);
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":188
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":198
  *             mvp_data = <GLfloat*>mvp
  *             mvp_data[12] = -x
  *             mvp_data[13] = -y             # <<<<<<<<<<<<<<
@@ -6053,7 +6159,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
     (__pyx_v_mvp_data[13]) = (-__pyx_v_y);
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":189
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":199
  *             mvp_data[12] = -x
  *             mvp_data[13] = -y
  *             mvp_data[14] = -z             # <<<<<<<<<<<<<<
@@ -6062,7 +6168,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
     (__pyx_v_mvp_data[14]) = (-__pyx_v_z);
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":190
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":200
  *             mvp_data[13] = -y
  *             mvp_data[14] = -z
  *             view = setup_camera(dx, dy, dz)             # <<<<<<<<<<<<<<
@@ -6071,7 +6177,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
     __pyx_v_view = __pyx_f_8pytouhou_5utils_5maths_setup_camera(__pyx_v_dx, __pyx_v_dy, __pyx_v_dz);
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":191
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":201
  *             mvp_data[14] = -z
  *             view = setup_camera(dx, dy, dz)
  *             mul(mvp, view)             # <<<<<<<<<<<<<<
@@ -6080,7 +6186,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
     __pyx_f_8pytouhou_5utils_6matrix_mul(__pyx_v_mvp, __pyx_v_view);
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":192
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":202
  *             view = setup_camera(dx, dy, dz)
  *             mul(mvp, view)
  *             free(view)             # <<<<<<<<<<<<<<
@@ -6089,7 +6195,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
     free(__pyx_v_view);
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":193
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":203
  *             mul(mvp, view)
  *             free(view)
  *             mul(mvp, self.proj)             # <<<<<<<<<<<<<<
@@ -6098,7 +6204,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
     __pyx_f_8pytouhou_5utils_6matrix_mul(__pyx_v_mvp, __pyx_v_self->proj);
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":195
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":205
  *             mul(mvp, self.proj)
  * 
  *             if is_legacy:             # <<<<<<<<<<<<<<
@@ -6108,7 +6214,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
     __pyx_t_9 = (__pyx_v_8pytouhou_2ui_6opengl_7backend_is_legacy != 0);
     if (__pyx_t_9) {
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":196
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":206
  * 
  *             if is_legacy:
  *                 glMatrixMode(GL_MODELVIEW)             # <<<<<<<<<<<<<<
@@ -6117,7 +6223,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
       glMatrixMode(GL_MODELVIEW);
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":197
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":207
  *             if is_legacy:
  *                 glMatrixMode(GL_MODELVIEW)
  *                 glLoadMatrixf(mvp_data)             # <<<<<<<<<<<<<<
@@ -6126,7 +6232,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
       glLoadMatrixf(__pyx_v_mvp_data);
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":199
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":209
  *                 glLoadMatrixf(mvp_data)
  * 
  *                 glEnable(GL_FOG)             # <<<<<<<<<<<<<<
@@ -6135,7 +6241,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
       glEnable(GL_FOG);
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":200
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":210
  * 
  *                 glEnable(GL_FOG)
  *                 glFogi(GL_FOG_MODE, GL_LINEAR)             # <<<<<<<<<<<<<<
@@ -6144,7 +6250,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
       glFogi(GL_FOG_MODE, GL_LINEAR);
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":201
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":211
  *                 glEnable(GL_FOG)
  *                 glFogi(GL_FOG_MODE, GL_LINEAR)
  *                 glFogf(GL_FOG_START, fog_start)             # <<<<<<<<<<<<<<
@@ -6153,7 +6259,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
       glFogf(GL_FOG_START, __pyx_v_fog_start);
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":202
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":212
  *                 glFogi(GL_FOG_MODE, GL_LINEAR)
  *                 glFogf(GL_FOG_START, fog_start)
  *                 glFogf(GL_FOG_END,  fog_end)             # <<<<<<<<<<<<<<
@@ -6162,7 +6268,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
       glFogf(GL_FOG_END, __pyx_v_fog_end);
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":204
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":214
  *                 glFogf(GL_FOG_END,  fog_end)
  * 
  *                 fog_data[0] = fog_r / 255.             # <<<<<<<<<<<<<<
@@ -6171,7 +6277,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
       (__pyx_v_fog_data[0]) = (((double)__pyx_v_fog_r) / 255.);
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":205
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":215
  * 
  *                 fog_data[0] = fog_r / 255.
  *                 fog_data[1] = fog_g / 255.             # <<<<<<<<<<<<<<
@@ -6180,7 +6286,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
       (__pyx_v_fog_data[1]) = (((double)__pyx_v_fog_g) / 255.);
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":206
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":216
  *                 fog_data[0] = fog_r / 255.
  *                 fog_data[1] = fog_g / 255.
  *                 fog_data[2] = fog_b / 255.             # <<<<<<<<<<<<<<
@@ -6189,7 +6295,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
       (__pyx_v_fog_data[2]) = (((double)__pyx_v_fog_b) / 255.);
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":207
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":217
  *                 fog_data[1] = fog_g / 255.
  *                 fog_data[2] = fog_b / 255.
  *                 fog_data[3] = 1.             # <<<<<<<<<<<<<<
@@ -6198,7 +6304,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
       (__pyx_v_fog_data[3]) = 1.;
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":208
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":218
  *                 fog_data[2] = fog_b / 255.
  *                 fog_data[3] = 1.
  *                 glFogfv(GL_FOG_COLOR, fog_data)             # <<<<<<<<<<<<<<
@@ -6207,7 +6313,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
       glFogfv(GL_FOG_COLOR, __pyx_v_fog_data);
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":195
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":205
  *             mul(mvp, self.proj)
  * 
  *             if is_legacy:             # <<<<<<<<<<<<<<
@@ -6217,7 +6323,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
       goto __pyx_L17;
     }
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":210
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":220
  *                 glFogfv(GL_FOG_COLOR, fog_data)
  *             else:
  *                 self.background_shader.bind()             # <<<<<<<<<<<<<<
@@ -6227,16 +6333,16 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
     /*else*/ {
       ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_6shader_Shader *)__pyx_v_self->background_shader->__pyx_vtab)->bind(__pyx_v_self->background_shader);
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":211
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":221
  *             else:
  *                 self.background_shader.bind()
  *                 self.background_shader.uniform_matrix('mvp', mvp)             # <<<<<<<<<<<<<<
  * 
  *                 self.background_shader.uniform_1('fog_scale', 1. / (fog_end - fog_start))
  */
-      __pyx_t_9 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_6shader_Shader *)__pyx_v_self->background_shader->__pyx_vtab)->uniform_matrix(__pyx_v_self->background_shader, __pyx_n_u_mvp, __pyx_v_mvp); if (unlikely(__pyx_t_9 == ((int)1))) __PYX_ERR(0, 211, __pyx_L1_error)
+      __pyx_t_9 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_6shader_Shader *)__pyx_v_self->background_shader->__pyx_vtab)->uniform_matrix(__pyx_v_self->background_shader, __pyx_n_u_mvp, __pyx_v_mvp); if (unlikely(__pyx_t_9 == ((int)1))) __PYX_ERR(0, 221, __pyx_L1_error)
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":213
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":223
  *                 self.background_shader.uniform_matrix('mvp', mvp)
  * 
  *                 self.background_shader.uniform_1('fog_scale', 1. / (fog_end - fog_start))             # <<<<<<<<<<<<<<
@@ -6246,31 +6352,31 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
       __pyx_t_13 = (__pyx_v_fog_end - __pyx_v_fog_start);
       if (unlikely(__pyx_t_13 == 0)) {
         PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-        __PYX_ERR(0, 213, __pyx_L1_error)
+        __PYX_ERR(0, 223, __pyx_L1_error)
       }
-      __pyx_t_9 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_6shader_Shader *)__pyx_v_self->background_shader->__pyx_vtab)->uniform_1(__pyx_v_self->background_shader, __pyx_n_u_fog_scale, (1. / ((double)__pyx_t_13))); if (unlikely(__pyx_t_9 == ((int)1))) __PYX_ERR(0, 213, __pyx_L1_error)
+      __pyx_t_9 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_6shader_Shader *)__pyx_v_self->background_shader->__pyx_vtab)->uniform_1(__pyx_v_self->background_shader, __pyx_n_u_fog_scale, (1. / ((double)__pyx_t_13))); if (unlikely(__pyx_t_9 == ((int)1))) __PYX_ERR(0, 223, __pyx_L1_error)
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":214
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":224
  * 
  *                 self.background_shader.uniform_1('fog_scale', 1. / (fog_end - fog_start))
  *                 self.background_shader.uniform_1('fog_end', fog_end)             # <<<<<<<<<<<<<<
  *                 self.background_shader.uniform_4('fog_color', fog_r / 255., fog_g / 255., fog_b / 255., 1.)
  * 
  */
-      __pyx_t_9 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_6shader_Shader *)__pyx_v_self->background_shader->__pyx_vtab)->uniform_1(__pyx_v_self->background_shader, __pyx_n_u_fog_end, __pyx_v_fog_end); if (unlikely(__pyx_t_9 == ((int)1))) __PYX_ERR(0, 214, __pyx_L1_error)
+      __pyx_t_9 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_6shader_Shader *)__pyx_v_self->background_shader->__pyx_vtab)->uniform_1(__pyx_v_self->background_shader, __pyx_n_u_fog_end, __pyx_v_fog_end); if (unlikely(__pyx_t_9 == ((int)1))) __PYX_ERR(0, 224, __pyx_L1_error)
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":215
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":225
  *                 self.background_shader.uniform_1('fog_scale', 1. / (fog_end - fog_start))
  *                 self.background_shader.uniform_1('fog_end', fog_end)
  *                 self.background_shader.uniform_4('fog_color', fog_r / 255., fog_g / 255., fog_b / 255., 1.)             # <<<<<<<<<<<<<<
  * 
  *             free(mvp)
  */
-      __pyx_t_9 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_6shader_Shader *)__pyx_v_self->background_shader->__pyx_vtab)->uniform_4(__pyx_v_self->background_shader, __pyx_n_u_fog_color, (((double)__pyx_v_fog_r) / 255.), (((double)__pyx_v_fog_g) / 255.), (((double)__pyx_v_fog_b) / 255.), 1.); if (unlikely(__pyx_t_9 == ((int)1))) __PYX_ERR(0, 215, __pyx_L1_error)
+      __pyx_t_9 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_6shader_Shader *)__pyx_v_self->background_shader->__pyx_vtab)->uniform_4(__pyx_v_self->background_shader, __pyx_n_u_fog_color, (((double)__pyx_v_fog_r) / 255.), (((double)__pyx_v_fog_g) / 255.), (((double)__pyx_v_fog_b) / 255.), 1.); if (unlikely(__pyx_t_9 == ((int)1))) __PYX_ERR(0, 225, __pyx_L1_error)
     }
     __pyx_L17:;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":217
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":227
  *                 self.background_shader.uniform_4('fog_color', fog_r / 255., fog_g / 255., fog_b / 255., 1.)
  * 
  *             free(mvp)             # <<<<<<<<<<<<<<
@@ -6279,7 +6385,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
     free(__pyx_v_mvp);
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":218
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":228
  * 
  *             free(mvp)
  *             self.background_renderer.render_background()             # <<<<<<<<<<<<<<
@@ -6290,7 +6396,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
   }
   __pyx_L7:;
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":220
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":230
  *             self.background_renderer.render_background()
  * 
  *         if game is not None:             # <<<<<<<<<<<<<<
@@ -6301,7 +6407,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
   __pyx_t_1 = (__pyx_t_9 != 0);
   if (__pyx_t_1) {
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":221
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":231
  * 
  *         if game is not None:
  *             if is_legacy:             # <<<<<<<<<<<<<<
@@ -6311,7 +6417,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
     __pyx_t_1 = (__pyx_v_8pytouhou_2ui_6opengl_7backend_is_legacy != 0);
     if (__pyx_t_1) {
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":222
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":232
  *         if game is not None:
  *             if is_legacy:
  *                 glMatrixMode(GL_MODELVIEW)             # <<<<<<<<<<<<<<
@@ -6320,7 +6426,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
       glMatrixMode(GL_MODELVIEW);
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":223
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":233
  *             if is_legacy:
  *                 glMatrixMode(GL_MODELVIEW)
  *                 glLoadMatrixf(<GLfloat*>self.game_mvp)             # <<<<<<<<<<<<<<
@@ -6329,7 +6435,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
       glLoadMatrixf(((GLfloat *)__pyx_v_self->game_mvp));
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":224
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":234
  *                 glMatrixMode(GL_MODELVIEW)
  *                 glLoadMatrixf(<GLfloat*>self.game_mvp)
  *                 glDisable(GL_FOG)             # <<<<<<<<<<<<<<
@@ -6338,7 +6444,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
       glDisable(GL_FOG);
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":221
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":231
  * 
  *         if game is not None:
  *             if is_legacy:             # <<<<<<<<<<<<<<
@@ -6348,7 +6454,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
       goto __pyx_L19;
     }
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":226
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":236
  *                 glDisable(GL_FOG)
  *             else:
  *                 self.game_shader.bind()             # <<<<<<<<<<<<<<
@@ -6358,18 +6464,18 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
     /*else*/ {
       ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_6shader_Shader *)__pyx_v_self->game_shader->__pyx_vtab)->bind(__pyx_v_self->game_shader);
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":227
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":237
  *             else:
  *                 self.game_shader.bind()
  *                 self.game_shader.uniform_matrix('mvp', self.game_mvp)             # <<<<<<<<<<<<<<
  * 
  *             self.render_elements([enemy for enemy in game.enemies if enemy.visible])
  */
-      __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_6shader_Shader *)__pyx_v_self->game_shader->__pyx_vtab)->uniform_matrix(__pyx_v_self->game_shader, __pyx_n_u_mvp, __pyx_v_self->game_mvp); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 227, __pyx_L1_error)
+      __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_6shader_Shader *)__pyx_v_self->game_shader->__pyx_vtab)->uniform_matrix(__pyx_v_self->game_shader, __pyx_n_u_mvp, __pyx_v_self->game_mvp); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 237, __pyx_L1_error)
     }
     __pyx_L19:;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":229
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":239
  *                 self.game_shader.uniform_matrix('mvp', self.game_mvp)
  * 
  *             self.render_elements([enemy for enemy in game.enemies if enemy.visible])             # <<<<<<<<<<<<<<
@@ -6377,29 +6483,29 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  *             self.render_elements(chain(game.players_bullets,
  */
     { /* enter inner scope */
-      __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 229, __pyx_L22_error)
+      __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 239, __pyx_L22_error)
       __Pyx_GOTREF(__pyx_t_2);
       if (unlikely(__pyx_v_game->enemies == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-        __PYX_ERR(0, 229, __pyx_L22_error)
+        __PYX_ERR(0, 239, __pyx_L22_error)
       }
       __pyx_t_15 = __pyx_v_game->enemies; __Pyx_INCREF(__pyx_t_15); __pyx_t_20 = 0;
       for (;;) {
         if (__pyx_t_20 >= PyList_GET_SIZE(__pyx_t_15)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_11 = PyList_GET_ITEM(__pyx_t_15, __pyx_t_20); __Pyx_INCREF(__pyx_t_11); __pyx_t_20++; if (unlikely(0 < 0)) __PYX_ERR(0, 229, __pyx_L22_error)
+        __pyx_t_11 = PyList_GET_ITEM(__pyx_t_15, __pyx_t_20); __Pyx_INCREF(__pyx_t_11); __pyx_t_20++; if (unlikely(0 < 0)) __PYX_ERR(0, 239, __pyx_L22_error)
         #else
-        __pyx_t_11 = PySequence_ITEM(__pyx_t_15, __pyx_t_20); __pyx_t_20++; if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 229, __pyx_L22_error)
+        __pyx_t_11 = PySequence_ITEM(__pyx_t_15, __pyx_t_20); __pyx_t_20++; if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 239, __pyx_L22_error)
         __Pyx_GOTREF(__pyx_t_11);
         #endif
         __Pyx_XDECREF_SET(__pyx_7genexpr__pyx_v_enemy, __pyx_t_11);
         __pyx_t_11 = 0;
-        __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_7genexpr__pyx_v_enemy, __pyx_n_s_visible); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 229, __pyx_L22_error)
+        __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_7genexpr__pyx_v_enemy, __pyx_n_s_visible); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 239, __pyx_L22_error)
         __Pyx_GOTREF(__pyx_t_11);
-        __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_11); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 229, __pyx_L22_error)
+        __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_11); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 239, __pyx_L22_error)
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
         if (__pyx_t_1) {
-          if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_7genexpr__pyx_v_enemy))) __PYX_ERR(0, 229, __pyx_L22_error)
+          if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_7genexpr__pyx_v_enemy))) __PYX_ERR(0, 239, __pyx_L22_error)
         }
       }
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
@@ -6410,10 +6516,10 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
       goto __pyx_L1_error;
       __pyx_L26_exit_scope:;
     } /* exit inner scope */
-    __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.render_elements(((struct __pyx_obj_8pytouhou_2ui_6opengl_8renderer_Renderer *)__pyx_v_self), __pyx_t_2); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 229, __pyx_L1_error)
+    __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.render_elements(((struct __pyx_obj_8pytouhou_2ui_6opengl_8renderer_Renderer *)__pyx_v_self), __pyx_t_2); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 239, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":230
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":240
  * 
  *             self.render_elements([enemy for enemy in game.enemies if enemy.visible])
  *             self.render_elements(game.effects)             # <<<<<<<<<<<<<<
@@ -6422,37 +6528,37 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
     __pyx_t_2 = __pyx_v_game->effects;
     __Pyx_INCREF(__pyx_t_2);
-    __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.render_elements(((struct __pyx_obj_8pytouhou_2ui_6opengl_8renderer_Renderer *)__pyx_v_self), __pyx_t_2); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 230, __pyx_L1_error)
+    __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.render_elements(((struct __pyx_obj_8pytouhou_2ui_6opengl_8renderer_Renderer *)__pyx_v_self), __pyx_t_2); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 240, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":231
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":241
  *             self.render_elements([enemy for enemy in game.enemies if enemy.visible])
  *             self.render_elements(game.effects)
  *             self.render_elements(chain(game.players_bullets,             # <<<<<<<<<<<<<<
  *                                        game.lasers_sprites(),
  *                                        game.players,
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_n_s_chain); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 231, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_n_s_chain); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 241, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_15);
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":232
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":242
  *             self.render_elements(game.effects)
  *             self.render_elements(chain(game.players_bullets,
  *                                        game.lasers_sprites(),             # <<<<<<<<<<<<<<
  *                                        game.players,
  *                                        game.msg_sprites()))
  */
-    __pyx_t_11 = ((struct __pyx_vtabstruct_8pytouhou_4game_4game_Game *)__pyx_v_game->__pyx_vtab)->lasers_sprites(__pyx_v_game); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 232, __pyx_L1_error)
+    __pyx_t_11 = ((struct __pyx_vtabstruct_8pytouhou_4game_4game_Game *)__pyx_v_game->__pyx_vtab)->lasers_sprites(__pyx_v_game); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 242, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":234
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":244
  *                                        game.lasers_sprites(),
  *                                        game.players,
  *                                        game.msg_sprites()))             # <<<<<<<<<<<<<<
  *             self.render_elements(chain(game.bullets, game.lasers,
  *                                        game.cancelled_bullets, game.items,
  */
-    __pyx_t_4 = ((struct __pyx_vtabstruct_8pytouhou_4game_4game_Game *)__pyx_v_game->__pyx_vtab)->msg_sprites(__pyx_v_game); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 234, __pyx_L1_error)
+    __pyx_t_4 = ((struct __pyx_vtabstruct_8pytouhou_4game_4game_Game *)__pyx_v_game->__pyx_vtab)->msg_sprites(__pyx_v_game); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 244, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_3 = NULL;
     __pyx_t_21 = 0;
@@ -6469,7 +6575,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_15)) {
       PyObject *__pyx_temp[5] = {__pyx_t_3, __pyx_v_game->players_bullets, __pyx_t_11, __pyx_v_game->players, __pyx_t_4};
-      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_21, 4+__pyx_t_21); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 231, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_21, 4+__pyx_t_21); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 241, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
@@ -6479,7 +6585,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_15)) {
       PyObject *__pyx_temp[5] = {__pyx_t_3, __pyx_v_game->players_bullets, __pyx_t_11, __pyx_v_game->players, __pyx_t_4};
-      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_21, 4+__pyx_t_21); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 231, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_21, 4+__pyx_t_21); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 241, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
@@ -6487,7 +6593,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
     } else
     #endif
     {
-      __pyx_t_5 = PyTuple_New(4+__pyx_t_21); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 231, __pyx_L1_error)
+      __pyx_t_5 = PyTuple_New(4+__pyx_t_21); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 241, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       if (__pyx_t_3) {
         __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -6504,33 +6610,33 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
       PyTuple_SET_ITEM(__pyx_t_5, 3+__pyx_t_21, __pyx_t_4);
       __pyx_t_11 = 0;
       __pyx_t_4 = 0;
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_15, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 231, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_15, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 241, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     }
     __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":231
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":241
  *             self.render_elements([enemy for enemy in game.enemies if enemy.visible])
  *             self.render_elements(game.effects)
  *             self.render_elements(chain(game.players_bullets,             # <<<<<<<<<<<<<<
  *                                        game.lasers_sprites(),
  *                                        game.players,
  */
-    __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.render_elements(((struct __pyx_obj_8pytouhou_2ui_6opengl_8renderer_Renderer *)__pyx_v_self), __pyx_t_2); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 231, __pyx_L1_error)
+    __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.render_elements(((struct __pyx_obj_8pytouhou_2ui_6opengl_8renderer_Renderer *)__pyx_v_self), __pyx_t_2); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 241, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":235
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":245
  *                                        game.players,
  *                                        game.msg_sprites()))
  *             self.render_elements(chain(game.bullets, game.lasers,             # <<<<<<<<<<<<<<
  *                                        game.cancelled_bullets, game.items,
  *                                        game.labels))
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_n_s_chain); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 235, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_n_s_chain); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 245, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_15);
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":237
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":247
  *             self.render_elements(chain(game.bullets, game.lasers,
  *                                        game.cancelled_bullets, game.items,
  *                                        game.labels))             # <<<<<<<<<<<<<<
@@ -6552,7 +6658,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_15)) {
       PyObject *__pyx_temp[6] = {__pyx_t_5, __pyx_v_game->bullets, __pyx_v_game->lasers, __pyx_v_game->cancelled_bullets, __pyx_v_game->items, __pyx_v_game->labels};
-      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_21, 5+__pyx_t_21); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 235, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_21, 5+__pyx_t_21); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 245, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else
@@ -6560,13 +6666,13 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_15)) {
       PyObject *__pyx_temp[6] = {__pyx_t_5, __pyx_v_game->bullets, __pyx_v_game->lasers, __pyx_v_game->cancelled_bullets, __pyx_v_game->items, __pyx_v_game->labels};
-      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_21, 5+__pyx_t_21); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 235, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_21, 5+__pyx_t_21); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 245, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else
     #endif
     {
-      __pyx_t_4 = PyTuple_New(5+__pyx_t_21); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 235, __pyx_L1_error)
+      __pyx_t_4 = PyTuple_New(5+__pyx_t_21); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 245, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       if (__pyx_t_5) {
         __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_5); __pyx_t_5 = NULL;
@@ -6586,23 +6692,23 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
       __Pyx_INCREF(__pyx_v_game->labels);
       __Pyx_GIVEREF(__pyx_v_game->labels);
       PyTuple_SET_ITEM(__pyx_t_4, 4+__pyx_t_21, __pyx_v_game->labels);
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_15, __pyx_t_4, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 235, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_15, __pyx_t_4, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 245, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
     __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":235
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":245
  *                                        game.players,
  *                                        game.msg_sprites()))
  *             self.render_elements(chain(game.bullets, game.lasers,             # <<<<<<<<<<<<<<
  *                                        game.cancelled_bullets, game.items,
  *                                        game.labels))
  */
-    __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.render_elements(((struct __pyx_obj_8pytouhou_2ui_6opengl_8renderer_Renderer *)__pyx_v_self), __pyx_t_2); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 235, __pyx_L1_error)
+    __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.render_elements(((struct __pyx_obj_8pytouhou_2ui_6opengl_8renderer_Renderer *)__pyx_v_self), __pyx_t_2); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 245, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":220
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":230
  *             self.background_renderer.render_background()
  * 
  *         if game is not None:             # <<<<<<<<<<<<<<
@@ -6611,7 +6717,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
   }
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":239
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":249
  *                                        game.labels))
  * 
  *         if game.msg_runner is not None:             # <<<<<<<<<<<<<<
@@ -6622,64 +6728,64 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
   __pyx_t_9 = (__pyx_t_1 != 0);
   if (__pyx_t_9) {
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":240
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":250
  * 
  *         if game.msg_runner is not None:
  *             rect = Rect(48, 368, 288, 48)             # <<<<<<<<<<<<<<
  *             color1 = Color(0, 0, 0, 192)
  *             color2 = Color(0, 0, 0, 128)
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_Rect); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 240, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_Rect); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 250, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_15 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 240, __pyx_L1_error)
+    __pyx_t_15 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 250, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_15);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_rect = __pyx_t_15;
     __pyx_t_15 = 0;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":241
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":251
  *         if game.msg_runner is not None:
  *             rect = Rect(48, 368, 288, 48)
  *             color1 = Color(0, 0, 0, 192)             # <<<<<<<<<<<<<<
  *             color2 = Color(0, 0, 0, 128)
  *             self.render_quads([rect], [(color1, color1, color2, color2)], 0)
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_n_s_Color); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 241, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_n_s_Color); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 251, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_15);
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_15, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 241, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_15, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 251, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
     __pyx_v_color1 = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":242
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":252
  *             rect = Rect(48, 368, 288, 48)
  *             color1 = Color(0, 0, 0, 192)
  *             color2 = Color(0, 0, 0, 128)             # <<<<<<<<<<<<<<
  *             self.render_quads([rect], [(color1, color1, color2, color2)], 0)
  * 
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_Color); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 242, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_Color); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 252, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_15 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 242, __pyx_L1_error)
+    __pyx_t_15 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 252, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_15);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_color2 = __pyx_t_15;
     __pyx_t_15 = 0;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":243
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":253
  *             color1 = Color(0, 0, 0, 192)
  *             color2 = Color(0, 0, 0, 128)
  *             self.render_quads([rect], [(color1, color1, color2, color2)], 0)             # <<<<<<<<<<<<<<
  * 
  *         glDisable(GL_SCISSOR_TEST)
  */
-    __pyx_t_15 = PyList_New(1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 243, __pyx_L1_error)
+    __pyx_t_15 = PyList_New(1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 253, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_15);
     __Pyx_INCREF(__pyx_v_rect);
     __Pyx_GIVEREF(__pyx_v_rect);
     PyList_SET_ITEM(__pyx_t_15, 0, __pyx_v_rect);
-    __pyx_t_2 = PyTuple_New(4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 243, __pyx_L1_error)
+    __pyx_t_2 = PyTuple_New(4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 253, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_INCREF(__pyx_v_color1);
     __Pyx_GIVEREF(__pyx_v_color1);
@@ -6693,16 +6799,16 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
     __Pyx_INCREF(__pyx_v_color2);
     __Pyx_GIVEREF(__pyx_v_color2);
     PyTuple_SET_ITEM(__pyx_t_2, 3, __pyx_v_color2);
-    __pyx_t_4 = PyList_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 243, __pyx_L1_error)
+    __pyx_t_4 = PyList_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 253, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_GIVEREF(__pyx_t_2);
     PyList_SET_ITEM(__pyx_t_4, 0, __pyx_t_2);
     __pyx_t_2 = 0;
-    __pyx_t_9 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.render_quads(((struct __pyx_obj_8pytouhou_2ui_6opengl_8renderer_Renderer *)__pyx_v_self), __pyx_t_15, __pyx_t_4, 0); if (unlikely(__pyx_t_9 == ((int)1))) __PYX_ERR(0, 243, __pyx_L1_error)
+    __pyx_t_9 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.render_quads(((struct __pyx_obj_8pytouhou_2ui_6opengl_8renderer_Renderer *)__pyx_v_self), __pyx_t_15, __pyx_t_4, 0); if (unlikely(__pyx_t_9 == ((int)1))) __PYX_ERR(0, 253, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":239
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":249
  *                                        game.labels))
  * 
  *         if game.msg_runner is not None:             # <<<<<<<<<<<<<<
@@ -6711,7 +6817,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
   }
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":245
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":255
  *             self.render_quads([rect], [(color1, color1, color2, color2)], 0)
  * 
  *         glDisable(GL_SCISSOR_TEST)             # <<<<<<<<<<<<<<
@@ -6720,7 +6826,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
   glDisable(GL_SCISSOR_TEST);
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":247
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":257
  *         glDisable(GL_SCISSOR_TEST)
  * 
  *         if use_debug_group:             # <<<<<<<<<<<<<<
@@ -6730,7 +6836,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
   __pyx_t_9 = (__pyx_v_8pytouhou_2ui_6opengl_7backend_use_debug_group != 0);
   if (__pyx_t_9) {
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":248
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":258
  * 
  *         if use_debug_group:
  *             glPopDebugGroup()             # <<<<<<<<<<<<<<
@@ -6739,7 +6845,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
     glPopDebugGroup();
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":247
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":257
  *         glDisable(GL_SCISSOR_TEST)
  * 
  *         if use_debug_group:             # <<<<<<<<<<<<<<
@@ -6748,7 +6854,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
  */
   }
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":137
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":147
  *         return copy
  * 
  *     cdef bint render_game(self, Game game) except True:             # <<<<<<<<<<<<<<
@@ -6779,7 +6885,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_ga
   return __pyx_r;
 }
 
-/* "pytouhou/ui/opengl/gamerenderer.pyx":251
+/* "pytouhou/ui/opengl/gamerenderer.pyx":261
  * 
  * 
  *     cdef bint render_text(self, dict texts) except True:             # <<<<<<<<<<<<<<
@@ -6820,7 +6926,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("render_text", 0);
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":254
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":264
  *         cdef NativeText label
  * 
  *         if self.font_manager is None:             # <<<<<<<<<<<<<<
@@ -6831,7 +6937,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":255
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":265
  * 
  *         if self.font_manager is None:
  *             return False             # <<<<<<<<<<<<<<
@@ -6841,7 +6947,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":254
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":264
  *         cdef NativeText label
  * 
  *         if self.font_manager is None:             # <<<<<<<<<<<<<<
@@ -6850,31 +6956,31 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
  */
   }
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":257
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":267
  *             return False
  * 
  *         self.font_manager.load(texts)             # <<<<<<<<<<<<<<
  * 
  *         black = Color(0, 0, 0, 255)
  */
-  __pyx_t_2 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_7texture_FontManager *)__pyx_v_self->__pyx_base.font_manager->__pyx_vtab)->load(__pyx_v_self->__pyx_base.font_manager, __pyx_v_texts); if (unlikely(__pyx_t_2 == ((int)1))) __PYX_ERR(0, 257, __pyx_L1_error)
+  __pyx_t_2 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_7texture_FontManager *)__pyx_v_self->__pyx_base.font_manager->__pyx_vtab)->load(__pyx_v_self->__pyx_base.font_manager, __pyx_v_texts); if (unlikely(__pyx_t_2 == ((int)1))) __PYX_ERR(0, 267, __pyx_L1_error)
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":259
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":269
  *         self.font_manager.load(texts)
  * 
  *         black = Color(0, 0, 0, 255)             # <<<<<<<<<<<<<<
  * 
  *         for label in texts.values():
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_Color); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 259, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_Color); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 269, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__6, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 259, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__6, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 269, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_black = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":261
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":271
  *         black = Color(0, 0, 0, 255)
  * 
  *         for label in texts.values():             # <<<<<<<<<<<<<<
@@ -6884,9 +6990,9 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
   __pyx_t_5 = 0;
   if (unlikely(__pyx_v_texts == Py_None)) {
     PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "values");
-    __PYX_ERR(0, 261, __pyx_L1_error)
+    __PYX_ERR(0, 271, __pyx_L1_error)
   }
-  __pyx_t_3 = __Pyx_dict_iterator(__pyx_v_texts, 1, __pyx_n_s_values, (&__pyx_t_6), (&__pyx_t_7)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 261, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_dict_iterator(__pyx_v_texts, 1, __pyx_n_s_values, (&__pyx_t_6), (&__pyx_t_7)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 271, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __pyx_t_4 = __pyx_t_3;
@@ -6894,13 +7000,13 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
   while (1) {
     __pyx_t_8 = __Pyx_dict_iter_next(__pyx_t_4, __pyx_t_6, &__pyx_t_5, NULL, &__pyx_t_3, NULL, __pyx_t_7);
     if (unlikely(__pyx_t_8 == 0)) break;
-    if (unlikely(__pyx_t_8 == -1)) __PYX_ERR(0, 261, __pyx_L1_error)
+    if (unlikely(__pyx_t_8 == -1)) __PYX_ERR(0, 271, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_8pytouhou_4game_4text_NativeText))))) __PYX_ERR(0, 261, __pyx_L1_error)
+    if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_8pytouhou_4game_4text_NativeText))))) __PYX_ERR(0, 271, __pyx_L1_error)
     __Pyx_XDECREF_SET(__pyx_v_label, ((struct __pyx_obj_8pytouhou_4game_4text_NativeText *)__pyx_t_3));
     __pyx_t_3 = 0;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":262
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":272
  * 
  *         for label in texts.values():
  *             texture = (<Texture>label.texture).texture             # <<<<<<<<<<<<<<
@@ -6910,22 +7016,22 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
     __pyx_t_9 = ((struct __pyx_obj_8pytouhou_2ui_6opengl_8renderer_Texture *)__pyx_v_label->texture)->texture;
     __pyx_v_texture = __pyx_t_9;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":263
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":273
  *         for label in texts.values():
  *             texture = (<Texture>label.texture).texture
  *             rect = Rect(label.x, label.y, label.width, label.height)             # <<<<<<<<<<<<<<
  *             gradient = [Color(*color, a=label.alpha) for color in label.gradient]
  * 
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_Rect); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 263, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_Rect); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 273, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
-    __pyx_t_11 = PyFloat_FromDouble(__pyx_v_label->__pyx_base.x); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 263, __pyx_L1_error)
+    __pyx_t_11 = PyFloat_FromDouble(__pyx_v_label->__pyx_base.x); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 273, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
-    __pyx_t_12 = PyFloat_FromDouble(__pyx_v_label->__pyx_base.y); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 263, __pyx_L1_error)
+    __pyx_t_12 = PyFloat_FromDouble(__pyx_v_label->__pyx_base.y); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 273, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_12);
-    __pyx_t_13 = __Pyx_PyInt_From_long(__pyx_v_label->width); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 263, __pyx_L1_error)
+    __pyx_t_13 = __Pyx_PyInt_From_long(__pyx_v_label->width); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 273, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_13);
-    __pyx_t_14 = __Pyx_PyInt_From_long(__pyx_v_label->height); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 263, __pyx_L1_error)
+    __pyx_t_14 = __Pyx_PyInt_From_long(__pyx_v_label->height); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 273, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_14);
     __pyx_t_15 = NULL;
     __pyx_t_8 = 0;
@@ -6942,7 +7048,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_10)) {
       PyObject *__pyx_temp[5] = {__pyx_t_15, __pyx_t_11, __pyx_t_12, __pyx_t_13, __pyx_t_14};
-      __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_8, 4+__pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 263, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_8, 4+__pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 273, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
@@ -6954,7 +7060,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_10)) {
       PyObject *__pyx_temp[5] = {__pyx_t_15, __pyx_t_11, __pyx_t_12, __pyx_t_13, __pyx_t_14};
-      __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_8, 4+__pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 263, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_8, 4+__pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 273, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
@@ -6964,7 +7070,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
     } else
     #endif
     {
-      __pyx_t_16 = PyTuple_New(4+__pyx_t_8); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 263, __pyx_L1_error)
+      __pyx_t_16 = PyTuple_New(4+__pyx_t_8); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 273, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_16);
       if (__pyx_t_15) {
         __Pyx_GIVEREF(__pyx_t_15); PyTuple_SET_ITEM(__pyx_t_16, 0, __pyx_t_15); __pyx_t_15 = NULL;
@@ -6981,7 +7087,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
       __pyx_t_12 = 0;
       __pyx_t_13 = 0;
       __pyx_t_14 = 0;
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_16, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 263, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_16, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 273, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
     }
@@ -6989,7 +7095,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
     __Pyx_XDECREF_SET(__pyx_v_rect, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":264
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":274
  *             texture = (<Texture>label.texture).texture
  *             rect = Rect(label.x, label.y, label.width, label.height)
  *             gradient = [Color(*color, a=label.alpha) for color in label.gradient]             # <<<<<<<<<<<<<<
@@ -6997,39 +7103,39 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
  *             if label.shadow:
  */
     { /* enter inner scope */
-      __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 264, __pyx_L8_error)
+      __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 274, __pyx_L8_error)
       __Pyx_GOTREF(__pyx_t_3);
       if (unlikely(__pyx_v_label->gradient == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-        __PYX_ERR(0, 264, __pyx_L8_error)
+        __PYX_ERR(0, 274, __pyx_L8_error)
       }
       __pyx_t_10 = __pyx_v_label->gradient; __Pyx_INCREF(__pyx_t_10); __pyx_t_17 = 0;
       for (;;) {
         if (__pyx_t_17 >= PyList_GET_SIZE(__pyx_t_10)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_16 = PyList_GET_ITEM(__pyx_t_10, __pyx_t_17); __Pyx_INCREF(__pyx_t_16); __pyx_t_17++; if (unlikely(0 < 0)) __PYX_ERR(0, 264, __pyx_L8_error)
+        __pyx_t_16 = PyList_GET_ITEM(__pyx_t_10, __pyx_t_17); __Pyx_INCREF(__pyx_t_16); __pyx_t_17++; if (unlikely(0 < 0)) __PYX_ERR(0, 274, __pyx_L8_error)
         #else
-        __pyx_t_16 = PySequence_ITEM(__pyx_t_10, __pyx_t_17); __pyx_t_17++; if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 264, __pyx_L8_error)
+        __pyx_t_16 = PySequence_ITEM(__pyx_t_10, __pyx_t_17); __pyx_t_17++; if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 274, __pyx_L8_error)
         __Pyx_GOTREF(__pyx_t_16);
         #endif
         __Pyx_XDECREF_SET(__pyx_8genexpr1__pyx_v_color, __pyx_t_16);
         __pyx_t_16 = 0;
-        __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_n_s_Color); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 264, __pyx_L8_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_n_s_Color); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 274, __pyx_L8_error)
         __Pyx_GOTREF(__pyx_t_16);
-        __pyx_t_14 = __Pyx_PySequence_Tuple(__pyx_8genexpr1__pyx_v_color); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 264, __pyx_L8_error)
+        __pyx_t_14 = __Pyx_PySequence_Tuple(__pyx_8genexpr1__pyx_v_color); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 274, __pyx_L8_error)
         __Pyx_GOTREF(__pyx_t_14);
-        __pyx_t_13 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 264, __pyx_L8_error)
+        __pyx_t_13 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 274, __pyx_L8_error)
         __Pyx_GOTREF(__pyx_t_13);
-        __pyx_t_12 = __Pyx_PyInt_From_unsigned_char(__pyx_v_label->alpha); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 264, __pyx_L8_error)
+        __pyx_t_12 = __Pyx_PyInt_From_unsigned_char(__pyx_v_label->alpha); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 274, __pyx_L8_error)
         __Pyx_GOTREF(__pyx_t_12);
-        if (PyDict_SetItem(__pyx_t_13, __pyx_n_s_a, __pyx_t_12) < 0) __PYX_ERR(0, 264, __pyx_L8_error)
+        if (PyDict_SetItem(__pyx_t_13, __pyx_n_s_a, __pyx_t_12) < 0) __PYX_ERR(0, 274, __pyx_L8_error)
         __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-        __pyx_t_12 = __Pyx_PyObject_Call(__pyx_t_16, __pyx_t_14, __pyx_t_13); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 264, __pyx_L8_error)
+        __pyx_t_12 = __Pyx_PyObject_Call(__pyx_t_16, __pyx_t_14, __pyx_t_13); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 274, __pyx_L8_error)
         __Pyx_GOTREF(__pyx_t_12);
         __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
         __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
         __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-        if (unlikely(__Pyx_ListComp_Append(__pyx_t_3, (PyObject*)__pyx_t_12))) __PYX_ERR(0, 264, __pyx_L8_error)
+        if (unlikely(__Pyx_ListComp_Append(__pyx_t_3, (PyObject*)__pyx_t_12))) __PYX_ERR(0, 274, __pyx_L8_error)
         __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
       }
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
@@ -7043,7 +7149,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
     __Pyx_XDECREF_SET(__pyx_v_gradient, ((PyObject*)__pyx_t_3));
     __pyx_t_3 = 0;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":266
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":276
  *             gradient = [Color(*color, a=label.alpha) for color in label.gradient]
  * 
  *             if label.shadow:             # <<<<<<<<<<<<<<
@@ -7053,22 +7159,22 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
     __pyx_t_2 = (__pyx_v_label->shadow != 0);
     if (__pyx_t_2) {
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":267
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":277
  * 
  *             if label.shadow:
  *                 shadow_rect = Rect(label.x + 1, label.y + 1, label.width, label.height)             # <<<<<<<<<<<<<<
  *                 shadow = [black._replace(a=label.alpha)] * 4
  *                 self.render_quads([shadow_rect, rect], [shadow, gradient], texture)
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_Rect); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 267, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_Rect); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 277, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
-      __pyx_t_12 = PyFloat_FromDouble((__pyx_v_label->__pyx_base.x + 1.0)); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 267, __pyx_L1_error)
+      __pyx_t_12 = PyFloat_FromDouble((__pyx_v_label->__pyx_base.x + 1.0)); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 277, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_12);
-      __pyx_t_13 = PyFloat_FromDouble((__pyx_v_label->__pyx_base.y + 1.0)); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 267, __pyx_L1_error)
+      __pyx_t_13 = PyFloat_FromDouble((__pyx_v_label->__pyx_base.y + 1.0)); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 277, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_13);
-      __pyx_t_14 = __Pyx_PyInt_From_long(__pyx_v_label->width); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 267, __pyx_L1_error)
+      __pyx_t_14 = __Pyx_PyInt_From_long(__pyx_v_label->width); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 277, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_14);
-      __pyx_t_16 = __Pyx_PyInt_From_long(__pyx_v_label->height); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 267, __pyx_L1_error)
+      __pyx_t_16 = __Pyx_PyInt_From_long(__pyx_v_label->height); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 277, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_16);
       __pyx_t_11 = NULL;
       __pyx_t_8 = 0;
@@ -7085,7 +7191,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_10)) {
         PyObject *__pyx_temp[5] = {__pyx_t_11, __pyx_t_12, __pyx_t_13, __pyx_t_14, __pyx_t_16};
-        __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_8, 4+__pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 267, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_8, 4+__pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 277, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
@@ -7097,7 +7203,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_10)) {
         PyObject *__pyx_temp[5] = {__pyx_t_11, __pyx_t_12, __pyx_t_13, __pyx_t_14, __pyx_t_16};
-        __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_8, 4+__pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 267, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_8, 4+__pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 277, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
@@ -7107,7 +7213,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
       } else
       #endif
       {
-        __pyx_t_15 = PyTuple_New(4+__pyx_t_8); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 267, __pyx_L1_error)
+        __pyx_t_15 = PyTuple_New(4+__pyx_t_8); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 277, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_15);
         if (__pyx_t_11) {
           __Pyx_GIVEREF(__pyx_t_11); PyTuple_SET_ITEM(__pyx_t_15, 0, __pyx_t_11); __pyx_t_11 = NULL;
@@ -7124,7 +7230,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
         __pyx_t_13 = 0;
         __pyx_t_14 = 0;
         __pyx_t_16 = 0;
-        __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_15, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 267, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_15, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 277, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
       }
@@ -7132,26 +7238,26 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
       __Pyx_XDECREF_SET(__pyx_v_shadow_rect, __pyx_t_3);
       __pyx_t_3 = 0;
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":268
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":278
  *             if label.shadow:
  *                 shadow_rect = Rect(label.x + 1, label.y + 1, label.width, label.height)
  *                 shadow = [black._replace(a=label.alpha)] * 4             # <<<<<<<<<<<<<<
  *                 self.render_quads([shadow_rect, rect], [shadow, gradient], texture)
  *             else:
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_black, __pyx_n_s_replace); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 268, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_black, __pyx_n_s_replace); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 278, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_10 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 268, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 278, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
-      __pyx_t_15 = __Pyx_PyInt_From_unsigned_char(__pyx_v_label->alpha); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 268, __pyx_L1_error)
+      __pyx_t_15 = __Pyx_PyInt_From_unsigned_char(__pyx_v_label->alpha); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 278, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
-      if (PyDict_SetItem(__pyx_t_10, __pyx_n_s_a, __pyx_t_15) < 0) __PYX_ERR(0, 268, __pyx_L1_error)
+      if (PyDict_SetItem(__pyx_t_10, __pyx_n_s_a, __pyx_t_15) < 0) __PYX_ERR(0, 278, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-      __pyx_t_15 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_empty_tuple, __pyx_t_10); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 268, __pyx_L1_error)
+      __pyx_t_15 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_empty_tuple, __pyx_t_10); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 278, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-      __pyx_t_10 = PyList_New(1 * 4); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 268, __pyx_L1_error)
+      __pyx_t_10 = PyList_New(1 * 4); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 278, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       { Py_ssize_t __pyx_temp;
         for (__pyx_temp=0; __pyx_temp < 4; __pyx_temp++) {
@@ -7164,14 +7270,14 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
       __Pyx_XDECREF_SET(__pyx_v_shadow, ((PyObject*)__pyx_t_10));
       __pyx_t_10 = 0;
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":269
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":279
  *                 shadow_rect = Rect(label.x + 1, label.y + 1, label.width, label.height)
  *                 shadow = [black._replace(a=label.alpha)] * 4
  *                 self.render_quads([shadow_rect, rect], [shadow, gradient], texture)             # <<<<<<<<<<<<<<
  *             else:
  *                 self.render_quads([rect], [gradient], texture)
  */
-      __pyx_t_10 = PyList_New(2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 269, __pyx_L1_error)
+      __pyx_t_10 = PyList_New(2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 279, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_INCREF(__pyx_v_shadow_rect);
       __Pyx_GIVEREF(__pyx_v_shadow_rect);
@@ -7179,7 +7285,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
       __Pyx_INCREF(__pyx_v_rect);
       __Pyx_GIVEREF(__pyx_v_rect);
       PyList_SET_ITEM(__pyx_t_10, 1, __pyx_v_rect);
-      __pyx_t_15 = PyList_New(2); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 269, __pyx_L1_error)
+      __pyx_t_15 = PyList_New(2); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 279, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
       __Pyx_INCREF(__pyx_v_shadow);
       __Pyx_GIVEREF(__pyx_v_shadow);
@@ -7187,11 +7293,11 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
       __Pyx_INCREF(__pyx_v_gradient);
       __Pyx_GIVEREF(__pyx_v_gradient);
       PyList_SET_ITEM(__pyx_t_15, 1, __pyx_v_gradient);
-      __pyx_t_2 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.render_quads(((struct __pyx_obj_8pytouhou_2ui_6opengl_8renderer_Renderer *)__pyx_v_self), __pyx_t_10, __pyx_t_15, __pyx_v_texture); if (unlikely(__pyx_t_2 == ((int)1))) __PYX_ERR(0, 269, __pyx_L1_error)
+      __pyx_t_2 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.render_quads(((struct __pyx_obj_8pytouhou_2ui_6opengl_8renderer_Renderer *)__pyx_v_self), __pyx_t_10, __pyx_t_15, __pyx_v_texture); if (unlikely(__pyx_t_2 == ((int)1))) __PYX_ERR(0, 279, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
 
-      /* "pytouhou/ui/opengl/gamerenderer.pyx":266
+      /* "pytouhou/ui/opengl/gamerenderer.pyx":276
  *             gradient = [Color(*color, a=label.alpha) for color in label.gradient]
  * 
  *             if label.shadow:             # <<<<<<<<<<<<<<
@@ -7201,7 +7307,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
       goto __pyx_L12;
     }
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":271
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":281
  *                 self.render_quads([shadow_rect, rect], [shadow, gradient], texture)
  *             else:
  *                 self.render_quads([rect], [gradient], texture)             # <<<<<<<<<<<<<<
@@ -7209,17 +7315,17 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
  * 
  */
     /*else*/ {
-      __pyx_t_15 = PyList_New(1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 271, __pyx_L1_error)
+      __pyx_t_15 = PyList_New(1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 281, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
       __Pyx_INCREF(__pyx_v_rect);
       __Pyx_GIVEREF(__pyx_v_rect);
       PyList_SET_ITEM(__pyx_t_15, 0, __pyx_v_rect);
-      __pyx_t_10 = PyList_New(1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 271, __pyx_L1_error)
+      __pyx_t_10 = PyList_New(1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 281, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_INCREF(__pyx_v_gradient);
       __Pyx_GIVEREF(__pyx_v_gradient);
       PyList_SET_ITEM(__pyx_t_10, 0, __pyx_v_gradient);
-      __pyx_t_2 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.render_quads(((struct __pyx_obj_8pytouhou_2ui_6opengl_8renderer_Renderer *)__pyx_v_self), __pyx_t_15, __pyx_t_10, __pyx_v_texture); if (unlikely(__pyx_t_2 == ((int)1))) __PYX_ERR(0, 271, __pyx_L1_error)
+      __pyx_t_2 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.render_quads(((struct __pyx_obj_8pytouhou_2ui_6opengl_8renderer_Renderer *)__pyx_v_self), __pyx_t_15, __pyx_t_10, __pyx_v_texture); if (unlikely(__pyx_t_2 == ((int)1))) __PYX_ERR(0, 281, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     }
@@ -7227,7 +7333,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
   }
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":251
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":261
  * 
  * 
  *     cdef bint render_text(self, dict texts) except True:             # <<<<<<<<<<<<<<
@@ -7262,7 +7368,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_te
   return __pyx_r;
 }
 
-/* "pytouhou/ui/opengl/gamerenderer.pyx":274
+/* "pytouhou/ui/opengl/gamerenderer.pyx":284
  * 
  * 
  *     cdef bint render_interface(self, interface, game_boss) except True:             # <<<<<<<<<<<<<<
@@ -7295,19 +7401,19 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("render_interface", 0);
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":277
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":287
  *         cdef GlyphCollection label
  * 
  *         elements = []             # <<<<<<<<<<<<<<
  * 
  *         if use_debug_group:
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 277, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 287, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_elements = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":279
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":289
  *         elements = []
  * 
  *         if use_debug_group:             # <<<<<<<<<<<<<<
@@ -7317,7 +7423,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
   __pyx_t_2 = (__pyx_v_8pytouhou_2ui_6opengl_7backend_use_debug_group != 0);
   if (__pyx_t_2) {
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":280
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":290
  * 
  *         if use_debug_group:
  *             glPushDebugGroup(GL_DEBUG_SOURCE_APPLICATION, 0, -1, "Interface rendering")             # <<<<<<<<<<<<<<
@@ -7326,7 +7432,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
  */
     glPushDebugGroup(GL_DEBUG_SOURCE_APPLICATION, 0, -1, ((char const *)"Interface rendering"));
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":279
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":289
  *         elements = []
  * 
  *         if use_debug_group:             # <<<<<<<<<<<<<<
@@ -7335,7 +7441,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
  */
   }
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":282
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":292
  *             glPushDebugGroup(GL_DEBUG_SOURCE_APPLICATION, 0, -1, "Interface rendering")
  * 
  *         if is_legacy:             # <<<<<<<<<<<<<<
@@ -7345,7 +7451,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
   __pyx_t_2 = (__pyx_v_8pytouhou_2ui_6opengl_7backend_is_legacy != 0);
   if (__pyx_t_2) {
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":283
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":293
  * 
  *         if is_legacy:
  *             glMatrixMode(GL_MODELVIEW)             # <<<<<<<<<<<<<<
@@ -7354,7 +7460,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
  */
     glMatrixMode(GL_MODELVIEW);
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":284
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":294
  *         if is_legacy:
  *             glMatrixMode(GL_MODELVIEW)
  *             glLoadMatrixf(<GLfloat*>self.interface_mvp)             # <<<<<<<<<<<<<<
@@ -7363,7 +7469,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
  */
     glLoadMatrixf(((GLfloat *)__pyx_v_self->interface_mvp));
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":285
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":295
  *             glMatrixMode(GL_MODELVIEW)
  *             glLoadMatrixf(<GLfloat*>self.interface_mvp)
  *             glDisable(GL_FOG)             # <<<<<<<<<<<<<<
@@ -7372,7 +7478,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
  */
     glDisable(GL_FOG);
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":282
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":292
  *             glPushDebugGroup(GL_DEBUG_SOURCE_APPLICATION, 0, -1, "Interface rendering")
  * 
  *         if is_legacy:             # <<<<<<<<<<<<<<
@@ -7382,7 +7488,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
     goto __pyx_L4;
   }
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":287
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":297
  *             glDisable(GL_FOG)
  *         else:
  *             self.interface_shader.bind()             # <<<<<<<<<<<<<<
@@ -7392,35 +7498,35 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
   /*else*/ {
     ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_6shader_Shader *)__pyx_v_self->interface_shader->__pyx_vtab)->bind(__pyx_v_self->interface_shader);
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":288
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":298
  *         else:
  *             self.interface_shader.bind()
  *             self.interface_shader.uniform_matrix('mvp', self.interface_mvp)             # <<<<<<<<<<<<<<
  *         glViewport(0, 0, interface.width, interface.height)
  * 
  */
-    __pyx_t_2 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_6shader_Shader *)__pyx_v_self->interface_shader->__pyx_vtab)->uniform_matrix(__pyx_v_self->interface_shader, __pyx_n_u_mvp, __pyx_v_self->interface_mvp); if (unlikely(__pyx_t_2 == ((int)1))) __PYX_ERR(0, 288, __pyx_L1_error)
+    __pyx_t_2 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_6shader_Shader *)__pyx_v_self->interface_shader->__pyx_vtab)->uniform_matrix(__pyx_v_self->interface_shader, __pyx_n_u_mvp, __pyx_v_self->interface_mvp); if (unlikely(__pyx_t_2 == ((int)1))) __PYX_ERR(0, 298, __pyx_L1_error)
   }
   __pyx_L4:;
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":289
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":299
  *             self.interface_shader.bind()
  *             self.interface_shader.uniform_matrix('mvp', self.interface_mvp)
  *         glViewport(0, 0, interface.width, interface.height)             # <<<<<<<<<<<<<<
  * 
  *         items = [item for item in interface.items if item.anmrunner and item.anmrunner.running]
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_interface, __pyx_n_s_width); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 289, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_interface, __pyx_n_s_width); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 299, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyInt_As_GLsizei(__pyx_t_1); if (unlikely((__pyx_t_3 == ((GLsizei)-1)) && PyErr_Occurred())) __PYX_ERR(0, 289, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_As_GLsizei(__pyx_t_1); if (unlikely((__pyx_t_3 == ((GLsizei)-1)) && PyErr_Occurred())) __PYX_ERR(0, 299, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_interface, __pyx_n_s_height); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 289, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_interface, __pyx_n_s_height); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 299, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = __Pyx_PyInt_As_GLsizei(__pyx_t_1); if (unlikely((__pyx_t_4 == ((GLsizei)-1)) && PyErr_Occurred())) __PYX_ERR(0, 289, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_As_GLsizei(__pyx_t_1); if (unlikely((__pyx_t_4 == ((GLsizei)-1)) && PyErr_Occurred())) __PYX_ERR(0, 299, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   glViewport(0, 0, __pyx_t_3, __pyx_t_4);
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":291
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":301
  *         glViewport(0, 0, interface.width, interface.height)
  * 
  *         items = [item for item in interface.items if item.anmrunner and item.anmrunner.running]             # <<<<<<<<<<<<<<
@@ -7428,17 +7534,17 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
  * 
  */
   { /* enter inner scope */
-    __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 291, __pyx_L7_error)
+    __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 301, __pyx_L7_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_interface, __pyx_n_s_items); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 291, __pyx_L7_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_interface, __pyx_n_s_items); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 301, __pyx_L7_error)
     __Pyx_GOTREF(__pyx_t_5);
     if (likely(PyList_CheckExact(__pyx_t_5)) || PyTuple_CheckExact(__pyx_t_5)) {
       __pyx_t_6 = __pyx_t_5; __Pyx_INCREF(__pyx_t_6); __pyx_t_7 = 0;
       __pyx_t_8 = NULL;
     } else {
-      __pyx_t_7 = -1; __pyx_t_6 = PyObject_GetIter(__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 291, __pyx_L7_error)
+      __pyx_t_7 = -1; __pyx_t_6 = PyObject_GetIter(__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 301, __pyx_L7_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_8 = Py_TYPE(__pyx_t_6)->tp_iternext; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 291, __pyx_L7_error)
+      __pyx_t_8 = Py_TYPE(__pyx_t_6)->tp_iternext; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 301, __pyx_L7_error)
     }
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     for (;;) {
@@ -7446,17 +7552,17 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
         if (likely(PyList_CheckExact(__pyx_t_6))) {
           if (__pyx_t_7 >= PyList_GET_SIZE(__pyx_t_6)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_5 = PyList_GET_ITEM(__pyx_t_6, __pyx_t_7); __Pyx_INCREF(__pyx_t_5); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 291, __pyx_L7_error)
+          __pyx_t_5 = PyList_GET_ITEM(__pyx_t_6, __pyx_t_7); __Pyx_INCREF(__pyx_t_5); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 301, __pyx_L7_error)
           #else
-          __pyx_t_5 = PySequence_ITEM(__pyx_t_6, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 291, __pyx_L7_error)
+          __pyx_t_5 = PySequence_ITEM(__pyx_t_6, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 301, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_5);
           #endif
         } else {
           if (__pyx_t_7 >= PyTuple_GET_SIZE(__pyx_t_6)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_5 = PyTuple_GET_ITEM(__pyx_t_6, __pyx_t_7); __Pyx_INCREF(__pyx_t_5); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 291, __pyx_L7_error)
+          __pyx_t_5 = PyTuple_GET_ITEM(__pyx_t_6, __pyx_t_7); __Pyx_INCREF(__pyx_t_5); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 301, __pyx_L7_error)
           #else
-          __pyx_t_5 = PySequence_ITEM(__pyx_t_6, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 291, __pyx_L7_error)
+          __pyx_t_5 = PySequence_ITEM(__pyx_t_6, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 301, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_5);
           #endif
         }
@@ -7466,7 +7572,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
             if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-            else __PYX_ERR(0, 291, __pyx_L7_error)
+            else __PYX_ERR(0, 301, __pyx_L7_error)
           }
           break;
         }
@@ -7474,26 +7580,26 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
       }
       __Pyx_XDECREF_SET(__pyx_8genexpr2__pyx_v_item, __pyx_t_5);
       __pyx_t_5 = 0;
-      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_8genexpr2__pyx_v_item, __pyx_n_s_anmrunner); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 291, __pyx_L7_error)
+      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_8genexpr2__pyx_v_item, __pyx_n_s_anmrunner); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 301, __pyx_L7_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 291, __pyx_L7_error)
+      __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 301, __pyx_L7_error)
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       if (__pyx_t_9) {
       } else {
         __pyx_t_2 = __pyx_t_9;
         goto __pyx_L11_bool_binop_done;
       }
-      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_8genexpr2__pyx_v_item, __pyx_n_s_anmrunner); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 291, __pyx_L7_error)
+      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_8genexpr2__pyx_v_item, __pyx_n_s_anmrunner); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 301, __pyx_L7_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_running); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 291, __pyx_L7_error)
+      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_running); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 301, __pyx_L7_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_10); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 291, __pyx_L7_error)
+      __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_10); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 301, __pyx_L7_error)
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       __pyx_t_2 = __pyx_t_9;
       __pyx_L11_bool_binop_done:;
       if (__pyx_t_2) {
-        if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_8genexpr2__pyx_v_item))) __PYX_ERR(0, 291, __pyx_L7_error)
+        if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_8genexpr2__pyx_v_item))) __PYX_ERR(0, 301, __pyx_L7_error)
       }
     }
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
@@ -7507,16 +7613,16 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
   __pyx_v_items = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":292
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":302
  * 
  *         items = [item for item in interface.items if item.anmrunner and item.anmrunner.running]
  *         labels = interface.labels.values()             # <<<<<<<<<<<<<<
  * 
  *         if items:
  */
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_interface, __pyx_n_s_labels); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 292, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_interface, __pyx_n_s_labels); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 302, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_values); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 292, __pyx_L1_error)
+  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_values); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 302, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __pyx_t_6 = NULL;
@@ -7531,13 +7637,13 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
   }
   __pyx_t_1 = (__pyx_t_6) ? __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_t_6) : __Pyx_PyObject_CallNoArg(__pyx_t_10);
   __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 292, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 302, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
   __pyx_v_labels = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":294
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":304
  *         labels = interface.labels.values()
  * 
  *         if items:             # <<<<<<<<<<<<<<
@@ -7547,16 +7653,16 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
   __pyx_t_2 = (PyList_GET_SIZE(__pyx_v_items) != 0);
   if (__pyx_t_2) {
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":296
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":306
  *         if items:
  *             # Redraw all the interface
  *             elements.extend(items)             # <<<<<<<<<<<<<<
  *         else:
  *             # Redraw only changed labels
  */
-    __pyx_t_11 = __Pyx_PyList_Extend(__pyx_v_elements, __pyx_v_items); if (unlikely(__pyx_t_11 == ((int)-1))) __PYX_ERR(0, 296, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyList_Extend(__pyx_v_elements, __pyx_v_items); if (unlikely(__pyx_t_11 == ((int)-1))) __PYX_ERR(0, 306, __pyx_L1_error)
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":294
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":304
  *         labels = interface.labels.values()
  * 
  *         if items:             # <<<<<<<<<<<<<<
@@ -7566,7 +7672,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
     goto __pyx_L14;
   }
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":299
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":309
  *         else:
  *             # Redraw only changed labels
  *             labels = [label for label in labels if label.changed]             # <<<<<<<<<<<<<<
@@ -7575,32 +7681,32 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
  */
   /*else*/ {
     { /* enter inner scope */
-      __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 299, __pyx_L17_error)
+      __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 309, __pyx_L17_error)
       __Pyx_GOTREF(__pyx_t_1);
       if (likely(PyList_CheckExact(__pyx_v_labels)) || PyTuple_CheckExact(__pyx_v_labels)) {
         __pyx_t_10 = __pyx_v_labels; __Pyx_INCREF(__pyx_t_10); __pyx_t_7 = 0;
         __pyx_t_8 = NULL;
       } else {
-        __pyx_t_7 = -1; __pyx_t_10 = PyObject_GetIter(__pyx_v_labels); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 299, __pyx_L17_error)
+        __pyx_t_7 = -1; __pyx_t_10 = PyObject_GetIter(__pyx_v_labels); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 309, __pyx_L17_error)
         __Pyx_GOTREF(__pyx_t_10);
-        __pyx_t_8 = Py_TYPE(__pyx_t_10)->tp_iternext; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 299, __pyx_L17_error)
+        __pyx_t_8 = Py_TYPE(__pyx_t_10)->tp_iternext; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 309, __pyx_L17_error)
       }
       for (;;) {
         if (likely(!__pyx_t_8)) {
           if (likely(PyList_CheckExact(__pyx_t_10))) {
             if (__pyx_t_7 >= PyList_GET_SIZE(__pyx_t_10)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_6 = PyList_GET_ITEM(__pyx_t_10, __pyx_t_7); __Pyx_INCREF(__pyx_t_6); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 299, __pyx_L17_error)
+            __pyx_t_6 = PyList_GET_ITEM(__pyx_t_10, __pyx_t_7); __Pyx_INCREF(__pyx_t_6); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 309, __pyx_L17_error)
             #else
-            __pyx_t_6 = PySequence_ITEM(__pyx_t_10, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 299, __pyx_L17_error)
+            __pyx_t_6 = PySequence_ITEM(__pyx_t_10, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 309, __pyx_L17_error)
             __Pyx_GOTREF(__pyx_t_6);
             #endif
           } else {
             if (__pyx_t_7 >= PyTuple_GET_SIZE(__pyx_t_10)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_6 = PyTuple_GET_ITEM(__pyx_t_10, __pyx_t_7); __Pyx_INCREF(__pyx_t_6); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 299, __pyx_L17_error)
+            __pyx_t_6 = PyTuple_GET_ITEM(__pyx_t_10, __pyx_t_7); __Pyx_INCREF(__pyx_t_6); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 309, __pyx_L17_error)
             #else
-            __pyx_t_6 = PySequence_ITEM(__pyx_t_10, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 299, __pyx_L17_error)
+            __pyx_t_6 = PySequence_ITEM(__pyx_t_10, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 309, __pyx_L17_error)
             __Pyx_GOTREF(__pyx_t_6);
             #endif
           }
@@ -7610,18 +7716,18 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
             PyObject* exc_type = PyErr_Occurred();
             if (exc_type) {
               if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-              else __PYX_ERR(0, 299, __pyx_L17_error)
+              else __PYX_ERR(0, 309, __pyx_L17_error)
             }
             break;
           }
           __Pyx_GOTREF(__pyx_t_6);
         }
-        if (!(likely(((__pyx_t_6) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_6, __pyx_ptype_8pytouhou_4game_4text_GlyphCollection))))) __PYX_ERR(0, 299, __pyx_L17_error)
+        if (!(likely(((__pyx_t_6) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_6, __pyx_ptype_8pytouhou_4game_4text_GlyphCollection))))) __PYX_ERR(0, 309, __pyx_L17_error)
         __Pyx_XDECREF_SET(__pyx_8genexpr3__pyx_v_label, ((struct __pyx_obj_8pytouhou_4game_4text_GlyphCollection *)__pyx_t_6));
         __pyx_t_6 = 0;
         __pyx_t_2 = (__pyx_8genexpr3__pyx_v_label->__pyx_base.changed != 0);
         if (__pyx_t_2) {
-          if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_8genexpr3__pyx_v_label))) __PYX_ERR(0, 299, __pyx_L17_error)
+          if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_8genexpr3__pyx_v_label))) __PYX_ERR(0, 309, __pyx_L17_error)
         }
       }
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
@@ -7637,19 +7743,19 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
   }
   __pyx_L14:;
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":301
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":311
  *             labels = [label for label in labels if label.changed]
  * 
  *         elements.extend(interface.level_start)             # <<<<<<<<<<<<<<
  * 
  *         if game_boss is not None:
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_interface, __pyx_n_s_level_start); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 301, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_interface, __pyx_n_s_level_start); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 311, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_11 = __Pyx_PyList_Extend(__pyx_v_elements, __pyx_t_1); if (unlikely(__pyx_t_11 == ((int)-1))) __PYX_ERR(0, 301, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyList_Extend(__pyx_v_elements, __pyx_t_1); if (unlikely(__pyx_t_11 == ((int)-1))) __PYX_ERR(0, 311, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":303
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":313
  *         elements.extend(interface.level_start)
  * 
  *         if game_boss is not None:             # <<<<<<<<<<<<<<
@@ -7660,19 +7766,19 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
   __pyx_t_9 = (__pyx_t_2 != 0);
   if (__pyx_t_9) {
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":304
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":314
  * 
  *         if game_boss is not None:
  *             elements.extend(interface.boss_items)             # <<<<<<<<<<<<<<
  * 
  *         elements.extend(labels)
  */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_interface, __pyx_n_s_boss_items); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 304, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_interface, __pyx_n_s_boss_items); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 314, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_11 = __Pyx_PyList_Extend(__pyx_v_elements, __pyx_t_1); if (unlikely(__pyx_t_11 == ((int)-1))) __PYX_ERR(0, 304, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyList_Extend(__pyx_v_elements, __pyx_t_1); if (unlikely(__pyx_t_11 == ((int)-1))) __PYX_ERR(0, 314, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":303
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":313
  *         elements.extend(interface.level_start)
  * 
  *         if game_boss is not None:             # <<<<<<<<<<<<<<
@@ -7681,25 +7787,25 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
  */
   }
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":306
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":316
  *             elements.extend(interface.boss_items)
  * 
  *         elements.extend(labels)             # <<<<<<<<<<<<<<
  *         self.render_elements(elements)
  *         for label in labels:
  */
-  __pyx_t_11 = __Pyx_PyList_Extend(__pyx_v_elements, __pyx_v_labels); if (unlikely(__pyx_t_11 == ((int)-1))) __PYX_ERR(0, 306, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyList_Extend(__pyx_v_elements, __pyx_v_labels); if (unlikely(__pyx_t_11 == ((int)-1))) __PYX_ERR(0, 316, __pyx_L1_error)
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":307
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":317
  * 
  *         elements.extend(labels)
  *         self.render_elements(elements)             # <<<<<<<<<<<<<<
  *         for label in labels:
  *             label.changed = False
  */
-  __pyx_t_9 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.render_elements(((struct __pyx_obj_8pytouhou_2ui_6opengl_8renderer_Renderer *)__pyx_v_self), __pyx_v_elements); if (unlikely(__pyx_t_9 == ((int)1))) __PYX_ERR(0, 307, __pyx_L1_error)
+  __pyx_t_9 = ((struct __pyx_vtabstruct_8pytouhou_2ui_6opengl_12gamerenderer_GameRenderer *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base.render_elements(((struct __pyx_obj_8pytouhou_2ui_6opengl_8renderer_Renderer *)__pyx_v_self), __pyx_v_elements); if (unlikely(__pyx_t_9 == ((int)1))) __PYX_ERR(0, 317, __pyx_L1_error)
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":308
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":318
  *         elements.extend(labels)
  *         self.render_elements(elements)
  *         for label in labels:             # <<<<<<<<<<<<<<
@@ -7710,26 +7816,26 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
     __pyx_t_1 = __pyx_v_labels; __Pyx_INCREF(__pyx_t_1); __pyx_t_7 = 0;
     __pyx_t_8 = NULL;
   } else {
-    __pyx_t_7 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_labels); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 308, __pyx_L1_error)
+    __pyx_t_7 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_labels); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 318, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_8 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 308, __pyx_L1_error)
+    __pyx_t_8 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 318, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_8)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_7 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_10 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_7); __Pyx_INCREF(__pyx_t_10); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 308, __pyx_L1_error)
+        __pyx_t_10 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_7); __Pyx_INCREF(__pyx_t_10); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 318, __pyx_L1_error)
         #else
-        __pyx_t_10 = PySequence_ITEM(__pyx_t_1, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 308, __pyx_L1_error)
+        __pyx_t_10 = PySequence_ITEM(__pyx_t_1, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 318, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_10);
         #endif
       } else {
         if (__pyx_t_7 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_10 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_7); __Pyx_INCREF(__pyx_t_10); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 308, __pyx_L1_error)
+        __pyx_t_10 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_7); __Pyx_INCREF(__pyx_t_10); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 318, __pyx_L1_error)
         #else
-        __pyx_t_10 = PySequence_ITEM(__pyx_t_1, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 308, __pyx_L1_error)
+        __pyx_t_10 = PySequence_ITEM(__pyx_t_1, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 318, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_10);
         #endif
       }
@@ -7739,17 +7845,17 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 308, __pyx_L1_error)
+          else __PYX_ERR(0, 318, __pyx_L1_error)
         }
         break;
       }
       __Pyx_GOTREF(__pyx_t_10);
     }
-    if (!(likely(((__pyx_t_10) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_10, __pyx_ptype_8pytouhou_4game_4text_GlyphCollection))))) __PYX_ERR(0, 308, __pyx_L1_error)
+    if (!(likely(((__pyx_t_10) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_10, __pyx_ptype_8pytouhou_4game_4text_GlyphCollection))))) __PYX_ERR(0, 318, __pyx_L1_error)
     __Pyx_XDECREF_SET(__pyx_v_label, ((struct __pyx_obj_8pytouhou_4game_4text_GlyphCollection *)__pyx_t_10));
     __pyx_t_10 = 0;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":309
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":319
  *         self.render_elements(elements)
  *         for label in labels:
  *             label.changed = False             # <<<<<<<<<<<<<<
@@ -7758,7 +7864,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
  */
     __pyx_v_label->__pyx_base.changed = 0;
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":308
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":318
  *         elements.extend(labels)
  *         self.render_elements(elements)
  *         for label in labels:             # <<<<<<<<<<<<<<
@@ -7768,7 +7874,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":311
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":321
  *             label.changed = False
  * 
  *         if use_debug_group:             # <<<<<<<<<<<<<<
@@ -7777,14 +7883,14 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
   __pyx_t_9 = (__pyx_v_8pytouhou_2ui_6opengl_7backend_use_debug_group != 0);
   if (__pyx_t_9) {
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":312
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":322
  * 
  *         if use_debug_group:
  *             glPopDebugGroup()             # <<<<<<<<<<<<<<
  */
     glPopDebugGroup();
 
-    /* "pytouhou/ui/opengl/gamerenderer.pyx":311
+    /* "pytouhou/ui/opengl/gamerenderer.pyx":321
  *             label.changed = False
  * 
  *         if use_debug_group:             # <<<<<<<<<<<<<<
@@ -7792,7 +7898,7 @@ static int __pyx_f_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_render_in
  */
   }
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":274
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":284
  * 
  * 
  *     cdef bint render_interface(self, interface, game_boss) except True:             # <<<<<<<<<<<<<<
@@ -8198,6 +8304,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_u_fog_scale, __pyx_k_fog_scale, sizeof(__pyx_k_fog_scale), 0, 1, 0, 1},
   {&__pyx_n_s_game_pos, __pyx_k_game_pos, sizeof(__pyx_k_game_pos), 0, 0, 1, 1},
   {&__pyx_n_s_getstate, __pyx_k_getstate, sizeof(__pyx_k_getstate), 0, 0, 1, 1},
+  {&__pyx_n_s_greyscale, __pyx_k_greyscale, sizeof(__pyx_k_greyscale), 0, 0, 1, 1},
   {&__pyx_n_s_height, __pyx_k_height, sizeof(__pyx_k_height), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
   {&__pyx_n_s_init, __pyx_k_init, sizeof(__pyx_k_init), 0, 0, 1, 1},
@@ -8261,47 +8368,47 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":240
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":250
  * 
  *         if game.msg_runner is not None:
  *             rect = Rect(48, 368, 288, 48)             # <<<<<<<<<<<<<<
  *             color1 = Color(0, 0, 0, 192)
  *             color2 = Color(0, 0, 0, 128)
  */
-  __pyx_tuple__3 = PyTuple_Pack(4, __pyx_int_48, __pyx_int_368, __pyx_int_288, __pyx_int_48); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 240, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(4, __pyx_int_48, __pyx_int_368, __pyx_int_288, __pyx_int_48); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 250, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":241
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":251
  *         if game.msg_runner is not None:
  *             rect = Rect(48, 368, 288, 48)
  *             color1 = Color(0, 0, 0, 192)             # <<<<<<<<<<<<<<
  *             color2 = Color(0, 0, 0, 128)
  *             self.render_quads([rect], [(color1, color1, color2, color2)], 0)
  */
-  __pyx_tuple__4 = PyTuple_Pack(4, __pyx_int_0, __pyx_int_0, __pyx_int_0, __pyx_int_192); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 241, __pyx_L1_error)
+  __pyx_tuple__4 = PyTuple_Pack(4, __pyx_int_0, __pyx_int_0, __pyx_int_0, __pyx_int_192); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 251, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":242
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":252
  *             rect = Rect(48, 368, 288, 48)
  *             color1 = Color(0, 0, 0, 192)
  *             color2 = Color(0, 0, 0, 128)             # <<<<<<<<<<<<<<
  *             self.render_quads([rect], [(color1, color1, color2, color2)], 0)
  * 
  */
-  __pyx_tuple__5 = PyTuple_Pack(4, __pyx_int_0, __pyx_int_0, __pyx_int_0, __pyx_int_128); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 242, __pyx_L1_error)
+  __pyx_tuple__5 = PyTuple_Pack(4, __pyx_int_0, __pyx_int_0, __pyx_int_0, __pyx_int_128); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 252, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__5);
   __Pyx_GIVEREF(__pyx_tuple__5);
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":259
+  /* "pytouhou/ui/opengl/gamerenderer.pyx":269
  *         self.font_manager.load(texts)
  * 
  *         black = Color(0, 0, 0, 255)             # <<<<<<<<<<<<<<
  * 
  *         for label in texts.values():
  */
-  __pyx_tuple__6 = PyTuple_Pack(4, __pyx_int_0, __pyx_int_0, __pyx_int_0, __pyx_int_255); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(0, 259, __pyx_L1_error)
+  __pyx_tuple__6 = PyTuple_Pack(4, __pyx_int_0, __pyx_int_0, __pyx_int_0, __pyx_int_255); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(0, 269, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__6);
   __Pyx_GIVEREF(__pyx_tuple__6);
 

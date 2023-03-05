@@ -22,7 +22,7 @@ from pytouhou.lib.opengl cimport \
           GL_FOG_COLOR, GL_COLOR_BUFFER_BIT, GLfloat, glViewport, glScissor,
           GL_SCISSOR_TEST, GL_DEPTH_BUFFER_BIT, glPushDebugGroup,
           GL_DEBUG_SOURCE_APPLICATION, glPopDebugGroup, glBindTexture,
-          glGetTexImage, GL_TEXTURE_2D, GL_RGB, GL_RGBA, GL_UNSIGNED_BYTE)
+          glGetTexImage, GL_TEXTURE_2D, GL_RGB, GL_LUMINANCE, GL_UNSIGNED_BYTE)
 
 from pytouhou.utils.matrix cimport mul, new_identity
 from pytouhou.utils.maths cimport perspective, setup_camera, ortho_2d
@@ -122,7 +122,17 @@ cdef class GameRenderer(Renderer):
         # Cleanup.
         free(capture_memory)
 
-    def get_framebuffer(self, int width, int height):
+    def get_framebuffer(self, int width, int height, greyscale=False):
+        if greyscale:
+            capture_memory = <unsigned char*>malloc(width * height)
+            glBindTexture(GL_TEXTURE_2D, self.framebuffer.texture)
+            glGetTexImage(GL_TEXTURE_2D, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, capture_memory)
+            glBindTexture(GL_TEXTURE_2D, 0)
+            copy = capture_memory[0:(width * height)]
+
+            free(capture_memory)
+            return copy
+
         capture_memory = <unsigned char*>malloc(width * height * 3)
 
         glBindTexture(GL_TEXTURE_2D, self.framebuffer.texture)
