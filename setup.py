@@ -180,7 +180,7 @@ if not os.path.exists(temp_data_dir):
 
 
 setup(name='PyTouhou',
-      version=check_output(['hg', 'heads', '.', '-T', '{rev}']).decode(),
+      version='1.0',
       author='Thibaut Girka',
       author_email='thib@sitedethib.com',
       url='http://pytouhou.linkmauve.fr/',
