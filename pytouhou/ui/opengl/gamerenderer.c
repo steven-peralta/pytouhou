@@ -5382,7 +5382,7 @@ static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_14
  *             free(capture_memory)
  *             return copy             # <<<<<<<<<<<<<<
  * 
- *         capture_memory = <unsigned char*>malloc(width * height * 3)
+ *         capture_memory = <unsigned char*>malloc(width * height * 4)
  */
     __Pyx_XDECREF(__pyx_r);
     __Pyx_INCREF(__pyx_v_copy);
@@ -5401,17 +5401,17 @@ static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_14
   /* "pytouhou/ui/opengl/gamerenderer.pyx":136
  *             return copy
  * 
- *         capture_memory = <unsigned char*>malloc(width * height * 3)             # <<<<<<<<<<<<<<
+ *         capture_memory = <unsigned char*>malloc(width * height * 4)             # <<<<<<<<<<<<<<
  * 
  *         glBindTexture(GL_TEXTURE_2D, self.framebuffer.texture)
  */
-  __pyx_v_capture_memory = ((unsigned char *)malloc(((__pyx_v_width * __pyx_v_height) * 3)));
+  __pyx_v_capture_memory = ((unsigned char *)malloc(((__pyx_v_width * __pyx_v_height) * 4)));
 
   /* "pytouhou/ui/opengl/gamerenderer.pyx":138
- *         capture_memory = <unsigned char*>malloc(width * height * 3)
+ *         capture_memory = <unsigned char*>malloc(width * height * 4)
  * 
  *         glBindTexture(GL_TEXTURE_2D, self.framebuffer.texture)             # <<<<<<<<<<<<<<
- *         glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, capture_memory)
+ *         glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, capture_memory)
  *         glBindTexture(GL_TEXTURE_2D, 0)
  */
   glBindTexture(GL_TEXTURE_2D, __pyx_v_self->framebuffer->texture);
@@ -5419,35 +5419,35 @@ static PyObject *__pyx_pf_8pytouhou_2ui_6opengl_12gamerenderer_12GameRenderer_14
   /* "pytouhou/ui/opengl/gamerenderer.pyx":139
  * 
  *         glBindTexture(GL_TEXTURE_2D, self.framebuffer.texture)
- *         glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, capture_memory)             # <<<<<<<<<<<<<<
+ *         glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, capture_memory)             # <<<<<<<<<<<<<<
  *         glBindTexture(GL_TEXTURE_2D, 0)
  * 
  */
-  glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, __pyx_v_capture_memory);
+  glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, __pyx_v_capture_memory);
 
   /* "pytouhou/ui/opengl/gamerenderer.pyx":140
  *         glBindTexture(GL_TEXTURE_2D, self.framebuffer.texture)
- *         glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, capture_memory)
+ *         glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, capture_memory)
  *         glBindTexture(GL_TEXTURE_2D, 0)             # <<<<<<<<<<<<<<
  * 
- *         copy = capture_memory[0:(width * height * 3)]
+ *         copy = capture_memory[0:(width * height * 4)]
  */
   glBindTexture(GL_TEXTURE_2D, 0);
 
   /* "pytouhou/ui/opengl/gamerenderer.pyx":142
  *         glBindTexture(GL_TEXTURE_2D, 0)
  * 
- *         copy = capture_memory[0:(width * height * 3)]             # <<<<<<<<<<<<<<
+ *         copy = capture_memory[0:(width * height * 4)]             # <<<<<<<<<<<<<<
  * 
  *         free(capture_memory)
  */
-  __pyx_t_2 = __Pyx_PyBytes_FromStringAndSize(((const char*)__pyx_v_capture_memory) + 0, ((__pyx_v_width * __pyx_v_height) * 3) - 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 142, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyBytes_FromStringAndSize(((const char*)__pyx_v_capture_memory) + 0, ((__pyx_v_width * __pyx_v_height) * 4) - 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 142, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_v_copy = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
   /* "pytouhou/ui/opengl/gamerenderer.pyx":144
- *         copy = capture_memory[0:(width * height * 3)]
+ *         copy = capture_memory[0:(width * height * 4)]
  * 
  *         free(capture_memory)             # <<<<<<<<<<<<<<
  *         return copy
