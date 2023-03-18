@@ -1498,6 +1498,7 @@ struct __pyx_obj_8pytouhou_4game_6player_Player {
   long lives;
   long bombs;
   long power;
+  long rewards;
   long graze;
   long points;
   long number;
@@ -2641,6 +2642,14 @@ static CYTHON_INLINE int __Pyx_PyObject_SetAttrStr(PyObject* obj, PyObject* attr
 #define __Pyx_PyObject_SetAttrStr(o,n,v) PyObject_SetAttr(o,n,v)
 #endif
 
+/* PyIntBinop.proto */
+#if !CYTHON_COMPILING_IN_PYPY
+static PyObject* __Pyx_PyInt_AddObjC(PyObject *op1, PyObject *op2, long intval, int inplace, int zerodivision_check);
+#else
+#define __Pyx_PyInt_AddObjC(op1, op2, intval, inplace, zerodivision_check)\
+    (inplace ? PyNumber_InPlaceAdd(op1, op2) : PyNumber_Add(op1, op2))
+#endif
+
 /* DivInt[Py_ssize_t].proto */
 static CYTHON_INLINE Py_ssize_t __Pyx_div_Py_ssize_t(Py_ssize_t, Py_ssize_t);
 
@@ -2718,69 +2727,6 @@ static PyTypeObject *__Pyx_ImportType(PyObject* module, const char *module_name,
 
 /* GetVTable.proto */
 static void* __Pyx_GetVtable(PyObject *dict);
-
-/* FetchCommonType.proto */
-static PyTypeObject* __Pyx_FetchCommonType(PyTypeObject* type);
-
-/* CythonFunctionShared.proto */
-#define __Pyx_CyFunction_USED 1
-#define __Pyx_CYFUNCTION_STATICMETHOD  0x01
-#define __Pyx_CYFUNCTION_CLASSMETHOD   0x02
-#define __Pyx_CYFUNCTION_CCLASS        0x04
-#define __Pyx_CyFunction_GetClosure(f)\
-    (((__pyx_CyFunctionObject *) (f))->func_closure)
-#define __Pyx_CyFunction_GetClassObj(f)\
-    (((__pyx_CyFunctionObject *) (f))->func_classobj)
-#define __Pyx_CyFunction_Defaults(type, f)\
-    ((type *)(((__pyx_CyFunctionObject *) (f))->defaults))
-#define __Pyx_CyFunction_SetDefaultsGetter(f, g)\
-    ((__pyx_CyFunctionObject *) (f))->defaults_getter = (g)
-typedef struct {
-    PyCFunctionObject func;
-#if PY_VERSION_HEX < 0x030500A0
-    PyObject *func_weakreflist;
-#endif
-    PyObject *func_dict;
-    PyObject *func_name;
-    PyObject *func_qualname;
-    PyObject *func_doc;
-    PyObject *func_globals;
-    PyObject *func_code;
-    PyObject *func_closure;
-    PyObject *func_classobj;
-    void *defaults;
-    int defaults_pyobjects;
-    size_t defaults_size;  // used by FusedFunction for copying defaults
-    int flags;
-    PyObject *defaults_tuple;
-    PyObject *defaults_kwdict;
-    PyObject *(*defaults_getter)(PyObject *);
-    PyObject *func_annotations;
-} __pyx_CyFunctionObject;
-static PyTypeObject *__pyx_CyFunctionType = 0;
-#define __Pyx_CyFunction_Check(obj)  (__Pyx_TypeCheck(obj, __pyx_CyFunctionType))
-static PyObject *__Pyx_CyFunction_Init(__pyx_CyFunctionObject* op, PyMethodDef *ml,
-                                      int flags, PyObject* qualname,
-                                      PyObject *self,
-                                      PyObject *module, PyObject *globals,
-                                      PyObject* code);
-static CYTHON_INLINE void *__Pyx_CyFunction_InitDefaults(PyObject *m,
-                                                         size_t size,
-                                                         int pyobjects);
-static CYTHON_INLINE void __Pyx_CyFunction_SetDefaultsTuple(PyObject *m,
-                                                            PyObject *tuple);
-static CYTHON_INLINE void __Pyx_CyFunction_SetDefaultsKwDict(PyObject *m,
-                                                             PyObject *dict);
-static CYTHON_INLINE void __Pyx_CyFunction_SetAnnotationsDict(PyObject *m,
-                                                              PyObject *dict);
-static int __pyx_CyFunction_init(void);
-
-/* CythonFunction.proto */
-static PyObject *__Pyx_CyFunction_New(PyMethodDef *ml,
-                                      int flags, PyObject* qualname,
-                                      PyObject *closure,
-                                      PyObject *module, PyObject *globals,
-                                      PyObject* code);
 
 /* CLineInTraceback.proto */
 #ifdef CYTHON_CLINE_IN_TRACEBACK
@@ -2969,7 +2915,6 @@ static const char __pyx_k_init[] = "__init__";
 static const char __pyx_k_life[] = "life";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_name[] = "__name__";
-static const char __pyx_k_self[] = "self";
 static const char __pyx_k_test[] = "__test__";
 static const char __pyx_k_type[] = "_type";
 static const char __pyx_k_Enemy[] = "Enemy";
@@ -2982,14 +2927,12 @@ static const char __pyx_k_s_wav[] = "%s.wav";
 static const char __pyx_k_score[] = "score";
 static const char __pyx_k_speed[] = "speed";
 static const char __pyx_k_start[] = "start";
-static const char __pyx_k_state[] = "state";
 static const char __pyx_k_tan00[] = "tan00";
 static const char __pyx_k_tan01[] = "tan01";
 static const char __pyx_k_tan02[] = "tan02";
 static const char __pyx_k_value[] = "value";
 static const char __pyx_k_width[] = "width";
 static const char __pyx_k_Sprite[] = "Sprite";
-static const char __pyx_k_dict_2[] = "_dict";
 static const char __pyx_k_enable[] = "enable";
 static const char __pyx_k_enep01[] = "enep01";
 static const char __pyx_k_height[] = "height";
@@ -3001,7 +2944,6 @@ static const char __pyx_k_kira02[] = "kira02";
 static const char __pyx_k_number[] = "number";
 static const char __pyx_k_offset[] = "offset";
 static const char __pyx_k_pickle[] = "pickle";
-static const char __pyx_k_player[] = "player";
 static const char __pyx_k_power0[] = "power0";
 static const char __pyx_k_power1[] = "power1";
 static const char __pyx_k_reduce[] = "__reduce__";
@@ -3016,6 +2958,7 @@ static const char __pyx_k_lazer00[] = "lazer00";
 static const char __pyx_k_lazer01[] = "lazer01";
 static const char __pyx_k_move_to[] = "move_to";
 static const char __pyx_k_players[] = "players";
+static const char __pyx_k_rewards[] = "rewards";
 static const char __pyx_k_scripts[] = "scripts";
 static const char __pyx_k_set_pos[] = "set_pos";
 static const char __pyx_k_stop_in[] = "stop_in";
@@ -3039,7 +2982,6 @@ static const char __pyx_k_new_laser[] = "new_laser";
 static const char __pyx_k_pyx_state[] = "__pyx_state";
 static const char __pyx_k_reduce_ex[] = "__reduce_ex__";
 static const char __pyx_k_run_frame[] = "run_frame";
-static const char __pyx_k_Enemy_fire[] = "Enemy.fire";
 static const char __pyx_k_IndexError[] = "IndexError";
 static const char __pyx_k_end_offset[] = "end_offset";
 static const char __pyx_k_enep00_wav[] = "enep00.wav";
@@ -3059,11 +3001,6 @@ static const char __pyx_k_launch_angle[] = "launch_angle";
 static const char __pyx_k_pyx_checksum[] = "__pyx_checksum";
 static const char __pyx_k_start_offset[] = "start_offset";
 static const char __pyx_k_stringsource[] = "stringsource";
-static const char __pyx_k_use_setstate[] = "use_setstate";
-static const char __pyx_k_Callback_fire[] = "Callback.fire";
-static const char __pyx_k_Enemy_move_to[] = "Enemy.move_to";
-static const char __pyx_k_Enemy_set_pos[] = "Enemy.set_pos";
-static const char __pyx_k_Enemy_stop_in[] = "Enemy.stop_in";
 static const char __pyx_k_OverflowError[] = "OverflowError";
 static const char __pyx_k_bonus_dropped[] = "bonus_dropped";
 static const char __pyx_k_grazing_delay[] = "grazing_delay";
@@ -3071,68 +3008,28 @@ static const char __pyx_k_reduce_cython[] = "__reduce_cython__";
 static const char __pyx_k_run_iteration[] = "run_iteration";
 static const char __pyx_k_select_player[] = "select_player";
 static const char __pyx_k_set_boss_life[] = "set_boss_life";
-static const char __pyx_k_Enemy_set_anim[] = "Enemy.set_anim";
-static const char __pyx_k_Enemy_set_boss[] = "Enemy.set_boss";
 static const char __pyx_k_start_duration[] = "start_duration";
-static const char __pyx_k_Callback_enable[] = "Callback.enable";
-static const char __pyx_k_Enemy_get_angle[] = "Enemy.get_angle";
-static const char __pyx_k_Enemy_new_laser[] = "Enemy.new_laser";
 static const char __pyx_k_number_of_shots[] = "number_of_shots";
 static const char __pyx_k_pyx_PickleError[] = "__pyx_PickleError";
 static const char __pyx_k_setstate_cython[] = "__setstate_cython__";
-static const char __pyx_k_Callback_disable[] = "Callback.disable";
-static const char __pyx_k_Enemy_play_sound[] = "Enemy.play_sound";
-static const char __pyx_k_Enemy_set_hitbox[] = "Enemy.set_hitbox";
 static const char __pyx_k_bullets_per_shot[] = "bullets_per_shot";
-static const char __pyx_k_Enemy_set_aux_anm[] = "Enemy.set_aux_anm";
 static const char __pyx_k_What_the_hell_man[] = "What the hell, man!";
 static const char __pyx_k_bullet_attributes[] = "bullet_attributes";
 static const char __pyx_k_select_player_key[] = "select_player_key";
 static const char __pyx_k_sprite_idx_offset[] = "sprite_idx_offset";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_pyx_unpickle_Enemy[] = "__pyx_unpickle_Enemy";
-static const char __pyx_k_Enemy_select_player[] = "Enemy.select_player";
 static const char __pyx_k_pytouhou_game_enemy[] = "pytouhou.game.enemy";
 static const char __pyx_k_pytouhou_game_sprite[] = "pytouhou.game.sprite";
-static const char __pyx_k_Enemy___reduce_cython[] = "Enemy.__reduce_cython__";
 static const char __pyx_k_pyx_unpickle_Callback[] = "__pyx_unpickle_Callback";
 static const char __pyx_k_set_bullet_attributes[] = "set_bullet_attributes";
 static const char __pyx_k_grazing_extra_duration[] = "grazing_extra_duration";
-static const char __pyx_k_Enemy___setstate_cython[] = "Enemy.__setstate_cython__";
-static const char __pyx_k_Enemy_select_player_key[] = "Enemy.select_player_key";
-static const char __pyx_k_pytouhou_game_enemy_pyx[] = "pytouhou/game/enemy.pyx";
-static const char __pyx_k_Callback___reduce_cython[] = "Callback.__reduce_cython__";
-static const char __pyx_k_Callback___setstate_cython[] = "Callback.__setstate_cython__";
 static const char __pyx_k_set_bullet_launch_interval[] = "set_bullet_launch_interval";
-static const char __pyx_k_Enemy_set_bullet_attributes[] = "Enemy.set_bullet_attributes";
-static const char __pyx_k_Enemy_set_bullet_launch_interval[] = "Enemy.set_bullet_launch_interval";
 static const char __pyx_k_Incompatible_checksums_0x_x_vs_0[] = "Incompatible checksums (0x%x vs (0x205b8ed, 0x781381a, 0x0d7e977) = (args, function))";
 static const char __pyx_k_Incompatible_checksums_0x_x_vs_0_2[] = "Incompatible checksums (0x%x vs (0x2d3b8c7, 0x08d55d1, 0x0032b83) = (_anms, _game, _type, acceleration, angle, anmrunner, automatic_orientation, aux_anm, bonus_dropped, boss, boss_callback, bullet_attributes, bullet_launch_interval, bullet_launch_offset, bullet_launch_timer, collidable, current_laser_id, damageable, death_anim, death_callback, death_flags, delay_attack, die_score, difficulty_coeffs, direction, extended_bullet_attributes, frame, hitbox_half_size, interpolator, laser_by_id, life, low_life_callback, low_life_trigger, movement_dependant_sprites, objects, process, remaining_lives, removed, rotation_speed, screen_box, speed, speed_interpolator, sprite, timeout, timeout_callback, touchable, update_mode, visible, was_visible, x, y, z))";
 static PyObject *__pyx_n_s_ANMRunner;
 static PyObject *__pyx_n_s_Callback;
-static PyObject *__pyx_n_s_Callback___reduce_cython;
-static PyObject *__pyx_n_s_Callback___setstate_cython;
-static PyObject *__pyx_n_s_Callback_disable;
-static PyObject *__pyx_n_s_Callback_enable;
-static PyObject *__pyx_n_s_Callback_fire;
 static PyObject *__pyx_n_s_Enemy;
-static PyObject *__pyx_n_s_Enemy___reduce_cython;
-static PyObject *__pyx_n_s_Enemy___setstate_cython;
-static PyObject *__pyx_n_s_Enemy_fire;
-static PyObject *__pyx_n_s_Enemy_get_angle;
-static PyObject *__pyx_n_s_Enemy_move_to;
-static PyObject *__pyx_n_s_Enemy_new_laser;
-static PyObject *__pyx_n_s_Enemy_play_sound;
-static PyObject *__pyx_n_s_Enemy_select_player;
-static PyObject *__pyx_n_s_Enemy_select_player_key;
-static PyObject *__pyx_n_s_Enemy_set_anim;
-static PyObject *__pyx_n_s_Enemy_set_aux_anm;
-static PyObject *__pyx_n_s_Enemy_set_boss;
-static PyObject *__pyx_n_s_Enemy_set_bullet_attributes;
-static PyObject *__pyx_n_s_Enemy_set_bullet_launch_interval;
-static PyObject *__pyx_n_s_Enemy_set_hitbox;
-static PyObject *__pyx_n_s_Enemy_set_pos;
-static PyObject *__pyx_n_s_Enemy_stop_in;
 static PyObject *__pyx_kp_s_Incompatible_checksums_0x_x_vs_0;
 static PyObject *__pyx_kp_s_Incompatible_checksums_0x_x_vs_0_2;
 static PyObject *__pyx_n_s_IndexError;
@@ -3153,7 +3050,6 @@ static PyObject *__pyx_n_s_character;
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_kp_u_damage00_wav;
 static PyObject *__pyx_n_s_dict;
-static PyObject *__pyx_n_s_dict_2;
 static PyObject *__pyx_n_s_die_score;
 static PyObject *__pyx_n_s_disable;
 static PyObject *__pyx_n_s_duration;
@@ -3199,13 +3095,11 @@ static PyObject *__pyx_n_s_number_of_shots;
 static PyObject *__pyx_n_s_offset;
 static PyObject *__pyx_n_s_pickle;
 static PyObject *__pyx_n_s_play_sound;
-static PyObject *__pyx_n_s_player;
 static PyObject *__pyx_n_s_players;
 static PyObject *__pyx_n_s_pos;
 static PyObject *__pyx_n_u_power0;
 static PyObject *__pyx_n_u_power1;
 static PyObject *__pyx_n_s_pytouhou_game_enemy;
-static PyObject *__pyx_kp_s_pytouhou_game_enemy_pyx;
 static PyObject *__pyx_n_s_pytouhou_game_sprite;
 static PyObject *__pyx_n_s_pytouhou_vm;
 static PyObject *__pyx_n_s_pyx_PickleError;
@@ -3220,6 +3114,7 @@ static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_reduce;
 static PyObject *__pyx_n_s_reduce_cython;
 static PyObject *__pyx_n_s_reduce_ex;
+static PyObject *__pyx_n_s_rewards;
 static PyObject *__pyx_n_s_run_frame;
 static PyObject *__pyx_n_s_run_iteration;
 static PyObject *__pyx_kp_u_s_wav;
@@ -3227,7 +3122,6 @@ static PyObject *__pyx_n_s_score;
 static PyObject *__pyx_n_s_scripts;
 static PyObject *__pyx_n_s_select_player;
 static PyObject *__pyx_n_s_select_player_key;
-static PyObject *__pyx_n_s_self;
 static PyObject *__pyx_n_s_set_anim;
 static PyObject *__pyx_n_s_set_aux_anm;
 static PyObject *__pyx_n_s_set_boss;
@@ -3245,7 +3139,6 @@ static PyObject *__pyx_n_s_sprite_idx_offset;
 static PyObject *__pyx_n_s_start;
 static PyObject *__pyx_n_s_start_duration;
 static PyObject *__pyx_n_s_start_offset;
-static PyObject *__pyx_n_s_state;
 static PyObject *__pyx_n_s_stop_in;
 static PyObject *__pyx_kp_s_stringsource;
 static PyObject *__pyx_n_u_tan00;
@@ -3257,7 +3150,6 @@ static PyObject *__pyx_n_s_type;
 static PyObject *__pyx_n_s_type_2;
 static PyObject *__pyx_n_s_unknown;
 static PyObject *__pyx_n_s_update;
-static PyObject *__pyx_n_s_use_setstate;
 static PyObject *__pyx_n_s_value;
 static PyObject *__pyx_n_s_values;
 static PyObject *__pyx_n_s_variant;
@@ -3440,52 +3332,8 @@ static PyObject *__pyx_tuple__6;
 static PyObject *__pyx_tuple__7;
 static PyObject *__pyx_tuple__8;
 static PyObject *__pyx_tuple__10;
-static PyObject *__pyx_tuple__12;
-static PyObject *__pyx_tuple__14;
-static PyObject *__pyx_tuple__16;
-static PyObject *__pyx_tuple__18;
-static PyObject *__pyx_tuple__20;
-static PyObject *__pyx_tuple__22;
-static PyObject *__pyx_tuple__24;
-static PyObject *__pyx_tuple__26;
-static PyObject *__pyx_tuple__28;
-static PyObject *__pyx_tuple__30;
-static PyObject *__pyx_tuple__32;
-static PyObject *__pyx_tuple__34;
-static PyObject *__pyx_tuple__36;
-static PyObject *__pyx_tuple__38;
-static PyObject *__pyx_tuple__40;
-static PyObject *__pyx_tuple__42;
-static PyObject *__pyx_tuple__44;
-static PyObject *__pyx_tuple__46;
-static PyObject *__pyx_tuple__48;
-static PyObject *__pyx_tuple__50;
-static PyObject *__pyx_tuple__52;
-static PyObject *__pyx_tuple__54;
 static PyObject *__pyx_codeobj__9;
 static PyObject *__pyx_codeobj__11;
-static PyObject *__pyx_codeobj__13;
-static PyObject *__pyx_codeobj__15;
-static PyObject *__pyx_codeobj__17;
-static PyObject *__pyx_codeobj__19;
-static PyObject *__pyx_codeobj__21;
-static PyObject *__pyx_codeobj__23;
-static PyObject *__pyx_codeobj__25;
-static PyObject *__pyx_codeobj__27;
-static PyObject *__pyx_codeobj__29;
-static PyObject *__pyx_codeobj__31;
-static PyObject *__pyx_codeobj__33;
-static PyObject *__pyx_codeobj__35;
-static PyObject *__pyx_codeobj__37;
-static PyObject *__pyx_codeobj__39;
-static PyObject *__pyx_codeobj__41;
-static PyObject *__pyx_codeobj__43;
-static PyObject *__pyx_codeobj__45;
-static PyObject *__pyx_codeobj__47;
-static PyObject *__pyx_codeobj__49;
-static PyObject *__pyx_codeobj__51;
-static PyObject *__pyx_codeobj__53;
-static PyObject *__pyx_codeobj__55;
 /* Late includes */
 
 /* "pytouhou/game/enemy.pyx":25
@@ -3830,7 +3678,6 @@ static PyObject *__pyx_f_8pytouhou_4game_5enemy_8Callback_enable(struct __pyx_ob
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_8Callback_5enable(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_8Callback_5enable = {"enable", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_8Callback_5enable, METH_VARARGS|METH_KEYWORDS, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_8Callback_5enable(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_function = 0;
   PyObject *__pyx_v_args = 0;
@@ -4030,7 +3877,6 @@ static PyObject *__pyx_f_8pytouhou_4game_5enemy_8Callback_disable(struct __pyx_o
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_8Callback_7disable(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_8Callback_7disable = {"disable", (PyCFunction)__pyx_pw_8pytouhou_4game_5enemy_8Callback_7disable, METH_NOARGS, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_8Callback_7disable(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -4211,7 +4057,6 @@ static PyObject *__pyx_f_8pytouhou_4game_5enemy_8Callback_fire(struct __pyx_obj_
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_8Callback_9fire(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_8Callback_9fire = {"fire", (PyCFunction)__pyx_pw_8pytouhou_4game_5enemy_8Callback_9fire, METH_NOARGS, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_8Callback_9fire(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -4365,7 +4210,6 @@ static int __pyx_pf_8pytouhou_4game_5enemy_8Callback_4args_4__del__(struct __pyx
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_8Callback_11__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_8Callback_11__reduce_cython__ = {"__reduce_cython__", (PyCFunction)__pyx_pw_8pytouhou_4game_5enemy_8Callback_11__reduce_cython__, METH_NOARGS, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_8Callback_11__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -4615,7 +4459,6 @@ static PyObject *__pyx_pf_8pytouhou_4game_5enemy_8Callback_10__reduce_cython__(s
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_8Callback_13__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_8Callback_13__setstate_cython__ = {"__setstate_cython__", (PyCFunction)__pyx_pw_8pytouhou_4game_5enemy_8Callback_13__setstate_cython__, METH_O, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_8Callback_13__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -5691,7 +5534,6 @@ static PyObject *__pyx_f_8pytouhou_4game_5enemy_5Enemy_play_sound(struct __pyx_o
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_3play_sound(PyObject *__pyx_v_self, PyObject *__pyx_v_index); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_5Enemy_3play_sound = {"play_sound", (PyCFunction)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_3play_sound, METH_O, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_3play_sound(PyObject *__pyx_v_self, PyObject *__pyx_v_index) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -5879,7 +5721,6 @@ static PyObject *__pyx_f_8pytouhou_4game_5enemy_5Enemy_set_hitbox(struct __pyx_o
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_5set_hitbox(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_5Enemy_5set_hitbox = {"set_hitbox", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_5set_hitbox, METH_VARARGS|METH_KEYWORDS, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_5set_hitbox(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   double __pyx_v_width;
   double __pyx_v_height;
@@ -6364,7 +6205,6 @@ static PyObject *__pyx_f_8pytouhou_4game_5enemy_5Enemy_set_bullet_attributes(str
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_7set_bullet_attributes(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_5Enemy_7set_bullet_attributes = {"set_bullet_attributes", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_7set_bullet_attributes, METH_VARARGS|METH_KEYWORDS, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_7set_bullet_attributes(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_type_ = 0;
   PyObject *__pyx_v_anim = 0;
@@ -6722,7 +6562,6 @@ static PyObject *__pyx_f_8pytouhou_4game_5enemy_5Enemy_set_bullet_launch_interva
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_9set_bullet_launch_interval(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_5Enemy_9set_bullet_launch_interval = {"set_bullet_launch_interval", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_9set_bullet_launch_interval, METH_VARARGS|METH_KEYWORDS, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_9set_bullet_launch_interval(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   long __pyx_v_value;
   unsigned long __pyx_v_start;
@@ -7825,7 +7664,6 @@ static PyObject *__pyx_f_8pytouhou_4game_5enemy_5Enemy_fire(struct __pyx_obj_8py
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_11fire(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_5Enemy_11fire = {"fire", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_11fire, METH_VARARGS|METH_KEYWORDS, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_11fire(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_offset = 0;
   PyObject *__pyx_v_bullet_attributes = 0;
@@ -8404,7 +8242,6 @@ static PyObject *__pyx_f_8pytouhou_4game_5enemy_5Enemy_new_laser(struct __pyx_ob
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_13new_laser(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_5Enemy_13new_laser = {"new_laser", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_13new_laser, METH_VARARGS|METH_KEYWORDS, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_13new_laser(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   unsigned long __pyx_v_variant;
   PyObject *__pyx_v_laser_type = 0;
@@ -8837,7 +8674,6 @@ static struct __pyx_obj_8pytouhou_4game_6player_Player *__pyx_f_8pytouhou_4game_
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_15select_player(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_5Enemy_15select_player = {"select_player", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_15select_player, METH_VARARGS|METH_KEYWORDS, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_15select_player(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_players = 0;
   int __pyx_lineno = 0;
@@ -9149,7 +8985,6 @@ static double __pyx_f_8pytouhou_4game_5enemy_5Enemy_get_angle(struct __pyx_obj_8
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_17get_angle(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_5Enemy_17get_angle = {"get_angle", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_17get_angle, METH_VARARGS|METH_KEYWORDS, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_17get_angle(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   struct __pyx_obj_8pytouhou_4game_7element_Element *__pyx_v_target = 0;
   PyObject *__pyx_v_pos = 0;
@@ -9471,7 +9306,6 @@ static PyObject *__pyx_f_8pytouhou_4game_5enemy_5Enemy_set_anim(struct __pyx_obj
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_19set_anim(PyObject *__pyx_v_self, PyObject *__pyx_v_index); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_5Enemy_19set_anim = {"set_anim", (PyCFunction)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_19set_anim, METH_O, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_19set_anim(PyObject *__pyx_v_self, PyObject *__pyx_v_index) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -9962,7 +9796,6 @@ static PyObject *__pyx_f_8pytouhou_4game_5enemy_5Enemy_set_aux_anm(struct __pyx_
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_21set_aux_anm(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_5Enemy_21set_aux_anm = {"set_aux_anm", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_21set_aux_anm, METH_VARARGS|METH_KEYWORDS, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_21set_aux_anm(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   long __pyx_v_number;
   long __pyx_v_index;
@@ -10259,7 +10092,6 @@ static PyObject *__pyx_f_8pytouhou_4game_5enemy_5Enemy_set_pos(struct __pyx_obj_
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_23set_pos(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_5Enemy_23set_pos = {"set_pos", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_23set_pos, METH_VARARGS|METH_KEYWORDS, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_23set_pos(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   double __pyx_v_x;
   double __pyx_v_y;
@@ -10638,7 +10470,6 @@ static PyObject *__pyx_f_8pytouhou_4game_5enemy_5Enemy_move_to(struct __pyx_obj_
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_25move_to(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_5Enemy_25move_to = {"move_to", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_25move_to, METH_VARARGS|METH_KEYWORDS, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_25move_to(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   unsigned long __pyx_v_duration;
   double __pyx_v_x;
@@ -10986,7 +10817,6 @@ static PyObject *__pyx_f_8pytouhou_4game_5enemy_5Enemy_stop_in(struct __pyx_obj_
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_27stop_in(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_5Enemy_27stop_in = {"stop_in", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_27stop_in, METH_VARARGS|METH_KEYWORDS, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_27stop_in(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   unsigned long __pyx_v_duration;
   PyObject *__pyx_v_formula = 0;
@@ -11267,7 +11097,6 @@ static PyObject *__pyx_f_8pytouhou_4game_5enemy_5Enemy_set_boss(struct __pyx_obj
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_29set_boss(PyObject *__pyx_v_self, PyObject *__pyx_arg_enable); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_5Enemy_29set_boss = {"set_boss", (PyCFunction)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_29set_boss, METH_O, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_29set_boss(PyObject *__pyx_v_self, PyObject *__pyx_arg_enable) {
   int __pyx_v_enable;
   int __pyx_lineno = 0;
@@ -12289,7 +12118,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_check_collisions(struct __pyx_o
  *         damages = min(70, damages)
  *         score = (damages // 5) * 10             # <<<<<<<<<<<<<<
  *         self._game.players[0].score += score #TODO: better distribution amongst the players.
- * 
+ *         if score > 0:
  */
   __pyx_v_score = (__Pyx_div_long(__pyx_v_damages, 5) * 10);
 
@@ -12297,8 +12126,8 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_check_collisions(struct __pyx_o
  *         damages = min(70, damages)
  *         score = (damages // 5) * 10
  *         self._game.players[0].score += score #TODO: better distribution amongst the players.             # <<<<<<<<<<<<<<
- * 
- *         if self.damageable:
+ *         if score > 0:
+ *             self._game.players[0].rewards += 1
  */
   if (unlikely(__pyx_v_self->_game->players == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
@@ -12318,8 +12147,49 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_check_collisions(struct __pyx_o
   __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "pytouhou/game/enemy.pyx":410
+  /* "pytouhou/game/enemy.pyx":409
+ *         score = (damages // 5) * 10
  *         self._game.players[0].score += score #TODO: better distribution amongst the players.
+ *         if score > 0:             # <<<<<<<<<<<<<<
+ *             self._game.players[0].rewards += 1
+ * 
+ */
+  __pyx_t_6 = ((__pyx_v_score > 0) != 0);
+  if (__pyx_t_6) {
+
+    /* "pytouhou/game/enemy.pyx":410
+ *         self._game.players[0].score += score #TODO: better distribution amongst the players.
+ *         if score > 0:
+ *             self._game.players[0].rewards += 1             # <<<<<<<<<<<<<<
+ * 
+ *         if self.damageable:
+ */
+    if (unlikely(__pyx_v_self->_game->players == Py_None)) {
+      PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+      __PYX_ERR(0, 410, __pyx_L1_error)
+    }
+    __pyx_t_3 = __Pyx_GetItemInt_List(__pyx_v_self->_game->players, 0, long, 1, __Pyx_PyInt_From_long, 1, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 410, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_rewards); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 410, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_12);
+    __pyx_t_5 = __Pyx_PyInt_AddObjC(__pyx_t_12, __pyx_int_1, 1, 1, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 410, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+    if (__Pyx_PyObject_SetAttrStr(__pyx_t_3, __pyx_n_s_rewards, __pyx_t_5) < 0) __PYX_ERR(0, 410, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+    /* "pytouhou/game/enemy.pyx":409
+ *         score = (damages // 5) * 10
+ *         self._game.players[0].score += score #TODO: better distribution amongst the players.
+ *         if score > 0:             # <<<<<<<<<<<<<<
+ *             self._game.players[0].rewards += 1
+ * 
+ */
+  }
+
+  /* "pytouhou/game/enemy.pyx":412
+ *             self._game.players[0].rewards += 1
  * 
  *         if self.damageable:             # <<<<<<<<<<<<<<
  *             if self._game.spellcard is not None:
@@ -12328,7 +12198,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_check_collisions(struct __pyx_o
   __pyx_t_6 = (__pyx_v_self->damageable != 0);
   if (__pyx_t_6) {
 
-    /* "pytouhou/game/enemy.pyx":411
+    /* "pytouhou/game/enemy.pyx":413
  * 
  *         if self.damageable:
  *             if self._game.spellcard is not None:             # <<<<<<<<<<<<<<
@@ -12339,7 +12209,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_check_collisions(struct __pyx_o
     __pyx_t_7 = (__pyx_t_6 != 0);
     if (__pyx_t_7) {
 
-      /* "pytouhou/game/enemy.pyx":413
+      /* "pytouhou/game/enemy.pyx":415
  *             if self._game.spellcard is not None:
  *                 #TODO: there is a division by 3, somewhere... where is it?
  *                 if damages <= 7:             # <<<<<<<<<<<<<<
@@ -12349,7 +12219,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_check_collisions(struct __pyx_o
       __pyx_t_7 = ((__pyx_v_damages <= 7) != 0);
       if (__pyx_t_7) {
 
-        /* "pytouhou/game/enemy.pyx":414
+        /* "pytouhou/game/enemy.pyx":416
  *                 #TODO: there is a division by 3, somewhere... where is it?
  *                 if damages <= 7:
  *                     damages = 1 if damages else 0             # <<<<<<<<<<<<<<
@@ -12363,17 +12233,17 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_check_collisions(struct __pyx_o
         }
         __pyx_v_damages = __pyx_t_11;
 
-        /* "pytouhou/game/enemy.pyx":413
+        /* "pytouhou/game/enemy.pyx":415
  *             if self._game.spellcard is not None:
  *                 #TODO: there is a division by 3, somewhere... where is it?
  *                 if damages <= 7:             # <<<<<<<<<<<<<<
  *                     damages = 1 if damages else 0
  *                 else:
  */
-        goto __pyx_L29;
+        goto __pyx_L30;
       }
 
-      /* "pytouhou/game/enemy.pyx":416
+      /* "pytouhou/game/enemy.pyx":418
  *                     damages = 1 if damages else 0
  *                 else:
  *                     damages //= 7             # <<<<<<<<<<<<<<
@@ -12383,9 +12253,9 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_check_collisions(struct __pyx_o
       /*else*/ {
         __pyx_v_damages = __Pyx_div_long(__pyx_v_damages, 7);
       }
-      __pyx_L29:;
+      __pyx_L30:;
 
-      /* "pytouhou/game/enemy.pyx":411
+      /* "pytouhou/game/enemy.pyx":413
  * 
  *         if self.damageable:
  *             if self._game.spellcard is not None:             # <<<<<<<<<<<<<<
@@ -12394,7 +12264,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_check_collisions(struct __pyx_o
  */
     }
 
-    /* "pytouhou/game/enemy.pyx":418
+    /* "pytouhou/game/enemy.pyx":420
  *                     damages //= 7
  * 
  *             nb_players = len(self._game.players)             # <<<<<<<<<<<<<<
@@ -12405,13 +12275,13 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_check_collisions(struct __pyx_o
     __Pyx_INCREF(__pyx_t_3);
     if (unlikely(__pyx_t_3 == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-      __PYX_ERR(0, 418, __pyx_L1_error)
+      __PYX_ERR(0, 420, __pyx_L1_error)
     }
-    __pyx_t_4 = PyList_GET_SIZE(__pyx_t_3); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 418, __pyx_L1_error)
+    __pyx_t_4 = PyList_GET_SIZE(__pyx_t_3); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 420, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_v_nb_players = __pyx_t_4;
 
-    /* "pytouhou/game/enemy.pyx":419
+    /* "pytouhou/game/enemy.pyx":421
  * 
  *             nb_players = len(self._game.players)
  *             if nb_players > 1:             # <<<<<<<<<<<<<<
@@ -12421,7 +12291,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_check_collisions(struct __pyx_o
     __pyx_t_7 = ((__pyx_v_nb_players > 1) != 0);
     if (__pyx_t_7) {
 
-      /* "pytouhou/game/enemy.pyx":420
+      /* "pytouhou/game/enemy.pyx":422
  *             nb_players = len(self._game.players)
  *             if nb_players > 1:
  *                 if damages <= nb_players:             # <<<<<<<<<<<<<<
@@ -12431,7 +12301,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_check_collisions(struct __pyx_o
       __pyx_t_7 = ((__pyx_v_damages <= __pyx_v_nb_players) != 0);
       if (__pyx_t_7) {
 
-        /* "pytouhou/game/enemy.pyx":421
+        /* "pytouhou/game/enemy.pyx":423
  *             if nb_players > 1:
  *                 if damages <= nb_players:
  *                     damages = 1 if damages else 0             # <<<<<<<<<<<<<<
@@ -12445,17 +12315,17 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_check_collisions(struct __pyx_o
         }
         __pyx_v_damages = __pyx_t_11;
 
-        /* "pytouhou/game/enemy.pyx":420
+        /* "pytouhou/game/enemy.pyx":422
  *             nb_players = len(self._game.players)
  *             if nb_players > 1:
  *                 if damages <= nb_players:             # <<<<<<<<<<<<<<
  *                     damages = 1 if damages else 0
  *                 else:
  */
-        goto __pyx_L31;
+        goto __pyx_L32;
       }
 
-      /* "pytouhou/game/enemy.pyx":423
+      /* "pytouhou/game/enemy.pyx":425
  *                     damages = 1 if damages else 0
  *                 else:
  *                     damages //= nb_players             # <<<<<<<<<<<<<<
@@ -12465,17 +12335,17 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_check_collisions(struct __pyx_o
       /*else*/ {
         if (unlikely(__pyx_v_nb_players == 0)) {
           PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-          __PYX_ERR(0, 423, __pyx_L1_error)
+          __PYX_ERR(0, 425, __pyx_L1_error)
         }
         else if (sizeof(Py_ssize_t) == sizeof(long) && (!(((Py_ssize_t)-1) > 0)) && unlikely(__pyx_v_nb_players == (Py_ssize_t)-1)  && unlikely(UNARY_NEG_WOULD_OVERFLOW(__pyx_v_damages))) {
           PyErr_SetString(PyExc_OverflowError, "value too large to perform division");
-          __PYX_ERR(0, 423, __pyx_L1_error)
+          __PYX_ERR(0, 425, __pyx_L1_error)
         }
         __pyx_v_damages = __Pyx_div_Py_ssize_t(__pyx_v_damages, __pyx_v_nb_players);
       }
-      __pyx_L31:;
+      __pyx_L32:;
 
-      /* "pytouhou/game/enemy.pyx":419
+      /* "pytouhou/game/enemy.pyx":421
  * 
  *             nb_players = len(self._game.players)
  *             if nb_players > 1:             # <<<<<<<<<<<<<<
@@ -12484,7 +12354,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_check_collisions(struct __pyx_o
  */
     }
 
-    /* "pytouhou/game/enemy.pyx":426
+    /* "pytouhou/game/enemy.pyx":428
  * 
  *             # Apply damages
  *             self.life -= damages             # <<<<<<<<<<<<<<
@@ -12493,8 +12363,8 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_check_collisions(struct __pyx_o
  */
     __pyx_v_self->life = (__pyx_v_self->life - __pyx_v_damages);
 
-    /* "pytouhou/game/enemy.pyx":410
- *         self._game.players[0].score += score #TODO: better distribution amongst the players.
+    /* "pytouhou/game/enemy.pyx":412
+ *             self._game.players[0].rewards += 1
  * 
  *         if self.damageable:             # <<<<<<<<<<<<<<
  *             if self._game.spellcard is not None:
@@ -12528,7 +12398,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_check_collisions(struct __pyx_o
   return __pyx_r;
 }
 
-/* "pytouhou/game/enemy.pyx":429
+/* "pytouhou/game/enemy.pyx":431
  * 
  * 
  *     cdef bint handle_callbacks(self) except True:             # <<<<<<<<<<<<<<
@@ -12553,7 +12423,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("handle_callbacks", 0);
 
-  /* "pytouhou/game/enemy.pyx":431
+  /* "pytouhou/game/enemy.pyx":433
  *     cdef bint handle_callbacks(self) except True:
  *         #TODO: implement missing callbacks and clean up!
  *         if self.life <= 0 and self.touchable:             # <<<<<<<<<<<<<<
@@ -12571,7 +12441,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "pytouhou/game/enemy.pyx":432
+    /* "pytouhou/game/enemy.pyx":434
  *         #TODO: implement missing callbacks and clean up!
  *         if self.life <= 0 and self.touchable:
  *             self.timeout = -1 #TODO: not really true, the timeout is frozen             # <<<<<<<<<<<<<<
@@ -12580,18 +12450,18 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
     __pyx_v_self->timeout = -1L;
 
-    /* "pytouhou/game/enemy.pyx":433
+    /* "pytouhou/game/enemy.pyx":435
  *         if self.life <= 0 and self.touchable:
  *             self.timeout = -1 #TODO: not really true, the timeout is frozen
  *             self.timeout_callback.disable()             # <<<<<<<<<<<<<<
  *             death_flags = self.death_flags & 7
  * 
  */
-    __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Callback *)__pyx_v_self->timeout_callback->__pyx_vtab)->disable(__pyx_v_self->timeout_callback, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 433, __pyx_L1_error)
+    __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Callback *)__pyx_v_self->timeout_callback->__pyx_vtab)->disable(__pyx_v_self->timeout_callback, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 435, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "pytouhou/game/enemy.pyx":434
+    /* "pytouhou/game/enemy.pyx":436
  *             self.timeout = -1 #TODO: not really true, the timeout is frozen
  *             self.timeout_callback.disable()
  *             death_flags = self.death_flags & 7             # <<<<<<<<<<<<<<
@@ -12600,16 +12470,16 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
     __pyx_v_death_flags = (__pyx_v_self->death_flags & 7);
 
-    /* "pytouhou/game/enemy.pyx":436
+    /* "pytouhou/game/enemy.pyx":438
  *             death_flags = self.death_flags & 7
  * 
  *             self.die_anim()             # <<<<<<<<<<<<<<
  * 
  *             #TODO: verify if the score is added with all the different flags.
  */
-    __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->die_anim(__pyx_v_self); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 436, __pyx_L1_error)
+    __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->die_anim(__pyx_v_self); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 438, __pyx_L1_error)
 
-    /* "pytouhou/game/enemy.pyx":439
+    /* "pytouhou/game/enemy.pyx":441
  * 
  *             #TODO: verify if the score is added with all the different flags.
  *             self._game.players[0].score += self.die_score #TODO: better distribution amongst the players.             # <<<<<<<<<<<<<<
@@ -12618,23 +12488,23 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
     if (unlikely(__pyx_v_self->_game->players == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-      __PYX_ERR(0, 439, __pyx_L1_error)
+      __PYX_ERR(0, 441, __pyx_L1_error)
     }
-    __pyx_t_3 = __Pyx_GetItemInt_List(__pyx_v_self->_game->players, 0, long, 1, __Pyx_PyInt_From_long, 1, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 439, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetItemInt_List(__pyx_v_self->_game->players, 0, long, 1, __Pyx_PyInt_From_long, 1, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 441, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_score); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 439, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_score); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 441, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = __Pyx_PyInt_From_long(__pyx_v_self->die_score); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 439, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_From_long(__pyx_v_self->die_score); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 441, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_6 = PyNumber_InPlaceAdd(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 439, __pyx_L1_error)
+    __pyx_t_6 = PyNumber_InPlaceAdd(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 441, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (__Pyx_PyObject_SetAttrStr(__pyx_t_3, __pyx_n_s_score, __pyx_t_6) < 0) __PYX_ERR(0, 439, __pyx_L1_error)
+    if (__Pyx_PyObject_SetAttrStr(__pyx_t_3, __pyx_n_s_score, __pyx_t_6) < 0) __PYX_ERR(0, 441, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "pytouhou/game/enemy.pyx":442
+    /* "pytouhou/game/enemy.pyx":444
  * 
  *             #TODO: verify if that should really be there.
  *             if self.boss:             # <<<<<<<<<<<<<<
@@ -12644,18 +12514,18 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
     __pyx_t_1 = (__pyx_v_self->boss != 0);
     if (__pyx_t_1) {
 
-      /* "pytouhou/game/enemy.pyx":443
+      /* "pytouhou/game/enemy.pyx":445
  *             #TODO: verify if that should really be there.
  *             if self.boss:
  *                 self._game.change_bullets_into_bonus()             # <<<<<<<<<<<<<<
  * 
  *             if death_flags < 4:
  */
-      __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_4game_Game *)__pyx_v_self->_game->__pyx_vtab)->change_bullets_into_bonus(__pyx_v_self->_game, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 443, __pyx_L1_error)
+      __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_4game_Game *)__pyx_v_self->_game->__pyx_vtab)->change_bullets_into_bonus(__pyx_v_self->_game, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 445, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "pytouhou/game/enemy.pyx":442
+      /* "pytouhou/game/enemy.pyx":444
  * 
  *             #TODO: verify if that should really be there.
  *             if self.boss:             # <<<<<<<<<<<<<<
@@ -12664,7 +12534,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
     }
 
-    /* "pytouhou/game/enemy.pyx":445
+    /* "pytouhou/game/enemy.pyx":447
  *                 self._game.change_bullets_into_bonus()
  * 
  *             if death_flags < 4:             # <<<<<<<<<<<<<<
@@ -12674,7 +12544,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
     __pyx_t_1 = ((__pyx_v_death_flags < 4) != 0);
     if (__pyx_t_1) {
 
-      /* "pytouhou/game/enemy.pyx":446
+      /* "pytouhou/game/enemy.pyx":448
  * 
  *             if death_flags < 4:
  *                 if self.bonus_dropped > -1:             # <<<<<<<<<<<<<<
@@ -12684,27 +12554,27 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
       __pyx_t_1 = ((__pyx_v_self->bonus_dropped > -1L) != 0);
       if (__pyx_t_1) {
 
-        /* "pytouhou/game/enemy.pyx":447
+        /* "pytouhou/game/enemy.pyx":449
  *             if death_flags < 4:
  *                 if self.bonus_dropped > -1:
  *                     self.drop_particles(7, 0)             # <<<<<<<<<<<<<<
  *                     self._game.drop_bonus(self.x, self.y, self.bonus_dropped)
  *                 elif self.bonus_dropped == -1:
  */
-        __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->drop_particles(__pyx_v_self, 7, 0); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 447, __pyx_L1_error)
+        __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->drop_particles(__pyx_v_self, 7, 0); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 449, __pyx_L1_error)
 
-        /* "pytouhou/game/enemy.pyx":448
+        /* "pytouhou/game/enemy.pyx":450
  *                 if self.bonus_dropped > -1:
  *                     self.drop_particles(7, 0)
  *                     self._game.drop_bonus(self.x, self.y, self.bonus_dropped)             # <<<<<<<<<<<<<<
  *                 elif self.bonus_dropped == -1:
  *                     if self._game.deaths_count % 3 == 0:
  */
-        __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_4game_Game *)__pyx_v_self->_game->__pyx_vtab)->drop_bonus(__pyx_v_self->_game, __pyx_v_self->__pyx_base.x, __pyx_v_self->__pyx_base.y, __pyx_v_self->bonus_dropped, 0, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 448, __pyx_L1_error)
+        __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_4game_Game *)__pyx_v_self->_game->__pyx_vtab)->drop_bonus(__pyx_v_self->_game, __pyx_v_self->__pyx_base.x, __pyx_v_self->__pyx_base.y, __pyx_v_self->bonus_dropped, 0, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 450, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-        /* "pytouhou/game/enemy.pyx":446
+        /* "pytouhou/game/enemy.pyx":448
  * 
  *             if death_flags < 4:
  *                 if self.bonus_dropped > -1:             # <<<<<<<<<<<<<<
@@ -12714,7 +12584,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
         goto __pyx_L8;
       }
 
-      /* "pytouhou/game/enemy.pyx":449
+      /* "pytouhou/game/enemy.pyx":451
  *                     self.drop_particles(7, 0)
  *                     self._game.drop_bonus(self.x, self.y, self.bonus_dropped)
  *                 elif self.bonus_dropped == -1:             # <<<<<<<<<<<<<<
@@ -12724,7 +12594,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
       __pyx_t_1 = ((__pyx_v_self->bonus_dropped == -1L) != 0);
       if (__pyx_t_1) {
 
-        /* "pytouhou/game/enemy.pyx":450
+        /* "pytouhou/game/enemy.pyx":452
  *                     self._game.drop_bonus(self.x, self.y, self.bonus_dropped)
  *                 elif self.bonus_dropped == -1:
  *                     if self._game.deaths_count % 3 == 0:             # <<<<<<<<<<<<<<
@@ -12734,16 +12604,16 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
         __pyx_t_1 = ((__Pyx_mod_long(__pyx_v_self->_game->deaths_count, 3) == 0) != 0);
         if (__pyx_t_1) {
 
-          /* "pytouhou/game/enemy.pyx":451
+          /* "pytouhou/game/enemy.pyx":453
  *                 elif self.bonus_dropped == -1:
  *                     if self._game.deaths_count % 3 == 0:
  *                         self.drop_particles(10, 0)             # <<<<<<<<<<<<<<
  *                         self._game.drop_bonus(self.x, self.y, self._game.bonus_list[self._game.next_bonus])
  *                         self._game.next_bonus = (self._game.next_bonus + 1) % 32
  */
-          __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->drop_particles(__pyx_v_self, 10, 0); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 451, __pyx_L1_error)
+          __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->drop_particles(__pyx_v_self, 10, 0); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 453, __pyx_L1_error)
 
-          /* "pytouhou/game/enemy.pyx":452
+          /* "pytouhou/game/enemy.pyx":454
  *                     if self._game.deaths_count % 3 == 0:
  *                         self.drop_particles(10, 0)
  *                         self._game.drop_bonus(self.x, self.y, self._game.bonus_list[self._game.next_bonus])             # <<<<<<<<<<<<<<
@@ -12752,17 +12622,17 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
           if (unlikely(__pyx_v_self->_game->bonus_list == Py_None)) {
             PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-            __PYX_ERR(0, 452, __pyx_L1_error)
+            __PYX_ERR(0, 454, __pyx_L1_error)
           }
-          __pyx_t_3 = __Pyx_GetItemInt_List(__pyx_v_self->_game->bonus_list, __pyx_v_self->_game->next_bonus, unsigned short, 0, __Pyx_PyInt_From_unsigned_short, 1, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 452, __pyx_L1_error)
+          __pyx_t_3 = __Pyx_GetItemInt_List(__pyx_v_self->_game->bonus_list, __pyx_v_self->_game->next_bonus, unsigned short, 0, __Pyx_PyInt_From_unsigned_short, 1, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 454, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
-          __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_3); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 452, __pyx_L1_error)
+          __pyx_t_7 = __Pyx_PyInt_As_long(__pyx_t_3); if (unlikely((__pyx_t_7 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 454, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-          __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_4game_Game *)__pyx_v_self->_game->__pyx_vtab)->drop_bonus(__pyx_v_self->_game, __pyx_v_self->__pyx_base.x, __pyx_v_self->__pyx_base.y, __pyx_t_7, 0, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 452, __pyx_L1_error)
+          __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_4game_Game *)__pyx_v_self->_game->__pyx_vtab)->drop_bonus(__pyx_v_self->_game, __pyx_v_self->__pyx_base.x, __pyx_v_self->__pyx_base.y, __pyx_t_7, 0, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 454, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-          /* "pytouhou/game/enemy.pyx":453
+          /* "pytouhou/game/enemy.pyx":455
  *                         self.drop_particles(10, 0)
  *                         self._game.drop_bonus(self.x, self.y, self._game.bonus_list[self._game.next_bonus])
  *                         self._game.next_bonus = (self._game.next_bonus + 1) % 32             # <<<<<<<<<<<<<<
@@ -12771,7 +12641,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
           __pyx_v_self->_game->next_bonus = __Pyx_mod_long((__pyx_v_self->_game->next_bonus + 1), 32);
 
-          /* "pytouhou/game/enemy.pyx":450
+          /* "pytouhou/game/enemy.pyx":452
  *                     self._game.drop_bonus(self.x, self.y, self.bonus_dropped)
  *                 elif self.bonus_dropped == -1:
  *                     if self._game.deaths_count % 3 == 0:             # <<<<<<<<<<<<<<
@@ -12781,7 +12651,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
           goto __pyx_L9;
         }
 
-        /* "pytouhou/game/enemy.pyx":455
+        /* "pytouhou/game/enemy.pyx":457
  *                         self._game.next_bonus = (self._game.next_bonus + 1) % 32
  *                     else:
  *                         self.drop_particles(4, 0)             # <<<<<<<<<<<<<<
@@ -12789,11 +12659,11 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  *                 else:
  */
         /*else*/ {
-          __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->drop_particles(__pyx_v_self, 4, 0); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 455, __pyx_L1_error)
+          __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->drop_particles(__pyx_v_self, 4, 0); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 457, __pyx_L1_error)
         }
         __pyx_L9:;
 
-        /* "pytouhou/game/enemy.pyx":456
+        /* "pytouhou/game/enemy.pyx":458
  *                     else:
  *                         self.drop_particles(4, 0)
  *                     self._game.deaths_count += 1             # <<<<<<<<<<<<<<
@@ -12805,7 +12675,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
         __pyx_t_8->deaths_count = (__pyx_t_8->deaths_count + 1);
         __Pyx_DECREF(((PyObject *)__pyx_t_8)); __pyx_t_8 = 0;
 
-        /* "pytouhou/game/enemy.pyx":449
+        /* "pytouhou/game/enemy.pyx":451
  *                     self.drop_particles(7, 0)
  *                     self._game.drop_bonus(self.x, self.y, self.bonus_dropped)
  *                 elif self.bonus_dropped == -1:             # <<<<<<<<<<<<<<
@@ -12815,7 +12685,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
         goto __pyx_L8;
       }
 
-      /* "pytouhou/game/enemy.pyx":458
+      /* "pytouhou/game/enemy.pyx":460
  *                     self._game.deaths_count += 1
  *                 else:
  *                     self.drop_particles(4, 0)             # <<<<<<<<<<<<<<
@@ -12823,11 +12693,11 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  *                 if death_flags == 0:
  */
       /*else*/ {
-        __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->drop_particles(__pyx_v_self, 4, 0); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 458, __pyx_L1_error)
+        __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->drop_particles(__pyx_v_self, 4, 0); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 460, __pyx_L1_error)
       }
       __pyx_L8:;
 
-      /* "pytouhou/game/enemy.pyx":460
+      /* "pytouhou/game/enemy.pyx":462
  *                     self.drop_particles(4, 0)
  * 
  *                 if death_flags == 0:             # <<<<<<<<<<<<<<
@@ -12837,7 +12707,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
       __pyx_t_1 = ((__pyx_v_death_flags == 0) != 0);
       if (__pyx_t_1) {
 
-        /* "pytouhou/game/enemy.pyx":461
+        /* "pytouhou/game/enemy.pyx":463
  * 
  *                 if death_flags == 0:
  *                     self.removed = True             # <<<<<<<<<<<<<<
@@ -12846,7 +12716,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
         __pyx_v_self->__pyx_base.removed = 1;
 
-        /* "pytouhou/game/enemy.pyx":462
+        /* "pytouhou/game/enemy.pyx":464
  *                 if death_flags == 0:
  *                     self.removed = True
  *                     return False             # <<<<<<<<<<<<<<
@@ -12856,7 +12726,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
         __pyx_r = 0;
         goto __pyx_L0;
 
-        /* "pytouhou/game/enemy.pyx":460
+        /* "pytouhou/game/enemy.pyx":462
  *                     self.drop_particles(4, 0)
  * 
  *                 if death_flags == 0:             # <<<<<<<<<<<<<<
@@ -12865,7 +12735,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
       }
 
-      /* "pytouhou/game/enemy.pyx":464
+      /* "pytouhou/game/enemy.pyx":466
  *                     return False
  * 
  *                 if death_flags == 1:             # <<<<<<<<<<<<<<
@@ -12875,7 +12745,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
       switch (__pyx_v_death_flags) {
         case 1:
 
-        /* "pytouhou/game/enemy.pyx":465
+        /* "pytouhou/game/enemy.pyx":467
  * 
  *                 if death_flags == 1:
  *                     if self.boss:             # <<<<<<<<<<<<<<
@@ -12885,7 +12755,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
         __pyx_t_1 = (__pyx_v_self->boss != 0);
         if (__pyx_t_1) {
 
-          /* "pytouhou/game/enemy.pyx":466
+          /* "pytouhou/game/enemy.pyx":468
  *                 if death_flags == 1:
  *                     if self.boss:
  *                         self.boss = False #TODO: really?             # <<<<<<<<<<<<<<
@@ -12894,7 +12764,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
           __pyx_v_self->boss = 0;
 
-          /* "pytouhou/game/enemy.pyx":467
+          /* "pytouhou/game/enemy.pyx":469
  *                     if self.boss:
  *                         self.boss = False #TODO: really?
  *                         self._game.boss = None             # <<<<<<<<<<<<<<
@@ -12907,7 +12777,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
           __Pyx_DECREF(__pyx_v_self->_game->boss);
           __pyx_v_self->_game->boss = Py_None;
 
-          /* "pytouhou/game/enemy.pyx":465
+          /* "pytouhou/game/enemy.pyx":467
  * 
  *                 if death_flags == 1:
  *                     if self.boss:             # <<<<<<<<<<<<<<
@@ -12916,7 +12786,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
         }
 
-        /* "pytouhou/game/enemy.pyx":468
+        /* "pytouhou/game/enemy.pyx":470
  *                         self.boss = False #TODO: really?
  *                         self._game.boss = None
  *                     self.touchable = False             # <<<<<<<<<<<<<<
@@ -12925,7 +12795,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
         __pyx_v_self->touchable = 0;
 
-        /* "pytouhou/game/enemy.pyx":464
+        /* "pytouhou/game/enemy.pyx":466
  *                     return False
  * 
  *                 if death_flags == 1:             # <<<<<<<<<<<<<<
@@ -12935,7 +12805,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
         break;
         case 2:
 
-        /* "pytouhou/game/enemy.pyx":469
+        /* "pytouhou/game/enemy.pyx":471
  *                         self._game.boss = None
  *                     self.touchable = False
  *                 elif death_flags == 2:             # <<<<<<<<<<<<<<
@@ -12945,7 +12815,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
         break;
         case 3:
 
-        /* "pytouhou/game/enemy.pyx":472
+        /* "pytouhou/game/enemy.pyx":474
  *                     pass # Just that?
  *                 elif death_flags == 3:
  *                     if self.boss:             # <<<<<<<<<<<<<<
@@ -12955,7 +12825,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
         __pyx_t_1 = (__pyx_v_self->boss != 0);
         if (__pyx_t_1) {
 
-          /* "pytouhou/game/enemy.pyx":473
+          /* "pytouhou/game/enemy.pyx":475
  *                 elif death_flags == 3:
  *                     if self.boss:
  *                         self.boss = False #TODO: really?             # <<<<<<<<<<<<<<
@@ -12964,7 +12834,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
           __pyx_v_self->boss = 0;
 
-          /* "pytouhou/game/enemy.pyx":474
+          /* "pytouhou/game/enemy.pyx":476
  *                     if self.boss:
  *                         self.boss = False #TODO: really?
  *                         self._game.boss = None             # <<<<<<<<<<<<<<
@@ -12977,7 +12847,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
           __Pyx_DECREF(__pyx_v_self->_game->boss);
           __pyx_v_self->_game->boss = Py_None;
 
-          /* "pytouhou/game/enemy.pyx":472
+          /* "pytouhou/game/enemy.pyx":474
  *                     pass # Just that?
  *                 elif death_flags == 3:
  *                     if self.boss:             # <<<<<<<<<<<<<<
@@ -12986,7 +12856,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
         }
 
-        /* "pytouhou/game/enemy.pyx":475
+        /* "pytouhou/game/enemy.pyx":477
  *                         self.boss = False #TODO: really?
  *                         self._game.boss = None
  *                     self.damageable = False             # <<<<<<<<<<<<<<
@@ -12995,7 +12865,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
         __pyx_v_self->damageable = 0;
 
-        /* "pytouhou/game/enemy.pyx":476
+        /* "pytouhou/game/enemy.pyx":478
  *                         self._game.boss = None
  *                     self.damageable = False
  *                     self.life = 1             # <<<<<<<<<<<<<<
@@ -13004,7 +12874,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
         __pyx_v_self->life = 1;
 
-        /* "pytouhou/game/enemy.pyx":477
+        /* "pytouhou/game/enemy.pyx":479
  *                     self.damageable = False
  *                     self.life = 1
  *                     self.death_flags = 0             # <<<<<<<<<<<<<<
@@ -13013,7 +12883,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
         __pyx_v_self->death_flags = 0;
 
-        /* "pytouhou/game/enemy.pyx":471
+        /* "pytouhou/game/enemy.pyx":473
  *                 elif death_flags == 2:
  *                     pass # Just that?
  *                 elif death_flags == 3:             # <<<<<<<<<<<<<<
@@ -13024,7 +12894,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
         default: break;
       }
 
-      /* "pytouhou/game/enemy.pyx":445
+      /* "pytouhou/game/enemy.pyx":447
  *                 self._game.change_bullets_into_bonus()
  * 
  *             if death_flags < 4:             # <<<<<<<<<<<<<<
@@ -13033,7 +12903,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
     }
 
-    /* "pytouhou/game/enemy.pyx":479
+    /* "pytouhou/game/enemy.pyx":481
  *                     self.death_flags = 0
  * 
  *             if death_flags != 0:             # <<<<<<<<<<<<<<
@@ -13043,18 +12913,18 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
     __pyx_t_1 = ((__pyx_v_death_flags != 0) != 0);
     if (__pyx_t_1) {
 
-      /* "pytouhou/game/enemy.pyx":480
+      /* "pytouhou/game/enemy.pyx":482
  * 
  *             if death_flags != 0:
  *                 self.death_callback.fire()             # <<<<<<<<<<<<<<
  *         elif self.life <= self.low_life_trigger and self.low_life_callback:
  *             self.low_life_callback.fire()
  */
-      __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Callback *)__pyx_v_self->death_callback->__pyx_vtab)->fire(__pyx_v_self->death_callback, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 480, __pyx_L1_error)
+      __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Callback *)__pyx_v_self->death_callback->__pyx_vtab)->fire(__pyx_v_self->death_callback, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 482, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "pytouhou/game/enemy.pyx":479
+      /* "pytouhou/game/enemy.pyx":481
  *                     self.death_flags = 0
  * 
  *             if death_flags != 0:             # <<<<<<<<<<<<<<
@@ -13063,7 +12933,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
     }
 
-    /* "pytouhou/game/enemy.pyx":431
+    /* "pytouhou/game/enemy.pyx":433
  *     cdef bint handle_callbacks(self) except True:
  *         #TODO: implement missing callbacks and clean up!
  *         if self.life <= 0 and self.touchable:             # <<<<<<<<<<<<<<
@@ -13073,7 +12943,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
     goto __pyx_L3;
   }
 
-  /* "pytouhou/game/enemy.pyx":481
+  /* "pytouhou/game/enemy.pyx":483
  *             if death_flags != 0:
  *                 self.death_callback.fire()
  *         elif self.life <= self.low_life_trigger and self.low_life_callback:             # <<<<<<<<<<<<<<
@@ -13086,23 +12956,23 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
     __pyx_t_1 = __pyx_t_2;
     goto __pyx_L14_bool_binop_done;
   }
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(((PyObject *)__pyx_v_self->low_life_callback)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 481, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(((PyObject *)__pyx_v_self->low_life_callback)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 483, __pyx_L1_error)
   __pyx_t_1 = __pyx_t_2;
   __pyx_L14_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "pytouhou/game/enemy.pyx":482
+    /* "pytouhou/game/enemy.pyx":484
  *                 self.death_callback.fire()
  *         elif self.life <= self.low_life_trigger and self.low_life_callback:
  *             self.low_life_callback.fire()             # <<<<<<<<<<<<<<
  *             self.low_life_trigger = -1
  *             self.timeout_callback.disable()
  */
-    __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Callback *)__pyx_v_self->low_life_callback->__pyx_vtab)->fire(__pyx_v_self->low_life_callback, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 482, __pyx_L1_error)
+    __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Callback *)__pyx_v_self->low_life_callback->__pyx_vtab)->fire(__pyx_v_self->low_life_callback, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 484, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "pytouhou/game/enemy.pyx":483
+    /* "pytouhou/game/enemy.pyx":485
  *         elif self.life <= self.low_life_trigger and self.low_life_callback:
  *             self.low_life_callback.fire()
  *             self.low_life_trigger = -1             # <<<<<<<<<<<<<<
@@ -13111,18 +12981,18 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
     __pyx_v_self->low_life_trigger = -1L;
 
-    /* "pytouhou/game/enemy.pyx":484
+    /* "pytouhou/game/enemy.pyx":486
  *             self.low_life_callback.fire()
  *             self.low_life_trigger = -1
  *             self.timeout_callback.disable()             # <<<<<<<<<<<<<<
  *         elif self.timeout != -1 and self.frame == self.timeout:
  *             self.frame = 0
  */
-    __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Callback *)__pyx_v_self->timeout_callback->__pyx_vtab)->disable(__pyx_v_self->timeout_callback, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 484, __pyx_L1_error)
+    __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Callback *)__pyx_v_self->timeout_callback->__pyx_vtab)->disable(__pyx_v_self->timeout_callback, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 486, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "pytouhou/game/enemy.pyx":481
+    /* "pytouhou/game/enemy.pyx":483
  *             if death_flags != 0:
  *                 self.death_callback.fire()
  *         elif self.life <= self.low_life_trigger and self.low_life_callback:             # <<<<<<<<<<<<<<
@@ -13132,7 +13002,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
     goto __pyx_L3;
   }
 
-  /* "pytouhou/game/enemy.pyx":485
+  /* "pytouhou/game/enemy.pyx":487
  *             self.low_life_trigger = -1
  *             self.timeout_callback.disable()
  *         elif self.timeout != -1 and self.frame == self.timeout:             # <<<<<<<<<<<<<<
@@ -13150,7 +13020,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
   __pyx_L16_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "pytouhou/game/enemy.pyx":486
+    /* "pytouhou/game/enemy.pyx":488
  *             self.timeout_callback.disable()
  *         elif self.timeout != -1 and self.frame == self.timeout:
  *             self.frame = 0             # <<<<<<<<<<<<<<
@@ -13159,7 +13029,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
     __pyx_v_self->frame = 0;
 
-    /* "pytouhou/game/enemy.pyx":487
+    /* "pytouhou/game/enemy.pyx":489
  *         elif self.timeout != -1 and self.frame == self.timeout:
  *             self.frame = 0
  *             self.timeout = -1             # <<<<<<<<<<<<<<
@@ -13168,27 +13038,27 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
     __pyx_v_self->timeout = -1L;
 
-    /* "pytouhou/game/enemy.pyx":488
+    /* "pytouhou/game/enemy.pyx":490
  *             self.frame = 0
  *             self.timeout = -1
  *             self._game.kill_enemies()             # <<<<<<<<<<<<<<
  *             self._game.cancel_bullets()
  * 
  */
-    __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_4game_Game *)__pyx_v_self->_game->__pyx_vtab)->kill_enemies(__pyx_v_self->_game, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 488, __pyx_L1_error)
+    __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_4game_Game *)__pyx_v_self->_game->__pyx_vtab)->kill_enemies(__pyx_v_self->_game, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 490, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "pytouhou/game/enemy.pyx":489
+    /* "pytouhou/game/enemy.pyx":491
  *             self.timeout = -1
  *             self._game.kill_enemies()
  *             self._game.cancel_bullets()             # <<<<<<<<<<<<<<
  * 
  *             if self.low_life_trigger > 0:
  */
-    __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_4game_4game_Game *)__pyx_v_self->_game->__pyx_vtab)->cancel_bullets(__pyx_v_self->_game); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 489, __pyx_L1_error)
+    __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_4game_4game_Game *)__pyx_v_self->_game->__pyx_vtab)->cancel_bullets(__pyx_v_self->_game); if (unlikely(__pyx_t_1 == ((int)1))) __PYX_ERR(0, 491, __pyx_L1_error)
 
-    /* "pytouhou/game/enemy.pyx":491
+    /* "pytouhou/game/enemy.pyx":493
  *             self._game.cancel_bullets()
  * 
  *             if self.low_life_trigger > 0:             # <<<<<<<<<<<<<<
@@ -13198,7 +13068,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
     __pyx_t_1 = ((__pyx_v_self->low_life_trigger > 0) != 0);
     if (__pyx_t_1) {
 
-      /* "pytouhou/game/enemy.pyx":492
+      /* "pytouhou/game/enemy.pyx":494
  * 
  *             if self.low_life_trigger > 0:
  *                 self.life = self.low_life_trigger             # <<<<<<<<<<<<<<
@@ -13208,7 +13078,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
       __pyx_t_7 = __pyx_v_self->low_life_trigger;
       __pyx_v_self->life = __pyx_t_7;
 
-      /* "pytouhou/game/enemy.pyx":493
+      /* "pytouhou/game/enemy.pyx":495
  *             if self.low_life_trigger > 0:
  *                 self.life = self.low_life_trigger
  *                 self.low_life_trigger = -1             # <<<<<<<<<<<<<<
@@ -13217,7 +13087,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
       __pyx_v_self->low_life_trigger = -1L;
 
-      /* "pytouhou/game/enemy.pyx":491
+      /* "pytouhou/game/enemy.pyx":493
  *             self._game.cancel_bullets()
  * 
  *             if self.low_life_trigger > 0:             # <<<<<<<<<<<<<<
@@ -13226,28 +13096,28 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
     }
 
-    /* "pytouhou/game/enemy.pyx":495
+    /* "pytouhou/game/enemy.pyx":497
  *                 self.low_life_trigger = -1
  * 
  *             if self.timeout_callback:             # <<<<<<<<<<<<<<
  *                 self.timeout_callback.fire()
  *             #TODO: this is only done under certain (unknown) conditions!
  */
-    __pyx_t_1 = __Pyx_PyObject_IsTrue(((PyObject *)__pyx_v_self->timeout_callback)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 495, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_IsTrue(((PyObject *)__pyx_v_self->timeout_callback)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 497, __pyx_L1_error)
     if (__pyx_t_1) {
 
-      /* "pytouhou/game/enemy.pyx":496
+      /* "pytouhou/game/enemy.pyx":498
  * 
  *             if self.timeout_callback:
  *                 self.timeout_callback.fire()             # <<<<<<<<<<<<<<
  *             #TODO: this is only done under certain (unknown) conditions!
  *             # but it shouldn't hurt anyway, as the only option left is to crash!
  */
-      __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Callback *)__pyx_v_self->timeout_callback->__pyx_vtab)->fire(__pyx_v_self->timeout_callback, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 496, __pyx_L1_error)
+      __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Callback *)__pyx_v_self->timeout_callback->__pyx_vtab)->fire(__pyx_v_self->timeout_callback, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 498, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "pytouhou/game/enemy.pyx":495
+      /* "pytouhou/game/enemy.pyx":497
  *                 self.low_life_trigger = -1
  * 
  *             if self.timeout_callback:             # <<<<<<<<<<<<<<
@@ -13257,17 +13127,17 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
       goto __pyx_L19;
     }
 
-    /* "pytouhou/game/enemy.pyx":499
+    /* "pytouhou/game/enemy.pyx":501
  *             #TODO: this is only done under certain (unknown) conditions!
  *             # but it shouldn't hurt anyway, as the only option left is to crash!
  *             elif self.death_callback:             # <<<<<<<<<<<<<<
  *                 self.life = 0 #TODO: do this next frame? Bypass self.touchable?
  *             else:
  */
-    __pyx_t_1 = __Pyx_PyObject_IsTrue(((PyObject *)__pyx_v_self->death_callback)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 499, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_IsTrue(((PyObject *)__pyx_v_self->death_callback)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 501, __pyx_L1_error)
     if (likely(__pyx_t_1)) {
 
-      /* "pytouhou/game/enemy.pyx":500
+      /* "pytouhou/game/enemy.pyx":502
  *             # but it shouldn't hurt anyway, as the only option left is to crash!
  *             elif self.death_callback:
  *                 self.life = 0 #TODO: do this next frame? Bypass self.touchable?             # <<<<<<<<<<<<<<
@@ -13276,7 +13146,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  */
       __pyx_v_self->life = 0;
 
-      /* "pytouhou/game/enemy.pyx":499
+      /* "pytouhou/game/enemy.pyx":501
  *             #TODO: this is only done under certain (unknown) conditions!
  *             # but it shouldn't hurt anyway, as the only option left is to crash!
  *             elif self.death_callback:             # <<<<<<<<<<<<<<
@@ -13286,7 +13156,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
       goto __pyx_L19;
     }
 
-    /* "pytouhou/game/enemy.pyx":502
+    /* "pytouhou/game/enemy.pyx":504
  *                 self.life = 0 #TODO: do this next frame? Bypass self.touchable?
  *             else:
  *                 raise Exception('What the hell, man!')             # <<<<<<<<<<<<<<
@@ -13294,15 +13164,15 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
  * 
  */
     /*else*/ {
-      __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])), __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 502, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])), __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 504, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_Raise(__pyx_t_3, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __PYX_ERR(0, 502, __pyx_L1_error)
+      __PYX_ERR(0, 504, __pyx_L1_error)
     }
     __pyx_L19:;
 
-    /* "pytouhou/game/enemy.pyx":485
+    /* "pytouhou/game/enemy.pyx":487
  *             self.low_life_trigger = -1
  *             self.timeout_callback.disable()
  *         elif self.timeout != -1 and self.frame == self.timeout:             # <<<<<<<<<<<<<<
@@ -13312,7 +13182,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
   }
   __pyx_L3:;
 
-  /* "pytouhou/game/enemy.pyx":429
+  /* "pytouhou/game/enemy.pyx":431
  * 
  * 
  *     cdef bint handle_callbacks(self) except True:             # <<<<<<<<<<<<<<
@@ -13336,7 +13206,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_handle_callbacks(struct __pyx_o
   return __pyx_r;
 }
 
-/* "pytouhou/game/enemy.pyx":505
+/* "pytouhou/game/enemy.pyx":507
  * 
  * 
  *     cdef bint update(self) except True:             # <<<<<<<<<<<<<<
@@ -13379,7 +13249,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("update", 0);
 
-  /* "pytouhou/game/enemy.pyx":508
+  /* "pytouhou/game/enemy.pyx":510
  *         cdef double x, y, speed
  * 
  *         if self.process is not None:             # <<<<<<<<<<<<<<
@@ -13390,14 +13260,14 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "pytouhou/game/enemy.pyx":509
+    /* "pytouhou/game/enemy.pyx":511
  * 
  *         if self.process is not None:
  *             self.process.run_iteration()             # <<<<<<<<<<<<<<
  * 
  *         x, y = self.x, self.y
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->process, __pyx_n_s_run_iteration); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 509, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->process, __pyx_n_s_run_iteration); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 511, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_5 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
@@ -13411,12 +13281,12 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
     }
     __pyx_t_3 = (__pyx_t_5) ? __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_5) : __Pyx_PyObject_CallNoArg(__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 509, __pyx_L1_error)
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 511, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "pytouhou/game/enemy.pyx":508
+    /* "pytouhou/game/enemy.pyx":510
  *         cdef double x, y, speed
  * 
  *         if self.process is not None:             # <<<<<<<<<<<<<<
@@ -13425,7 +13295,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
   }
 
-  /* "pytouhou/game/enemy.pyx":511
+  /* "pytouhou/game/enemy.pyx":513
  *             self.process.run_iteration()
  * 
  *         x, y = self.x, self.y             # <<<<<<<<<<<<<<
@@ -13437,7 +13307,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
   __pyx_v_x = __pyx_t_6;
   __pyx_v_y = __pyx_t_7;
 
-  /* "pytouhou/game/enemy.pyx":513
+  /* "pytouhou/game/enemy.pyx":515
  *         x, y = self.x, self.y
  * 
  *         if self.update_mode == 1:             # <<<<<<<<<<<<<<
@@ -13447,7 +13317,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
   __pyx_t_2 = ((__pyx_v_self->update_mode == 1) != 0);
   if (__pyx_t_2) {
 
-    /* "pytouhou/game/enemy.pyx":514
+    /* "pytouhou/game/enemy.pyx":516
  * 
  *         if self.update_mode == 1:
  *             speed = 0.             # <<<<<<<<<<<<<<
@@ -13456,35 +13326,35 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
     __pyx_v_speed = 0.;
 
-    /* "pytouhou/game/enemy.pyx":515
+    /* "pytouhou/game/enemy.pyx":517
  *         if self.update_mode == 1:
  *             speed = 0.
  *             if self.interpolator:             # <<<<<<<<<<<<<<
  *                 self.interpolator.update(self._game.frame)
  *                 x, y = self.interpolator.values
  */
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(((PyObject *)__pyx_v_self->interpolator)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 515, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(((PyObject *)__pyx_v_self->interpolator)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 517, __pyx_L1_error)
     if (__pyx_t_2) {
 
-      /* "pytouhou/game/enemy.pyx":516
+      /* "pytouhou/game/enemy.pyx":518
  *             speed = 0.
  *             if self.interpolator:
  *                 self.interpolator.update(self._game.frame)             # <<<<<<<<<<<<<<
  *                 x, y = self.interpolator.values
  *             if self.speed_interpolator:
  */
-      __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_5utils_12interpolator_Interpolator *)__pyx_v_self->interpolator->__pyx_vtab)->update(__pyx_v_self->interpolator, __pyx_v_self->_game->frame, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 516, __pyx_L1_error)
+      __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_5utils_12interpolator_Interpolator *)__pyx_v_self->interpolator->__pyx_vtab)->update(__pyx_v_self->interpolator, __pyx_v_self->_game->frame, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 518, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "pytouhou/game/enemy.pyx":517
+      /* "pytouhou/game/enemy.pyx":519
  *             if self.interpolator:
  *                 self.interpolator.update(self._game.frame)
  *                 x, y = self.interpolator.values             # <<<<<<<<<<<<<<
  *             if self.speed_interpolator:
  *                 self.speed_interpolator.update(self._game.frame)
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->interpolator), __pyx_n_s_values); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 517, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->interpolator), __pyx_n_s_values); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 519, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       if ((likely(PyTuple_CheckExact(__pyx_t_3))) || (PyList_CheckExact(__pyx_t_3))) {
         PyObject* sequence = __pyx_t_3;
@@ -13492,7 +13362,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
         if (unlikely(size != 2)) {
           if (size > 2) __Pyx_RaiseTooManyValuesError(2);
           else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-          __PYX_ERR(0, 517, __pyx_L1_error)
+          __PYX_ERR(0, 519, __pyx_L1_error)
         }
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
         if (likely(PyTuple_CheckExact(sequence))) {
@@ -13505,15 +13375,15 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
         __Pyx_INCREF(__pyx_t_4);
         __Pyx_INCREF(__pyx_t_5);
         #else
-        __pyx_t_4 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 517, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 519, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_5 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 517, __pyx_L1_error)
+        __pyx_t_5 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 519, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
         #endif
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       } else {
         Py_ssize_t index = -1;
-        __pyx_t_8 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 517, __pyx_L1_error)
+        __pyx_t_8 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 519, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __pyx_t_9 = Py_TYPE(__pyx_t_8)->tp_iternext;
@@ -13521,7 +13391,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
         __Pyx_GOTREF(__pyx_t_4);
         index = 1; __pyx_t_5 = __pyx_t_9(__pyx_t_8); if (unlikely(!__pyx_t_5)) goto __pyx_L6_unpacking_failed;
         __Pyx_GOTREF(__pyx_t_5);
-        if (__Pyx_IternextUnpackEndCheck(__pyx_t_9(__pyx_t_8), 2) < 0) __PYX_ERR(0, 517, __pyx_L1_error)
+        if (__Pyx_IternextUnpackEndCheck(__pyx_t_9(__pyx_t_8), 2) < 0) __PYX_ERR(0, 519, __pyx_L1_error)
         __pyx_t_9 = NULL;
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
         goto __pyx_L7_unpacking_done;
@@ -13529,17 +13399,17 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
         __pyx_t_9 = NULL;
         if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-        __PYX_ERR(0, 517, __pyx_L1_error)
+        __PYX_ERR(0, 519, __pyx_L1_error)
         __pyx_L7_unpacking_done:;
       }
-      __pyx_t_7 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_7 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 517, __pyx_L1_error)
+      __pyx_t_7 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_7 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 519, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 517, __pyx_L1_error)
+      __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 519, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __pyx_v_x = __pyx_t_7;
       __pyx_v_y = __pyx_t_6;
 
-      /* "pytouhou/game/enemy.pyx":515
+      /* "pytouhou/game/enemy.pyx":517
  *         if self.update_mode == 1:
  *             speed = 0.
  *             if self.interpolator:             # <<<<<<<<<<<<<<
@@ -13548,35 +13418,35 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
     }
 
-    /* "pytouhou/game/enemy.pyx":518
+    /* "pytouhou/game/enemy.pyx":520
  *                 self.interpolator.update(self._game.frame)
  *                 x, y = self.interpolator.values
  *             if self.speed_interpolator:             # <<<<<<<<<<<<<<
  *                 self.speed_interpolator.update(self._game.frame)
  *                 speed, = self.speed_interpolator.values
  */
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(((PyObject *)__pyx_v_self->speed_interpolator)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 518, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(((PyObject *)__pyx_v_self->speed_interpolator)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 520, __pyx_L1_error)
     if (__pyx_t_2) {
 
-      /* "pytouhou/game/enemy.pyx":519
+      /* "pytouhou/game/enemy.pyx":521
  *                 x, y = self.interpolator.values
  *             if self.speed_interpolator:
  *                 self.speed_interpolator.update(self._game.frame)             # <<<<<<<<<<<<<<
  *                 speed, = self.speed_interpolator.values
  *         else:
  */
-      __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_5utils_12interpolator_Interpolator *)__pyx_v_self->speed_interpolator->__pyx_vtab)->update(__pyx_v_self->speed_interpolator, __pyx_v_self->_game->frame, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 519, __pyx_L1_error)
+      __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_5utils_12interpolator_Interpolator *)__pyx_v_self->speed_interpolator->__pyx_vtab)->update(__pyx_v_self->speed_interpolator, __pyx_v_self->_game->frame, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 521, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "pytouhou/game/enemy.pyx":520
+      /* "pytouhou/game/enemy.pyx":522
  *             if self.speed_interpolator:
  *                 self.speed_interpolator.update(self._game.frame)
  *                 speed, = self.speed_interpolator.values             # <<<<<<<<<<<<<<
  *         else:
  *             speed = self.speed
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->speed_interpolator), __pyx_n_s_values); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 520, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->speed_interpolator), __pyx_n_s_values); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 522, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       if ((likely(PyTuple_CheckExact(__pyx_t_3))) || (PyList_CheckExact(__pyx_t_3))) {
         PyObject* sequence = __pyx_t_3;
@@ -13584,7 +13454,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
         if (unlikely(size != 1)) {
           if (size > 1) __Pyx_RaiseTooManyValuesError(1);
           else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-          __PYX_ERR(0, 520, __pyx_L1_error)
+          __PYX_ERR(0, 522, __pyx_L1_error)
         }
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
         if (likely(PyTuple_CheckExact(sequence))) {
@@ -13594,19 +13464,19 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
         }
         __Pyx_INCREF(__pyx_t_5);
         #else
-        __pyx_t_5 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 520, __pyx_L1_error)
+        __pyx_t_5 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 522, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
         #endif
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       } else {
         Py_ssize_t index = -1;
-        __pyx_t_4 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 520, __pyx_L1_error)
+        __pyx_t_4 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 522, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __pyx_t_9 = Py_TYPE(__pyx_t_4)->tp_iternext;
         index = 0; __pyx_t_5 = __pyx_t_9(__pyx_t_4); if (unlikely(!__pyx_t_5)) goto __pyx_L9_unpacking_failed;
         __Pyx_GOTREF(__pyx_t_5);
-        if (__Pyx_IternextUnpackEndCheck(__pyx_t_9(__pyx_t_4), 1) < 0) __PYX_ERR(0, 520, __pyx_L1_error)
+        if (__Pyx_IternextUnpackEndCheck(__pyx_t_9(__pyx_t_4), 1) < 0) __PYX_ERR(0, 522, __pyx_L1_error)
         __pyx_t_9 = NULL;
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         goto __pyx_L10_unpacking_done;
@@ -13614,14 +13484,14 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         __pyx_t_9 = NULL;
         if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-        __PYX_ERR(0, 520, __pyx_L1_error)
+        __PYX_ERR(0, 522, __pyx_L1_error)
         __pyx_L10_unpacking_done:;
       }
-      __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 520, __pyx_L1_error)
+      __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 522, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __pyx_v_speed = __pyx_t_6;
 
-      /* "pytouhou/game/enemy.pyx":518
+      /* "pytouhou/game/enemy.pyx":520
  *                 self.interpolator.update(self._game.frame)
  *                 x, y = self.interpolator.values
  *             if self.speed_interpolator:             # <<<<<<<<<<<<<<
@@ -13630,7 +13500,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
     }
 
-    /* "pytouhou/game/enemy.pyx":513
+    /* "pytouhou/game/enemy.pyx":515
  *         x, y = self.x, self.y
  * 
  *         if self.update_mode == 1:             # <<<<<<<<<<<<<<
@@ -13640,7 +13510,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
     goto __pyx_L4;
   }
 
-  /* "pytouhou/game/enemy.pyx":522
+  /* "pytouhou/game/enemy.pyx":524
  *                 speed, = self.speed_interpolator.values
  *         else:
  *             speed = self.speed             # <<<<<<<<<<<<<<
@@ -13651,7 +13521,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
     __pyx_t_6 = __pyx_v_self->speed;
     __pyx_v_speed = __pyx_t_6;
 
-    /* "pytouhou/game/enemy.pyx":523
+    /* "pytouhou/game/enemy.pyx":525
  *         else:
  *             speed = self.speed
  *             self.speed += self.acceleration             # <<<<<<<<<<<<<<
@@ -13660,7 +13530,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
     __pyx_v_self->speed = (__pyx_v_self->speed + __pyx_v_self->acceleration);
 
-    /* "pytouhou/game/enemy.pyx":524
+    /* "pytouhou/game/enemy.pyx":526
  *             speed = self.speed
  *             self.speed += self.acceleration
  *             self.angle += self.rotation_speed             # <<<<<<<<<<<<<<
@@ -13671,7 +13541,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
   }
   __pyx_L4:;
 
-  /* "pytouhou/game/enemy.pyx":526
+  /* "pytouhou/game/enemy.pyx":528
  *             self.angle += self.rotation_speed
  * 
  *         dx, dy = cos(self.angle) * speed, sin(self.angle) * speed             # <<<<<<<<<<<<<<
@@ -13683,7 +13553,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
   __pyx_v_dx = __pyx_t_6;
   __pyx_v_dy = __pyx_t_7;
 
-  /* "pytouhou/game/enemy.pyx":527
+  /* "pytouhou/game/enemy.pyx":529
  * 
  *         dx, dy = cos(self.angle) * speed, sin(self.angle) * speed
  *         if self._type & 2:             # <<<<<<<<<<<<<<
@@ -13693,7 +13563,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
   __pyx_t_2 = ((__pyx_v_self->_type & 2) != 0);
   if (__pyx_t_2) {
 
-    /* "pytouhou/game/enemy.pyx":528
+    /* "pytouhou/game/enemy.pyx":530
  *         dx, dy = cos(self.angle) * speed, sin(self.angle) * speed
  *         if self._type & 2:
  *             x -= dx             # <<<<<<<<<<<<<<
@@ -13702,7 +13572,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
     __pyx_v_x = (__pyx_v_x - __pyx_v_dx);
 
-    /* "pytouhou/game/enemy.pyx":527
+    /* "pytouhou/game/enemy.pyx":529
  * 
  *         dx, dy = cos(self.angle) * speed, sin(self.angle) * speed
  *         if self._type & 2:             # <<<<<<<<<<<<<<
@@ -13712,7 +13582,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
     goto __pyx_L11;
   }
 
-  /* "pytouhou/game/enemy.pyx":530
+  /* "pytouhou/game/enemy.pyx":532
  *             x -= dx
  *         else:
  *             x += dx             # <<<<<<<<<<<<<<
@@ -13724,7 +13594,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
   }
   __pyx_L11:;
 
-  /* "pytouhou/game/enemy.pyx":531
+  /* "pytouhou/game/enemy.pyx":533
  *         else:
  *             x += dx
  *         y += dy             # <<<<<<<<<<<<<<
@@ -13733,7 +13603,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
   __pyx_v_y = (__pyx_v_y + __pyx_v_dy);
 
-  /* "pytouhou/game/enemy.pyx":533
+  /* "pytouhou/game/enemy.pyx":535
  *         y += dy
  * 
  *         if self.movement_dependant_sprites is not None:             # <<<<<<<<<<<<<<
@@ -13744,7 +13614,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
   __pyx_t_1 = (__pyx_t_2 != 0);
   if (__pyx_t_1) {
 
-    /* "pytouhou/game/enemy.pyx":537
+    /* "pytouhou/game/enemy.pyx":539
  *             # Sprite determination is done only once per changement, and is
  *             # superseeded by ins_97.
  *             end_left, end_right, left, right = self.movement_dependant_sprites             # <<<<<<<<<<<<<<
@@ -13759,7 +13629,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
       if (unlikely(size != 4)) {
         if (size > 4) __Pyx_RaiseTooManyValuesError(4);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 537, __pyx_L1_error)
+        __PYX_ERR(0, 539, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       __pyx_t_5 = PyTuple_GET_ITEM(sequence, 0); 
@@ -13775,7 +13645,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
         Py_ssize_t i;
         PyObject** temps[4] = {&__pyx_t_5,&__pyx_t_4,&__pyx_t_8,&__pyx_t_10};
         for (i=0; i < 4; i++) {
-          PyObject* item = PySequence_ITEM(sequence, i); if (unlikely(!item)) __PYX_ERR(0, 537, __pyx_L1_error)
+          PyObject* item = PySequence_ITEM(sequence, i); if (unlikely(!item)) __PYX_ERR(0, 539, __pyx_L1_error)
           __Pyx_GOTREF(item);
           *(temps[i]) = item;
         }
@@ -13783,7 +13653,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
       #endif
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     } else {
-      __Pyx_RaiseNoneNotIterableError(); __PYX_ERR(0, 537, __pyx_L1_error)
+      __Pyx_RaiseNoneNotIterableError(); __PYX_ERR(0, 539, __pyx_L1_error)
     }
     __pyx_v_end_left = __pyx_t_5;
     __pyx_t_5 = 0;
@@ -13794,7 +13664,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
     __pyx_v_right = __pyx_t_10;
     __pyx_t_10 = 0;
 
-    /* "pytouhou/game/enemy.pyx":538
+    /* "pytouhou/game/enemy.pyx":540
  *             # superseeded by ins_97.
  *             end_left, end_right, left, right = self.movement_dependant_sprites
  *             if x < self.x and self.direction != -1:             # <<<<<<<<<<<<<<
@@ -13812,18 +13682,18 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
     __pyx_L14_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "pytouhou/game/enemy.pyx":539
+      /* "pytouhou/game/enemy.pyx":541
  *             end_left, end_right, left, right = self.movement_dependant_sprites
  *             if x < self.x and self.direction != -1:
  *                 self.set_anim(left)             # <<<<<<<<<<<<<<
  *                 self.direction = -1
  *             elif x > self.x and self.direction != +1:
  */
-      __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->set_anim(__pyx_v_self, __pyx_v_left, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 539, __pyx_L1_error)
+      __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->set_anim(__pyx_v_self, __pyx_v_left, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 541, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "pytouhou/game/enemy.pyx":540
+      /* "pytouhou/game/enemy.pyx":542
  *             if x < self.x and self.direction != -1:
  *                 self.set_anim(left)
  *                 self.direction = -1             # <<<<<<<<<<<<<<
@@ -13832,7 +13702,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
       __pyx_v_self->direction = -1L;
 
-      /* "pytouhou/game/enemy.pyx":538
+      /* "pytouhou/game/enemy.pyx":540
  *             # superseeded by ins_97.
  *             end_left, end_right, left, right = self.movement_dependant_sprites
  *             if x < self.x and self.direction != -1:             # <<<<<<<<<<<<<<
@@ -13842,7 +13712,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
       goto __pyx_L13;
     }
 
-    /* "pytouhou/game/enemy.pyx":541
+    /* "pytouhou/game/enemy.pyx":543
  *                 self.set_anim(left)
  *                 self.direction = -1
  *             elif x > self.x and self.direction != +1:             # <<<<<<<<<<<<<<
@@ -13860,18 +13730,18 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
     __pyx_L16_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "pytouhou/game/enemy.pyx":542
+      /* "pytouhou/game/enemy.pyx":544
  *                 self.direction = -1
  *             elif x > self.x and self.direction != +1:
  *                 self.set_anim(right)             # <<<<<<<<<<<<<<
  *                 self.direction = +1
  *             elif x == self.x and self.direction != 0:
  */
-      __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->set_anim(__pyx_v_self, __pyx_v_right, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 542, __pyx_L1_error)
+      __pyx_t_3 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->set_anim(__pyx_v_self, __pyx_v_right, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 544, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "pytouhou/game/enemy.pyx":543
+      /* "pytouhou/game/enemy.pyx":545
  *             elif x > self.x and self.direction != +1:
  *                 self.set_anim(right)
  *                 self.direction = +1             # <<<<<<<<<<<<<<
@@ -13880,7 +13750,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
       __pyx_v_self->direction = 1;
 
-      /* "pytouhou/game/enemy.pyx":541
+      /* "pytouhou/game/enemy.pyx":543
  *                 self.set_anim(left)
  *                 self.direction = -1
  *             elif x > self.x and self.direction != +1:             # <<<<<<<<<<<<<<
@@ -13890,7 +13760,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
       goto __pyx_L13;
     }
 
-    /* "pytouhou/game/enemy.pyx":544
+    /* "pytouhou/game/enemy.pyx":546
  *                 self.set_anim(right)
  *                 self.direction = +1
  *             elif x == self.x and self.direction != 0:             # <<<<<<<<<<<<<<
@@ -13908,29 +13778,29 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
     __pyx_L18_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "pytouhou/game/enemy.pyx":545
+      /* "pytouhou/game/enemy.pyx":547
  *                 self.direction = +1
  *             elif x == self.x and self.direction != 0:
  *                 self.set_anim({-1: end_left, +1: end_right}[self.direction])             # <<<<<<<<<<<<<<
  *                 self.direction = 0
  * 
  */
-      __pyx_t_3 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 545, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 547, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      if (PyDict_SetItem(__pyx_t_3, __pyx_int_neg_1, __pyx_v_end_left) < 0) __PYX_ERR(0, 545, __pyx_L1_error)
-      if (PyDict_SetItem(__pyx_t_3, __pyx_int_1, __pyx_v_end_right) < 0) __PYX_ERR(0, 545, __pyx_L1_error)
-      __pyx_t_10 = __Pyx_PyInt_From_long(__pyx_v_self->direction); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 545, __pyx_L1_error)
+      if (PyDict_SetItem(__pyx_t_3, __pyx_int_neg_1, __pyx_v_end_left) < 0) __PYX_ERR(0, 547, __pyx_L1_error)
+      if (PyDict_SetItem(__pyx_t_3, __pyx_int_1, __pyx_v_end_right) < 0) __PYX_ERR(0, 547, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyInt_From_long(__pyx_v_self->direction); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 547, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
-      __pyx_t_8 = __Pyx_PyDict_GetItem(__pyx_t_3, __pyx_t_10); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 545, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyDict_GetItem(__pyx_t_3, __pyx_t_10); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 547, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-      __pyx_t_10 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->set_anim(__pyx_v_self, __pyx_t_8, 0); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 545, __pyx_L1_error)
+      __pyx_t_10 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->set_anim(__pyx_v_self, __pyx_t_8, 0); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 547, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
 
-      /* "pytouhou/game/enemy.pyx":546
+      /* "pytouhou/game/enemy.pyx":548
  *             elif x == self.x and self.direction != 0:
  *                 self.set_anim({-1: end_left, +1: end_right}[self.direction])
  *                 self.direction = 0             # <<<<<<<<<<<<<<
@@ -13939,7 +13809,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
       __pyx_v_self->direction = 0;
 
-      /* "pytouhou/game/enemy.pyx":544
+      /* "pytouhou/game/enemy.pyx":546
  *                 self.set_anim(right)
  *                 self.direction = +1
  *             elif x == self.x and self.direction != 0:             # <<<<<<<<<<<<<<
@@ -13949,7 +13819,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
     }
     __pyx_L13:;
 
-    /* "pytouhou/game/enemy.pyx":533
+    /* "pytouhou/game/enemy.pyx":535
  *         y += dy
  * 
  *         if self.movement_dependant_sprites is not None:             # <<<<<<<<<<<<<<
@@ -13958,7 +13828,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
   }
 
-  /* "pytouhou/game/enemy.pyx":549
+  /* "pytouhou/game/enemy.pyx":551
  * 
  * 
  *         if self.screen_box is not None:             # <<<<<<<<<<<<<<
@@ -13969,7 +13839,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "pytouhou/game/enemy.pyx":550
+    /* "pytouhou/game/enemy.pyx":552
  * 
  *         if self.screen_box is not None:
  *             xmin, ymin, xmax, ymax = self.screen_box             # <<<<<<<<<<<<<<
@@ -13984,7 +13854,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
       if (unlikely(size != 4)) {
         if (size > 4) __Pyx_RaiseTooManyValuesError(4);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 550, __pyx_L1_error)
+        __PYX_ERR(0, 552, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       __pyx_t_8 = PyTuple_GET_ITEM(sequence, 0); 
@@ -14000,7 +13870,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
         Py_ssize_t i;
         PyObject** temps[4] = {&__pyx_t_8,&__pyx_t_3,&__pyx_t_4,&__pyx_t_5};
         for (i=0; i < 4; i++) {
-          PyObject* item = PySequence_ITEM(sequence, i); if (unlikely(!item)) __PYX_ERR(0, 550, __pyx_L1_error)
+          PyObject* item = PySequence_ITEM(sequence, i); if (unlikely(!item)) __PYX_ERR(0, 552, __pyx_L1_error)
           __Pyx_GOTREF(item);
           *(temps[i]) = item;
         }
@@ -14008,7 +13878,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
       #endif
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     } else {
-      __Pyx_RaiseNoneNotIterableError(); __PYX_ERR(0, 550, __pyx_L1_error)
+      __Pyx_RaiseNoneNotIterableError(); __PYX_ERR(0, 552, __pyx_L1_error)
     }
     __pyx_v_xmin = __pyx_t_8;
     __pyx_t_8 = 0;
@@ -14019,7 +13889,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
     __pyx_v_ymax = __pyx_t_5;
     __pyx_t_5 = 0;
 
-    /* "pytouhou/game/enemy.pyx":551
+    /* "pytouhou/game/enemy.pyx":553
  *         if self.screen_box is not None:
  *             xmin, ymin, xmax, ymax = self.screen_box
  *             x = max(xmin, min(x, xmax))             # <<<<<<<<<<<<<<
@@ -14029,17 +13899,17 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
     __Pyx_INCREF(__pyx_v_xmax);
     __pyx_t_10 = __pyx_v_xmax;
     __pyx_t_7 = __pyx_v_x;
-    __pyx_t_4 = PyFloat_FromDouble(__pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 551, __pyx_L1_error)
+    __pyx_t_4 = PyFloat_FromDouble(__pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 553, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_3 = PyObject_RichCompare(__pyx_t_10, __pyx_t_4, Py_LT); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 551, __pyx_L1_error)
+    __pyx_t_3 = PyObject_RichCompare(__pyx_t_10, __pyx_t_4, Py_LT); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 553, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 551, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 553, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     if (__pyx_t_2) {
       __Pyx_INCREF(__pyx_t_10);
       __pyx_t_5 = __pyx_t_10;
     } else {
-      __pyx_t_3 = PyFloat_FromDouble(__pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 551, __pyx_L1_error)
+      __pyx_t_3 = PyFloat_FromDouble(__pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 553, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_5 = __pyx_t_3;
       __pyx_t_3 = 0;
@@ -14050,8 +13920,8 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_v_xmin);
     __pyx_t_5 = __pyx_v_xmin;
-    __pyx_t_4 = PyObject_RichCompare(__pyx_t_10, __pyx_t_5, Py_GT); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 551, __pyx_L1_error)
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 551, __pyx_L1_error)
+    __pyx_t_4 = PyObject_RichCompare(__pyx_t_10, __pyx_t_5, Py_GT); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 553, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 553, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     if (__pyx_t_2) {
       __Pyx_INCREF(__pyx_t_10);
@@ -14062,11 +13932,11 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
     }
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-    __pyx_t_7 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_7 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 551, __pyx_L1_error)
+    __pyx_t_7 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_7 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 553, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_v_x = __pyx_t_7;
 
-    /* "pytouhou/game/enemy.pyx":552
+    /* "pytouhou/game/enemy.pyx":554
  *             xmin, ymin, xmax, ymax = self.screen_box
  *             x = max(xmin, min(x, xmax))
  *             y = max(ymin, min(y, ymax))             # <<<<<<<<<<<<<<
@@ -14076,17 +13946,17 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
     __Pyx_INCREF(__pyx_v_ymax);
     __pyx_t_3 = __pyx_v_ymax;
     __pyx_t_7 = __pyx_v_y;
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 552, __pyx_L1_error)
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 554, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_4 = PyObject_RichCompare(__pyx_t_3, __pyx_t_5, Py_LT); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 552, __pyx_L1_error)
+    __pyx_t_4 = PyObject_RichCompare(__pyx_t_3, __pyx_t_5, Py_LT); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 554, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 552, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 554, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     if (__pyx_t_2) {
       __Pyx_INCREF(__pyx_t_3);
       __pyx_t_10 = __pyx_t_3;
     } else {
-      __pyx_t_4 = PyFloat_FromDouble(__pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 552, __pyx_L1_error)
+      __pyx_t_4 = PyFloat_FromDouble(__pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 554, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __pyx_t_10 = __pyx_t_4;
       __pyx_t_4 = 0;
@@ -14097,8 +13967,8 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     __Pyx_INCREF(__pyx_v_ymin);
     __pyx_t_10 = __pyx_v_ymin;
-    __pyx_t_5 = PyObject_RichCompare(__pyx_t_3, __pyx_t_10, Py_GT); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 552, __pyx_L1_error)
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 552, __pyx_L1_error)
+    __pyx_t_5 = PyObject_RichCompare(__pyx_t_3, __pyx_t_10, Py_GT); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 554, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 554, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     if (__pyx_t_2) {
       __Pyx_INCREF(__pyx_t_3);
@@ -14109,11 +13979,11 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
     }
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_7 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_7 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 552, __pyx_L1_error)
+    __pyx_t_7 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_7 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 554, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_v_y = __pyx_t_7;
 
-    /* "pytouhou/game/enemy.pyx":549
+    /* "pytouhou/game/enemy.pyx":551
  * 
  * 
  *         if self.screen_box is not None:             # <<<<<<<<<<<<<<
@@ -14122,7 +13992,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
   }
 
-  /* "pytouhou/game/enemy.pyx":555
+  /* "pytouhou/game/enemy.pyx":557
  * 
  * 
  *         self.x, self.y = x, y             # <<<<<<<<<<<<<<
@@ -14134,7 +14004,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
   __pyx_v_self->__pyx_base.x = __pyx_t_7;
   __pyx_v_self->__pyx_base.y = __pyx_t_6;
 
-  /* "pytouhou/game/enemy.pyx":558
+  /* "pytouhou/game/enemy.pyx":560
  * 
  *         #TODO
  *         if self.anmrunner is not None and not self.anmrunner.run_frame():             # <<<<<<<<<<<<<<
@@ -14148,7 +14018,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
     __pyx_t_2 = __pyx_t_11;
     goto __pyx_L22_bool_binop_done;
   }
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->__pyx_base.anmrunner, __pyx_n_s_run_frame); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 558, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->__pyx_base.anmrunner, __pyx_n_s_run_frame); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 560, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_10 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -14162,17 +14032,17 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
   }
   __pyx_t_4 = (__pyx_t_10) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_10) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
-  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 558, __pyx_L1_error)
+  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 560, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(0, 558, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(0, 560, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_1 = ((!__pyx_t_11) != 0);
   __pyx_t_2 = __pyx_t_1;
   __pyx_L22_bool_binop_done:;
   if (__pyx_t_2) {
 
-    /* "pytouhou/game/enemy.pyx":559
+    /* "pytouhou/game/enemy.pyx":561
  *         #TODO
  *         if self.anmrunner is not None and not self.anmrunner.run_frame():
  *             self.anmrunner = None             # <<<<<<<<<<<<<<
@@ -14185,7 +14055,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
     __Pyx_DECREF(__pyx_v_self->__pyx_base.anmrunner);
     __pyx_v_self->__pyx_base.anmrunner = Py_None;
 
-    /* "pytouhou/game/enemy.pyx":558
+    /* "pytouhou/game/enemy.pyx":560
  * 
  *         #TODO
  *         if self.anmrunner is not None and not self.anmrunner.run_frame():             # <<<<<<<<<<<<<<
@@ -14194,7 +14064,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
   }
 
-  /* "pytouhou/game/enemy.pyx":561
+  /* "pytouhou/game/enemy.pyx":563
  *             self.anmrunner = None
  * 
  *         if self.sprite is not None and self.visible:             # <<<<<<<<<<<<<<
@@ -14213,7 +14083,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
   __pyx_L25_bool_binop_done:;
   if (__pyx_t_2) {
 
-    /* "pytouhou/game/enemy.pyx":562
+    /* "pytouhou/game/enemy.pyx":564
  * 
  *         if self.sprite is not None and self.visible:
  *             if self.sprite.removed:             # <<<<<<<<<<<<<<
@@ -14223,7 +14093,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
     __pyx_t_2 = (__pyx_v_self->__pyx_base.sprite->removed != 0);
     if (__pyx_t_2) {
 
-      /* "pytouhou/game/enemy.pyx":563
+      /* "pytouhou/game/enemy.pyx":565
  *         if self.sprite is not None and self.visible:
  *             if self.sprite.removed:
  *                 self.sprite = None             # <<<<<<<<<<<<<<
@@ -14236,7 +14106,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
       __Pyx_DECREF(((PyObject *)__pyx_v_self->__pyx_base.sprite));
       __pyx_v_self->__pyx_base.sprite = ((struct __pyx_obj_8pytouhou_4game_6sprite_Sprite *)Py_None);
 
-      /* "pytouhou/game/enemy.pyx":562
+      /* "pytouhou/game/enemy.pyx":564
  * 
  *         if self.sprite is not None and self.visible:
  *             if self.sprite.removed:             # <<<<<<<<<<<<<<
@@ -14246,7 +14116,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
       goto __pyx_L27;
     }
 
-    /* "pytouhou/game/enemy.pyx":565
+    /* "pytouhou/game/enemy.pyx":567
  *                 self.sprite = None
  *             else:
  *                 self.sprite.update_orientation(self.angle,             # <<<<<<<<<<<<<<
@@ -14255,7 +14125,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
     /*else*/ {
 
-      /* "pytouhou/game/enemy.pyx":566
+      /* "pytouhou/game/enemy.pyx":568
  *             else:
  *                 self.sprite.update_orientation(self.angle,
  *                                                self.automatic_orientation)             # <<<<<<<<<<<<<<
@@ -14265,13 +14135,13 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
       __pyx_t_12.__pyx_n = 2;
       __pyx_t_12.angle_base = __pyx_v_self->angle;
       __pyx_t_12.force_rotation = __pyx_v_self->automatic_orientation;
-      __pyx_t_4 = ((struct __pyx_vtabstruct_8pytouhou_4game_6sprite_Sprite *)__pyx_v_self->__pyx_base.sprite->__pyx_vtab)->update_orientation(__pyx_v_self->__pyx_base.sprite, 0, &__pyx_t_12); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 565, __pyx_L1_error)
+      __pyx_t_4 = ((struct __pyx_vtabstruct_8pytouhou_4game_6sprite_Sprite *)__pyx_v_self->__pyx_base.sprite->__pyx_vtab)->update_orientation(__pyx_v_self->__pyx_base.sprite, 0, &__pyx_t_12); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 567, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
     __pyx_L27:;
 
-    /* "pytouhou/game/enemy.pyx":561
+    /* "pytouhou/game/enemy.pyx":563
  *             self.anmrunner = None
  * 
  *         if self.sprite is not None and self.visible:             # <<<<<<<<<<<<<<
@@ -14280,7 +14150,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
   }
 
-  /* "pytouhou/game/enemy.pyx":569
+  /* "pytouhou/game/enemy.pyx":571
  * 
  * 
  *         if self.bullet_launch_interval != 0:             # <<<<<<<<<<<<<<
@@ -14290,7 +14160,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
   __pyx_t_2 = ((__pyx_v_self->bullet_launch_interval != 0) != 0);
   if (__pyx_t_2) {
 
-    /* "pytouhou/game/enemy.pyx":570
+    /* "pytouhou/game/enemy.pyx":572
  * 
  *         if self.bullet_launch_interval != 0:
  *             self.bullet_launch_timer += 1             # <<<<<<<<<<<<<<
@@ -14299,7 +14169,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
     __pyx_v_self->bullet_launch_timer = (__pyx_v_self->bullet_launch_timer + 1);
 
-    /* "pytouhou/game/enemy.pyx":571
+    /* "pytouhou/game/enemy.pyx":573
  *         if self.bullet_launch_interval != 0:
  *             self.bullet_launch_timer += 1
  *             if self.bullet_launch_timer == self.bullet_launch_interval:             # <<<<<<<<<<<<<<
@@ -14309,18 +14179,18 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
     __pyx_t_2 = ((__pyx_v_self->bullet_launch_timer == __pyx_v_self->bullet_launch_interval) != 0);
     if (__pyx_t_2) {
 
-      /* "pytouhou/game/enemy.pyx":572
+      /* "pytouhou/game/enemy.pyx":574
  *             self.bullet_launch_timer += 1
  *             if self.bullet_launch_timer == self.bullet_launch_interval:
  *                 self.fire()             # <<<<<<<<<<<<<<
  * 
  *         # Check collisions
  */
-      __pyx_t_4 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->fire(__pyx_v_self, 0, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 572, __pyx_L1_error)
+      __pyx_t_4 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->fire(__pyx_v_self, 0, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 574, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-      /* "pytouhou/game/enemy.pyx":571
+      /* "pytouhou/game/enemy.pyx":573
  *         if self.bullet_launch_interval != 0:
  *             self.bullet_launch_timer += 1
  *             if self.bullet_launch_timer == self.bullet_launch_interval:             # <<<<<<<<<<<<<<
@@ -14329,7 +14199,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
     }
 
-    /* "pytouhou/game/enemy.pyx":569
+    /* "pytouhou/game/enemy.pyx":571
  * 
  * 
  *         if self.bullet_launch_interval != 0:             # <<<<<<<<<<<<<<
@@ -14338,7 +14208,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
   }
 
-  /* "pytouhou/game/enemy.pyx":575
+  /* "pytouhou/game/enemy.pyx":577
  * 
  *         # Check collisions
  *         if self.touchable:             # <<<<<<<<<<<<<<
@@ -14348,16 +14218,16 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
   __pyx_t_2 = (__pyx_v_self->touchable != 0);
   if (__pyx_t_2) {
 
-    /* "pytouhou/game/enemy.pyx":576
+    /* "pytouhou/game/enemy.pyx":578
  *         # Check collisions
  *         if self.touchable:
  *             self.check_collisions()             # <<<<<<<<<<<<<<
  * 
  *         for anm in self.aux_anm:
  */
-    __pyx_t_2 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->check_collisions(__pyx_v_self); if (unlikely(__pyx_t_2 == ((int)1))) __PYX_ERR(0, 576, __pyx_L1_error)
+    __pyx_t_2 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->check_collisions(__pyx_v_self); if (unlikely(__pyx_t_2 == ((int)1))) __PYX_ERR(0, 578, __pyx_L1_error)
 
-    /* "pytouhou/game/enemy.pyx":575
+    /* "pytouhou/game/enemy.pyx":577
  * 
  *         # Check collisions
  *         if self.touchable:             # <<<<<<<<<<<<<<
@@ -14366,7 +14236,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
   }
 
-  /* "pytouhou/game/enemy.pyx":578
+  /* "pytouhou/game/enemy.pyx":580
  *             self.check_collisions()
  * 
  *         for anm in self.aux_anm:             # <<<<<<<<<<<<<<
@@ -14375,21 +14245,21 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
   if (unlikely(__pyx_v_self->aux_anm == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-    __PYX_ERR(0, 578, __pyx_L1_error)
+    __PYX_ERR(0, 580, __pyx_L1_error)
   }
   __pyx_t_4 = __pyx_v_self->aux_anm; __Pyx_INCREF(__pyx_t_4); __pyx_t_13 = 0;
   for (;;) {
     if (__pyx_t_13 >= PyList_GET_SIZE(__pyx_t_4)) break;
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    __pyx_t_3 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_13); __Pyx_INCREF(__pyx_t_3); __pyx_t_13++; if (unlikely(0 < 0)) __PYX_ERR(0, 578, __pyx_L1_error)
+    __pyx_t_3 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_13); __Pyx_INCREF(__pyx_t_3); __pyx_t_13++; if (unlikely(0 < 0)) __PYX_ERR(0, 580, __pyx_L1_error)
     #else
-    __pyx_t_3 = PySequence_ITEM(__pyx_t_4, __pyx_t_13); __pyx_t_13++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 578, __pyx_L1_error)
+    __pyx_t_3 = PySequence_ITEM(__pyx_t_4, __pyx_t_13); __pyx_t_13++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 580, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     #endif
     __Pyx_XDECREF_SET(__pyx_v_anm, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "pytouhou/game/enemy.pyx":579
+    /* "pytouhou/game/enemy.pyx":581
  * 
  *         for anm in self.aux_anm:
  *             if anm is not None:             # <<<<<<<<<<<<<<
@@ -14400,30 +14270,30 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
     __pyx_t_11 = (__pyx_t_2 != 0);
     if (__pyx_t_11) {
 
-      /* "pytouhou/game/enemy.pyx":580
+      /* "pytouhou/game/enemy.pyx":582
  *         for anm in self.aux_anm:
  *             if anm is not None:
  *                 anm.x, anm.y = self.x, self.y             # <<<<<<<<<<<<<<
  *                 anm.update()
  * 
  */
-      __pyx_t_3 = PyFloat_FromDouble(__pyx_v_self->__pyx_base.x); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 580, __pyx_L1_error)
+      __pyx_t_3 = PyFloat_FromDouble(__pyx_v_self->__pyx_base.x); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 582, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_10 = PyFloat_FromDouble(__pyx_v_self->__pyx_base.y); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 580, __pyx_L1_error)
+      __pyx_t_10 = PyFloat_FromDouble(__pyx_v_self->__pyx_base.y); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 582, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
-      if (__Pyx_PyObject_SetAttrStr(__pyx_v_anm, __pyx_n_s_x, __pyx_t_3) < 0) __PYX_ERR(0, 580, __pyx_L1_error)
+      if (__Pyx_PyObject_SetAttrStr(__pyx_v_anm, __pyx_n_s_x, __pyx_t_3) < 0) __PYX_ERR(0, 582, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (__Pyx_PyObject_SetAttrStr(__pyx_v_anm, __pyx_n_s_y, __pyx_t_10) < 0) __PYX_ERR(0, 580, __pyx_L1_error)
+      if (__Pyx_PyObject_SetAttrStr(__pyx_v_anm, __pyx_n_s_y, __pyx_t_10) < 0) __PYX_ERR(0, 582, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
 
-      /* "pytouhou/game/enemy.pyx":581
+      /* "pytouhou/game/enemy.pyx":583
  *             if anm is not None:
  *                 anm.x, anm.y = self.x, self.y
  *                 anm.update()             # <<<<<<<<<<<<<<
  * 
  *         self.handle_callbacks()
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_anm, __pyx_n_s_update); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 581, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_anm, __pyx_n_s_update); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 583, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_5 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -14437,12 +14307,12 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
       }
       __pyx_t_10 = (__pyx_t_5) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_5) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 581, __pyx_L1_error)
+      if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 583, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
 
-      /* "pytouhou/game/enemy.pyx":579
+      /* "pytouhou/game/enemy.pyx":581
  * 
  *         for anm in self.aux_anm:
  *             if anm is not None:             # <<<<<<<<<<<<<<
@@ -14451,7 +14321,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
     }
 
-    /* "pytouhou/game/enemy.pyx":578
+    /* "pytouhou/game/enemy.pyx":580
  *             self.check_collisions()
  * 
  *         for anm in self.aux_anm:             # <<<<<<<<<<<<<<
@@ -14461,16 +14331,16 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
   }
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pytouhou/game/enemy.pyx":583
+  /* "pytouhou/game/enemy.pyx":585
  *                 anm.update()
  * 
  *         self.handle_callbacks()             # <<<<<<<<<<<<<<
  * 
  *         self.frame += 1
  */
-  __pyx_t_11 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->handle_callbacks(__pyx_v_self); if (unlikely(__pyx_t_11 == ((int)1))) __PYX_ERR(0, 583, __pyx_L1_error)
+  __pyx_t_11 = ((struct __pyx_vtabstruct_8pytouhou_4game_5enemy_Enemy *)__pyx_v_self->__pyx_vtab)->handle_callbacks(__pyx_v_self); if (unlikely(__pyx_t_11 == ((int)1))) __PYX_ERR(0, 585, __pyx_L1_error)
 
-  /* "pytouhou/game/enemy.pyx":585
+  /* "pytouhou/game/enemy.pyx":587
  *         self.handle_callbacks()
  * 
  *         self.frame += 1             # <<<<<<<<<<<<<<
@@ -14479,7 +14349,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
  */
   __pyx_v_self->frame = (__pyx_v_self->frame + 1);
 
-  /* "pytouhou/game/enemy.pyx":505
+  /* "pytouhou/game/enemy.pyx":507
  * 
  * 
  *     cdef bint update(self) except True:             # <<<<<<<<<<<<<<
@@ -14512,7 +14382,7 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
   return __pyx_r;
 }
 
-/* "pytouhou/game/enemy.pyx":588
+/* "pytouhou/game/enemy.pyx":590
  * 
  * 
  *     def select_player_key(self, player):             # <<<<<<<<<<<<<<
@@ -14521,7 +14391,6 @@ static int __pyx_f_8pytouhou_4game_5enemy_5Enemy_update(struct __pyx_obj_8pytouh
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_31select_player_key(PyObject *__pyx_v_self, PyObject *__pyx_v_player); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_5Enemy_31select_player_key = {"select_player_key", (PyCFunction)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_31select_player_key, METH_O, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_31select_player_key(PyObject *__pyx_v_self, PyObject *__pyx_v_player) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -14545,41 +14414,41 @@ static PyObject *__pyx_pf_8pytouhou_4game_5enemy_5Enemy_30select_player_key(stru
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("select_player_key", 0);
 
-  /* "pytouhou/game/enemy.pyx":589
+  /* "pytouhou/game/enemy.pyx":591
  * 
  *     def select_player_key(self, player):
  *         return ((player.x - self.x) ** 2 + (player.y - self.y) ** 2, player.character)             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_player, __pyx_n_s_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 589, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_player, __pyx_n_s_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 591, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyFloat_FromDouble(__pyx_v_self->__pyx_base.x); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 589, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble(__pyx_v_self->__pyx_base.x); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 591, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyNumber_Subtract(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 589, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Subtract(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 591, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyNumber_Power(__pyx_t_3, __pyx_int_2, Py_None); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 589, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Power(__pyx_t_3, __pyx_int_2, Py_None); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 591, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_player, __pyx_n_s_y); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 589, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_player, __pyx_n_s_y); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 591, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->__pyx_base.y); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 589, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->__pyx_base.y); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 591, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = PyNumber_Subtract(__pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 589, __pyx_L1_error)
+  __pyx_t_4 = PyNumber_Subtract(__pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 591, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyNumber_Power(__pyx_t_4, __pyx_int_2, Py_None); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 589, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Power(__pyx_t_4, __pyx_int_2, Py_None); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 591, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PyNumber_Add(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 589, __pyx_L1_error)
+  __pyx_t_4 = PyNumber_Add(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 591, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_player, __pyx_n_s_character); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 589, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_player, __pyx_n_s_character); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 591, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 589, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 591, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_4);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_4);
@@ -14591,7 +14460,7 @@ static PyObject *__pyx_pf_8pytouhou_4game_5enemy_5Enemy_30select_player_key(stru
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "pytouhou/game/enemy.pyx":588
+  /* "pytouhou/game/enemy.pyx":590
  * 
  * 
  *     def select_player_key(self, player):             # <<<<<<<<<<<<<<
@@ -18338,7 +18207,6 @@ static int __pyx_pf_8pytouhou_4game_5enemy_5Enemy_7process_4__del__(struct __pyx
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_33__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_5Enemy_33__reduce_cython__ = {"__reduce_cython__", (PyCFunction)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_33__reduce_cython__, METH_NOARGS, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_33__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -18988,7 +18856,6 @@ static PyObject *__pyx_pf_8pytouhou_4game_5enemy_5Enemy_32__reduce_cython__(stru
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_35__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_5enemy_5Enemy_35__setstate_cython__ = {"__setstate_cython__", (PyCFunction)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_35__setstate_cython__, METH_O, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_5enemy_5Enemy_35__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -20986,6 +20853,9 @@ static int __pyx_setprop_8pytouhou_4game_5enemy_8Callback_args(PyObject *o, PyOb
 }
 
 static PyMethodDef __pyx_methods_8pytouhou_4game_5enemy_Callback[] = {
+  {"enable", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_8Callback_5enable, METH_VARARGS|METH_KEYWORDS, 0},
+  {"disable", (PyCFunction)__pyx_pw_8pytouhou_4game_5enemy_8Callback_7disable, METH_NOARGS, 0},
+  {"fire", (PyCFunction)__pyx_pw_8pytouhou_4game_5enemy_8Callback_9fire, METH_NOARGS, 0},
   {"__reduce_cython__", (PyCFunction)__pyx_pw_8pytouhou_4game_5enemy_8Callback_11__reduce_cython__, METH_NOARGS, 0},
   {"__setstate_cython__", (PyCFunction)__pyx_pw_8pytouhou_4game_5enemy_8Callback_13__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
@@ -21907,6 +21777,20 @@ static int __pyx_setprop_8pytouhou_4game_5enemy_5Enemy_process(PyObject *o, PyOb
 }
 
 static PyMethodDef __pyx_methods_8pytouhou_4game_5enemy_Enemy[] = {
+  {"play_sound", (PyCFunction)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_3play_sound, METH_O, 0},
+  {"set_hitbox", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_5set_hitbox, METH_VARARGS|METH_KEYWORDS, 0},
+  {"set_bullet_attributes", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_7set_bullet_attributes, METH_VARARGS|METH_KEYWORDS, 0},
+  {"set_bullet_launch_interval", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_9set_bullet_launch_interval, METH_VARARGS|METH_KEYWORDS, 0},
+  {"fire", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_11fire, METH_VARARGS|METH_KEYWORDS, 0},
+  {"new_laser", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_13new_laser, METH_VARARGS|METH_KEYWORDS, 0},
+  {"select_player", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_15select_player, METH_VARARGS|METH_KEYWORDS, 0},
+  {"get_angle", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_17get_angle, METH_VARARGS|METH_KEYWORDS, 0},
+  {"set_anim", (PyCFunction)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_19set_anim, METH_O, 0},
+  {"set_aux_anm", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_21set_aux_anm, METH_VARARGS|METH_KEYWORDS, 0},
+  {"set_pos", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_23set_pos, METH_VARARGS|METH_KEYWORDS, 0},
+  {"move_to", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_25move_to, METH_VARARGS|METH_KEYWORDS, 0},
+  {"stop_in", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_27stop_in, METH_VARARGS|METH_KEYWORDS, 0},
+  {"set_boss", (PyCFunction)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_29set_boss, METH_O, 0},
   {"select_player_key", (PyCFunction)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_31select_player_key, METH_O, 0},
   {"__reduce_cython__", (PyCFunction)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_33__reduce_cython__, METH_NOARGS, 0},
   {"__setstate_cython__", (PyCFunction)__pyx_pw_8pytouhou_4game_5enemy_5Enemy_35__setstate_cython__, METH_O, 0},
@@ -22082,29 +21966,7 @@ static struct PyModuleDef __pyx_moduledef = {
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_ANMRunner, __pyx_k_ANMRunner, sizeof(__pyx_k_ANMRunner), 0, 0, 1, 1},
   {&__pyx_n_s_Callback, __pyx_k_Callback, sizeof(__pyx_k_Callback), 0, 0, 1, 1},
-  {&__pyx_n_s_Callback___reduce_cython, __pyx_k_Callback___reduce_cython, sizeof(__pyx_k_Callback___reduce_cython), 0, 0, 1, 1},
-  {&__pyx_n_s_Callback___setstate_cython, __pyx_k_Callback___setstate_cython, sizeof(__pyx_k_Callback___setstate_cython), 0, 0, 1, 1},
-  {&__pyx_n_s_Callback_disable, __pyx_k_Callback_disable, sizeof(__pyx_k_Callback_disable), 0, 0, 1, 1},
-  {&__pyx_n_s_Callback_enable, __pyx_k_Callback_enable, sizeof(__pyx_k_Callback_enable), 0, 0, 1, 1},
-  {&__pyx_n_s_Callback_fire, __pyx_k_Callback_fire, sizeof(__pyx_k_Callback_fire), 0, 0, 1, 1},
   {&__pyx_n_s_Enemy, __pyx_k_Enemy, sizeof(__pyx_k_Enemy), 0, 0, 1, 1},
-  {&__pyx_n_s_Enemy___reduce_cython, __pyx_k_Enemy___reduce_cython, sizeof(__pyx_k_Enemy___reduce_cython), 0, 0, 1, 1},
-  {&__pyx_n_s_Enemy___setstate_cython, __pyx_k_Enemy___setstate_cython, sizeof(__pyx_k_Enemy___setstate_cython), 0, 0, 1, 1},
-  {&__pyx_n_s_Enemy_fire, __pyx_k_Enemy_fire, sizeof(__pyx_k_Enemy_fire), 0, 0, 1, 1},
-  {&__pyx_n_s_Enemy_get_angle, __pyx_k_Enemy_get_angle, sizeof(__pyx_k_Enemy_get_angle), 0, 0, 1, 1},
-  {&__pyx_n_s_Enemy_move_to, __pyx_k_Enemy_move_to, sizeof(__pyx_k_Enemy_move_to), 0, 0, 1, 1},
-  {&__pyx_n_s_Enemy_new_laser, __pyx_k_Enemy_new_laser, sizeof(__pyx_k_Enemy_new_laser), 0, 0, 1, 1},
-  {&__pyx_n_s_Enemy_play_sound, __pyx_k_Enemy_play_sound, sizeof(__pyx_k_Enemy_play_sound), 0, 0, 1, 1},
-  {&__pyx_n_s_Enemy_select_player, __pyx_k_Enemy_select_player, sizeof(__pyx_k_Enemy_select_player), 0, 0, 1, 1},
-  {&__pyx_n_s_Enemy_select_player_key, __pyx_k_Enemy_select_player_key, sizeof(__pyx_k_Enemy_select_player_key), 0, 0, 1, 1},
-  {&__pyx_n_s_Enemy_set_anim, __pyx_k_Enemy_set_anim, sizeof(__pyx_k_Enemy_set_anim), 0, 0, 1, 1},
-  {&__pyx_n_s_Enemy_set_aux_anm, __pyx_k_Enemy_set_aux_anm, sizeof(__pyx_k_Enemy_set_aux_anm), 0, 0, 1, 1},
-  {&__pyx_n_s_Enemy_set_boss, __pyx_k_Enemy_set_boss, sizeof(__pyx_k_Enemy_set_boss), 0, 0, 1, 1},
-  {&__pyx_n_s_Enemy_set_bullet_attributes, __pyx_k_Enemy_set_bullet_attributes, sizeof(__pyx_k_Enemy_set_bullet_attributes), 0, 0, 1, 1},
-  {&__pyx_n_s_Enemy_set_bullet_launch_interval, __pyx_k_Enemy_set_bullet_launch_interval, sizeof(__pyx_k_Enemy_set_bullet_launch_interval), 0, 0, 1, 1},
-  {&__pyx_n_s_Enemy_set_hitbox, __pyx_k_Enemy_set_hitbox, sizeof(__pyx_k_Enemy_set_hitbox), 0, 0, 1, 1},
-  {&__pyx_n_s_Enemy_set_pos, __pyx_k_Enemy_set_pos, sizeof(__pyx_k_Enemy_set_pos), 0, 0, 1, 1},
-  {&__pyx_n_s_Enemy_stop_in, __pyx_k_Enemy_stop_in, sizeof(__pyx_k_Enemy_stop_in), 0, 0, 1, 1},
   {&__pyx_kp_s_Incompatible_checksums_0x_x_vs_0, __pyx_k_Incompatible_checksums_0x_x_vs_0, sizeof(__pyx_k_Incompatible_checksums_0x_x_vs_0), 0, 0, 1, 0},
   {&__pyx_kp_s_Incompatible_checksums_0x_x_vs_0_2, __pyx_k_Incompatible_checksums_0x_x_vs_0_2, sizeof(__pyx_k_Incompatible_checksums_0x_x_vs_0_2), 0, 0, 1, 0},
   {&__pyx_n_s_IndexError, __pyx_k_IndexError, sizeof(__pyx_k_IndexError), 0, 0, 1, 1},
@@ -22125,7 +21987,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_kp_u_damage00_wav, __pyx_k_damage00_wav, sizeof(__pyx_k_damage00_wav), 0, 1, 0, 0},
   {&__pyx_n_s_dict, __pyx_k_dict, sizeof(__pyx_k_dict), 0, 0, 1, 1},
-  {&__pyx_n_s_dict_2, __pyx_k_dict_2, sizeof(__pyx_k_dict_2), 0, 0, 1, 1},
   {&__pyx_n_s_die_score, __pyx_k_die_score, sizeof(__pyx_k_die_score), 0, 0, 1, 1},
   {&__pyx_n_s_disable, __pyx_k_disable, sizeof(__pyx_k_disable), 0, 0, 1, 1},
   {&__pyx_n_s_duration, __pyx_k_duration, sizeof(__pyx_k_duration), 0, 0, 1, 1},
@@ -22171,13 +22032,11 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_offset, __pyx_k_offset, sizeof(__pyx_k_offset), 0, 0, 1, 1},
   {&__pyx_n_s_pickle, __pyx_k_pickle, sizeof(__pyx_k_pickle), 0, 0, 1, 1},
   {&__pyx_n_s_play_sound, __pyx_k_play_sound, sizeof(__pyx_k_play_sound), 0, 0, 1, 1},
-  {&__pyx_n_s_player, __pyx_k_player, sizeof(__pyx_k_player), 0, 0, 1, 1},
   {&__pyx_n_s_players, __pyx_k_players, sizeof(__pyx_k_players), 0, 0, 1, 1},
   {&__pyx_n_s_pos, __pyx_k_pos, sizeof(__pyx_k_pos), 0, 0, 1, 1},
   {&__pyx_n_u_power0, __pyx_k_power0, sizeof(__pyx_k_power0), 0, 1, 0, 1},
   {&__pyx_n_u_power1, __pyx_k_power1, sizeof(__pyx_k_power1), 0, 1, 0, 1},
   {&__pyx_n_s_pytouhou_game_enemy, __pyx_k_pytouhou_game_enemy, sizeof(__pyx_k_pytouhou_game_enemy), 0, 0, 1, 1},
-  {&__pyx_kp_s_pytouhou_game_enemy_pyx, __pyx_k_pytouhou_game_enemy_pyx, sizeof(__pyx_k_pytouhou_game_enemy_pyx), 0, 0, 1, 0},
   {&__pyx_n_s_pytouhou_game_sprite, __pyx_k_pytouhou_game_sprite, sizeof(__pyx_k_pytouhou_game_sprite), 0, 0, 1, 1},
   {&__pyx_n_s_pytouhou_vm, __pyx_k_pytouhou_vm, sizeof(__pyx_k_pytouhou_vm), 0, 0, 1, 1},
   {&__pyx_n_s_pyx_PickleError, __pyx_k_pyx_PickleError, sizeof(__pyx_k_pyx_PickleError), 0, 0, 1, 1},
@@ -22192,6 +22051,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_reduce, __pyx_k_reduce, sizeof(__pyx_k_reduce), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_cython, __pyx_k_reduce_cython, sizeof(__pyx_k_reduce_cython), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_ex, __pyx_k_reduce_ex, sizeof(__pyx_k_reduce_ex), 0, 0, 1, 1},
+  {&__pyx_n_s_rewards, __pyx_k_rewards, sizeof(__pyx_k_rewards), 0, 0, 1, 1},
   {&__pyx_n_s_run_frame, __pyx_k_run_frame, sizeof(__pyx_k_run_frame), 0, 0, 1, 1},
   {&__pyx_n_s_run_iteration, __pyx_k_run_iteration, sizeof(__pyx_k_run_iteration), 0, 0, 1, 1},
   {&__pyx_kp_u_s_wav, __pyx_k_s_wav, sizeof(__pyx_k_s_wav), 0, 1, 0, 0},
@@ -22199,7 +22059,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_scripts, __pyx_k_scripts, sizeof(__pyx_k_scripts), 0, 0, 1, 1},
   {&__pyx_n_s_select_player, __pyx_k_select_player, sizeof(__pyx_k_select_player), 0, 0, 1, 1},
   {&__pyx_n_s_select_player_key, __pyx_k_select_player_key, sizeof(__pyx_k_select_player_key), 0, 0, 1, 1},
-  {&__pyx_n_s_self, __pyx_k_self, sizeof(__pyx_k_self), 0, 0, 1, 1},
   {&__pyx_n_s_set_anim, __pyx_k_set_anim, sizeof(__pyx_k_set_anim), 0, 0, 1, 1},
   {&__pyx_n_s_set_aux_anm, __pyx_k_set_aux_anm, sizeof(__pyx_k_set_aux_anm), 0, 0, 1, 1},
   {&__pyx_n_s_set_boss, __pyx_k_set_boss, sizeof(__pyx_k_set_boss), 0, 0, 1, 1},
@@ -22217,7 +22076,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_start, __pyx_k_start, sizeof(__pyx_k_start), 0, 0, 1, 1},
   {&__pyx_n_s_start_duration, __pyx_k_start_duration, sizeof(__pyx_k_start_duration), 0, 0, 1, 1},
   {&__pyx_n_s_start_offset, __pyx_k_start_offset, sizeof(__pyx_k_start_offset), 0, 0, 1, 1},
-  {&__pyx_n_s_state, __pyx_k_state, sizeof(__pyx_k_state), 0, 0, 1, 1},
   {&__pyx_n_s_stop_in, __pyx_k_stop_in, sizeof(__pyx_k_stop_in), 0, 0, 1, 1},
   {&__pyx_kp_s_stringsource, __pyx_k_stringsource, sizeof(__pyx_k_stringsource), 0, 0, 1, 0},
   {&__pyx_n_u_tan00, __pyx_k_tan00, sizeof(__pyx_k_tan00), 0, 1, 0, 1},
@@ -22229,7 +22087,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_type_2, __pyx_k_type_2, sizeof(__pyx_k_type_2), 0, 0, 1, 1},
   {&__pyx_n_s_unknown, __pyx_k_unknown, sizeof(__pyx_k_unknown), 0, 0, 1, 1},
   {&__pyx_n_s_update, __pyx_k_update, sizeof(__pyx_k_update), 0, 0, 1, 1},
-  {&__pyx_n_s_use_setstate, __pyx_k_use_setstate, sizeof(__pyx_k_use_setstate), 0, 0, 1, 1},
   {&__pyx_n_s_value, __pyx_k_value, sizeof(__pyx_k_value), 0, 0, 1, 1},
   {&__pyx_n_s_values, __pyx_k_values, sizeof(__pyx_k_values), 0, 0, 1, 1},
   {&__pyx_n_s_variant, __pyx_k_variant, sizeof(__pyx_k_variant), 0, 0, 1, 1},
@@ -22299,14 +22156,14 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
-  /* "pytouhou/game/enemy.pyx":502
+  /* "pytouhou/game/enemy.pyx":504
  *                 self.life = 0 #TODO: do this next frame? Bypass self.touchable?
  *             else:
  *                 raise Exception('What the hell, man!')             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_tuple__5 = PyTuple_Pack(1, __pyx_kp_u_What_the_hell_man); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 502, __pyx_L1_error)
+  __pyx_tuple__5 = PyTuple_Pack(1, __pyx_kp_u_What_the_hell_man); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 504, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__5);
   __Pyx_GIVEREF(__pyx_tuple__5);
 
@@ -22324,276 +22181,19 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__7);
   __Pyx_GIVEREF(__pyx_tuple__7);
 
-  /* "pytouhou/game/enemy.pyx":32
- *         return self.function is not None
- * 
- *     cpdef enable(self, function, tuple args):             # <<<<<<<<<<<<<<
- *         self.function = function
- *         self.args = args
- */
-  __pyx_tuple__8 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_function, __pyx_n_s_args); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 32, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__8);
-  __Pyx_GIVEREF(__pyx_tuple__8);
-  __pyx_codeobj__9 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__8, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pytouhou_game_enemy_pyx, __pyx_n_s_enable, 32, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__9)) __PYX_ERR(0, 32, __pyx_L1_error)
-
-  /* "pytouhou/game/enemy.pyx":36
- *         self.args = args
- * 
- *     cpdef disable(self):             # <<<<<<<<<<<<<<
- *         self.function = None
- * 
- */
-  __pyx_tuple__10 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 36, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__10);
-  __Pyx_GIVEREF(__pyx_tuple__10);
-  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pytouhou_game_enemy_pyx, __pyx_n_s_disable, 36, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 36, __pyx_L1_error)
-
-  /* "pytouhou/game/enemy.pyx":39
- *         self.function = None
- * 
- *     cpdef fire(self):             # <<<<<<<<<<<<<<
- *         if self.function is not None:
- *             self.function(*self.args)
- */
-  __pyx_tuple__12 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 39, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__12);
-  __Pyx_GIVEREF(__pyx_tuple__12);
-  __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pytouhou_game_enemy_pyx, __pyx_n_s_fire, 39, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 39, __pyx_L1_error)
-
-  /* "(tree fragment)":1
- * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
- *     cdef tuple state
- *     cdef object _dict
- */
-  __pyx_tuple__14 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_state, __pyx_n_s_dict_2, __pyx_n_s_use_setstate); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(2, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__14);
-  __Pyx_GIVEREF(__pyx_tuple__14);
-  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(1, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(2, 1, __pyx_L1_error)
-
-  /* "(tree fragment)":16
- *     else:
- *         return __pyx_unpickle_Callback, (type(self), 0x205b8ed, state)
- * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
- *     __pyx_unpickle_Callback__set_state(self, __pyx_state)
- */
-  __pyx_tuple__16 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_pyx_state); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(2, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__16);
-  __Pyx_GIVEREF(__pyx_tuple__16);
-  __pyx_codeobj__17 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 16, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__17)) __PYX_ERR(2, 16, __pyx_L1_error)
-
-  /* "pytouhou/game/enemy.pyx":111
- * 
- * 
- *     cpdef play_sound(self, index):             # <<<<<<<<<<<<<<
- *         name = {
- *             5: 'power0',
- */
-  __pyx_tuple__18 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_index); if (unlikely(!__pyx_tuple__18)) __PYX_ERR(0, 111, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__18);
-  __Pyx_GIVEREF(__pyx_tuple__18);
-  __pyx_codeobj__19 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pytouhou_game_enemy_pyx, __pyx_n_s_play_sound, 111, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__19)) __PYX_ERR(0, 111, __pyx_L1_error)
-
-  /* "pytouhou/game/enemy.pyx":131
- * 
- * 
- *     cpdef set_hitbox(self, double width, double height):             # <<<<<<<<<<<<<<
- *         self.hitbox_half_size[:] = [width / 2, height / 2]
- * 
- */
-  __pyx_tuple__20 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_width, __pyx_n_s_height); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(0, 131, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__20);
-  __Pyx_GIVEREF(__pyx_tuple__20);
-  __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pytouhou_game_enemy_pyx, __pyx_n_s_set_hitbox, 131, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 131, __pyx_L1_error)
-
-  /* "pytouhou/game/enemy.pyx":135
- * 
- * 
- *     cpdef set_bullet_attributes(self, type_, anim, sprite_idx_offset,             # <<<<<<<<<<<<<<
- *                                 unsigned long bullets_per_shot,
- *                                 unsigned long number_of_shots, double speed,
- */
-  __pyx_tuple__22 = PyTuple_Pack(11, __pyx_n_s_self, __pyx_n_s_type_2, __pyx_n_s_anim, __pyx_n_s_sprite_idx_offset, __pyx_n_s_bullets_per_shot, __pyx_n_s_number_of_shots, __pyx_n_s_speed, __pyx_n_s_speed2, __pyx_n_s_launch_angle, __pyx_n_s_angle, __pyx_n_s_flags); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(0, 135, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__22);
-  __Pyx_GIVEREF(__pyx_tuple__22);
-  __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(11, 0, 11, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pytouhou_game_enemy_pyx, __pyx_n_s_set_bullet_attributes, 135, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(0, 135, __pyx_L1_error)
-
-  /* "pytouhou/game/enemy.pyx":158
- * 
- * 
- *     cpdef set_bullet_launch_interval(self, long value, unsigned long start=0):             # <<<<<<<<<<<<<<
- *         # Apply difficulty-specific modifiers:
- *         #TODO: check every value possible! Look around 102h.exe@0x408720
- */
-  __pyx_tuple__24 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_value, __pyx_n_s_start); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(0, 158, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__24);
-  __Pyx_GIVEREF(__pyx_tuple__24);
-  __pyx_codeobj__25 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pytouhou_game_enemy_pyx, __pyx_n_s_set_bullet_launch_interval, 158, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__25)) __PYX_ERR(0, 158, __pyx_L1_error)
-
-  /* "pytouhou/game/enemy.pyx":167
- * 
- * 
- *     cpdef fire(self, offset=None, bullet_attributes=None, tuple launch_pos=None):             # <<<<<<<<<<<<<<
- *         cdef unsigned long type_, bullets_per_shot, number_of_shots
- *         cdef double speed, speed2, launch_angle, angle
- */
-  __pyx_tuple__26 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_offset, __pyx_n_s_bullet_attributes, __pyx_n_s_launch_pos); if (unlikely(!__pyx_tuple__26)) __PYX_ERR(0, 167, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__26);
-  __Pyx_GIVEREF(__pyx_tuple__26);
-  __pyx_codeobj__27 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pytouhou_game_enemy_pyx, __pyx_n_s_fire, 167, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__27)) __PYX_ERR(0, 167, __pyx_L1_error)
-
-  /* "pytouhou/game/enemy.pyx":223
- * 
- * 
- *     cpdef new_laser(self, unsigned long variant, laser_type, sprite_idx_offset,             # <<<<<<<<<<<<<<
- *                     double angle, speed, start_offset, end_offset, max_length,
- *                     width, start_duration, duration, end_duration,
- */
-  __pyx_tuple__28 = PyTuple_Pack(17, __pyx_n_s_self, __pyx_n_s_variant, __pyx_n_s_laser_type, __pyx_n_s_sprite_idx_offset, __pyx_n_s_angle, __pyx_n_s_speed, __pyx_n_s_start_offset, __pyx_n_s_end_offset, __pyx_n_s_max_length, __pyx_n_s_width, __pyx_n_s_start_duration, __pyx_n_s_duration, __pyx_n_s_end_duration, __pyx_n_s_grazing_delay, __pyx_n_s_grazing_extra_duration, __pyx_n_s_unknown, __pyx_n_s_offset); if (unlikely(!__pyx_tuple__28)) __PYX_ERR(0, 223, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__28);
-  __Pyx_GIVEREF(__pyx_tuple__28);
-  __pyx_codeobj__29 = (PyObject*)__Pyx_PyCode_New(17, 0, 17, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__28, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pytouhou_game_enemy_pyx, __pyx_n_s_new_laser, 223, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__29)) __PYX_ERR(0, 223, __pyx_L1_error)
-
-  /* "pytouhou/game/enemy.pyx":246
- * 
- * 
- *     cpdef Player select_player(self, list players=None):             # <<<<<<<<<<<<<<
- *         if players is None:
- *             players = self._game.players
- */
-  __pyx_tuple__30 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_players); if (unlikely(!__pyx_tuple__30)) __PYX_ERR(0, 246, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__30);
-  __Pyx_GIVEREF(__pyx_tuple__30);
-  __pyx_codeobj__31 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__30, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pytouhou_game_enemy_pyx, __pyx_n_s_select_player, 246, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__31)) __PYX_ERR(0, 246, __pyx_L1_error)
-
-  /* "pytouhou/game/enemy.pyx":252
- * 
- * 
- *     cpdef double get_angle(self, Element target, tuple pos=None) except 42:             # <<<<<<<<<<<<<<
- *         cdef double x, y
- *         x, y = pos or (self.x, self.y)
- */
-  __pyx_tuple__32 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_target, __pyx_n_s_pos); if (unlikely(!__pyx_tuple__32)) __PYX_ERR(0, 252, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__32);
-  __Pyx_GIVEREF(__pyx_tuple__32);
-  __pyx_codeobj__33 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__32, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pytouhou_game_enemy_pyx, __pyx_n_s_get_angle, 252, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__33)) __PYX_ERR(0, 252, __pyx_L1_error)
-
-  /* "pytouhou/game/enemy.pyx":258
- * 
- * 
- *     cpdef set_anim(self, index):             # <<<<<<<<<<<<<<
- *         entry = 0 if index in self._anms[0].scripts else 1
- *         self.sprite = Sprite()
- */
-  __pyx_tuple__34 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_index); if (unlikely(!__pyx_tuple__34)) __PYX_ERR(0, 258, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__34);
-  __Pyx_GIVEREF(__pyx_tuple__34);
-  __pyx_codeobj__35 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__34, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pytouhou_game_enemy_pyx, __pyx_n_s_set_anim, 258, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__35)) __PYX_ERR(0, 258, __pyx_L1_error)
-
-  /* "pytouhou/game/enemy.pyx":279
- * 
- * 
- *     cpdef set_aux_anm(self, long number, long index):             # <<<<<<<<<<<<<<
- *         entry = 0 if index in self._anms[0].scripts else 1
- *         self.aux_anm[number] = Effect((self.x, self.y), index, self._anms[entry])
- */
-  __pyx_tuple__36 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_number, __pyx_n_s_index); if (unlikely(!__pyx_tuple__36)) __PYX_ERR(0, 279, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__36);
-  __Pyx_GIVEREF(__pyx_tuple__36);
-  __pyx_codeobj__37 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__36, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pytouhou_game_enemy_pyx, __pyx_n_s_set_aux_anm, 279, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__37)) __PYX_ERR(0, 279, __pyx_L1_error)
-
-  /* "pytouhou/game/enemy.pyx":284
- * 
- * 
- *     cpdef set_pos(self, double x, double y, double z):             # <<<<<<<<<<<<<<
- *         self.x, self.y = x, y
- *         self.update_mode = 1
- */
-  __pyx_tuple__38 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_x, __pyx_n_s_y, __pyx_n_s_z); if (unlikely(!__pyx_tuple__38)) __PYX_ERR(0, 284, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__38);
-  __Pyx_GIVEREF(__pyx_tuple__38);
-  __pyx_codeobj__39 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__38, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pytouhou_game_enemy_pyx, __pyx_n_s_set_pos, 284, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__39)) __PYX_ERR(0, 284, __pyx_L1_error)
-
-  /* "pytouhou/game/enemy.pyx":290
- * 
- * 
- *     cpdef move_to(self, unsigned long duration, double x, double y, double z,             # <<<<<<<<<<<<<<
- *                   formula):
- *         frame = self._game.frame
- */
-  __pyx_tuple__40 = PyTuple_Pack(6, __pyx_n_s_self, __pyx_n_s_duration, __pyx_n_s_x, __pyx_n_s_y, __pyx_n_s_z, __pyx_n_s_formula); if (unlikely(!__pyx_tuple__40)) __PYX_ERR(0, 290, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__40);
-  __Pyx_GIVEREF(__pyx_tuple__40);
-  __pyx_codeobj__41 = (PyObject*)__Pyx_PyCode_New(6, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__40, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pytouhou_game_enemy_pyx, __pyx_n_s_move_to, 290, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__41)) __PYX_ERR(0, 290, __pyx_L1_error)
-
-  /* "pytouhou/game/enemy.pyx":302
- * 
- * 
- *     cpdef stop_in(self, unsigned long duration, formula):             # <<<<<<<<<<<<<<
- *         frame = self._game.frame
- *         self.interpolator = None
- */
-  __pyx_tuple__42 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_duration, __pyx_n_s_formula); if (unlikely(!__pyx_tuple__42)) __PYX_ERR(0, 302, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__42);
-  __Pyx_GIVEREF(__pyx_tuple__42);
-  __pyx_codeobj__43 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__42, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pytouhou_game_enemy_pyx, __pyx_n_s_stop_in, 302, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__43)) __PYX_ERR(0, 302, __pyx_L1_error)
-
-  /* "pytouhou/game/enemy.pyx":311
- * 
- * 
- *     cpdef set_boss(self, bint enable):             # <<<<<<<<<<<<<<
- *         if enable:
- *             self.boss = True
- */
-  __pyx_tuple__44 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_enable, __pyx_n_s_enable); if (unlikely(!__pyx_tuple__44)) __PYX_ERR(0, 311, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__44);
-  __Pyx_GIVEREF(__pyx_tuple__44);
-  __pyx_codeobj__45 = (PyObject*)__Pyx_PyCode_New(2, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__44, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pytouhou_game_enemy_pyx, __pyx_n_s_set_boss, 311, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__45)) __PYX_ERR(0, 311, __pyx_L1_error)
-
-  /* "pytouhou/game/enemy.pyx":588
- * 
- * 
- *     def select_player_key(self, player):             # <<<<<<<<<<<<<<
- *         return ((player.x - self.x) ** 2 + (player.y - self.y) ** 2, player.character)
- */
-  __pyx_tuple__46 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_player); if (unlikely(!__pyx_tuple__46)) __PYX_ERR(0, 588, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__46);
-  __Pyx_GIVEREF(__pyx_tuple__46);
-  __pyx_codeobj__47 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__46, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pytouhou_game_enemy_pyx, __pyx_n_s_select_player_key, 588, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__47)) __PYX_ERR(0, 588, __pyx_L1_error)
-
-  /* "(tree fragment)":1
- * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
- *     cdef tuple state
- *     cdef object _dict
- */
-  __pyx_tuple__48 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_state, __pyx_n_s_dict_2, __pyx_n_s_use_setstate); if (unlikely(!__pyx_tuple__48)) __PYX_ERR(2, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__48);
-  __Pyx_GIVEREF(__pyx_tuple__48);
-  __pyx_codeobj__49 = (PyObject*)__Pyx_PyCode_New(1, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__48, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__49)) __PYX_ERR(2, 1, __pyx_L1_error)
-
-  /* "(tree fragment)":16
- *     else:
- *         return __pyx_unpickle_Enemy, (type(self), 0x2d3b8c7, state)
- * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
- *     __pyx_unpickle_Enemy__set_state(self, __pyx_state)
- */
-  __pyx_tuple__50 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_pyx_state); if (unlikely(!__pyx_tuple__50)) __PYX_ERR(2, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__50);
-  __Pyx_GIVEREF(__pyx_tuple__50);
-  __pyx_codeobj__51 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__50, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 16, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__51)) __PYX_ERR(2, 16, __pyx_L1_error)
-
   /* "(tree fragment)":1
  * def __pyx_unpickle_Callback(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_tuple__52 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__52)) __PYX_ERR(2, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__52);
-  __Pyx_GIVEREF(__pyx_tuple__52);
-  __pyx_codeobj__53 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__52, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Callback, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__53)) __PYX_ERR(2, 1, __pyx_L1_error)
-  __pyx_tuple__54 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__54)) __PYX_ERR(2, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__54);
-  __Pyx_GIVEREF(__pyx_tuple__54);
-  __pyx_codeobj__55 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__54, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Enemy, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__55)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_tuple__8 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__8);
+  __Pyx_GIVEREF(__pyx_tuple__8);
+  __pyx_codeobj__9 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__8, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Callback, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__9)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_tuple__10 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__10);
+  __Pyx_GIVEREF(__pyx_tuple__10);
+  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Enemy, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -23110,291 +22710,12 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pytouhou/game/enemy.pyx":32
- *         return self.function is not None
- * 
- *     cpdef enable(self, function, tuple args):             # <<<<<<<<<<<<<<
- *         self.function = function
- *         self.args = args
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_8Callback_5enable, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Callback_enable, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__9)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Callback->tp_dict, __pyx_n_s_enable, __pyx_t_1) < 0) __PYX_ERR(0, 32, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Callback);
-
-  /* "pytouhou/game/enemy.pyx":36
- *         self.args = args
- * 
- *     cpdef disable(self):             # <<<<<<<<<<<<<<
- *         self.function = None
- * 
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_8Callback_7disable, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Callback_disable, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__11)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 36, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Callback->tp_dict, __pyx_n_s_disable, __pyx_t_1) < 0) __PYX_ERR(0, 36, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Callback);
-
-  /* "pytouhou/game/enemy.pyx":39
- *         self.function = None
- * 
- *     cpdef fire(self):             # <<<<<<<<<<<<<<
- *         if self.function is not None:
- *             self.function(*self.args)
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_8Callback_9fire, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Callback_fire, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__13)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 39, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Callback->tp_dict, __pyx_n_s_fire, __pyx_t_1) < 0) __PYX_ERR(0, 39, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Callback);
-
-  /* "(tree fragment)":1
- * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
- *     cdef tuple state
- *     cdef object _dict
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_8Callback_11__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Callback___reduce_cython, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__15)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Callback->tp_dict, __pyx_n_s_reduce_cython, __pyx_t_1) < 0) __PYX_ERR(2, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Callback);
-
-  /* "(tree fragment)":16
- *     else:
- *         return __pyx_unpickle_Callback, (type(self), 0x205b8ed, state)
- * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
- *     __pyx_unpickle_Callback__set_state(self, __pyx_state)
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_8Callback_13__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Callback___setstate_cython, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__17)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Callback->tp_dict, __pyx_n_s_setstate_cython, __pyx_t_1) < 0) __PYX_ERR(2, 16, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Callback);
-
-  /* "pytouhou/game/enemy.pyx":111
- * 
- * 
- *     cpdef play_sound(self, index):             # <<<<<<<<<<<<<<
- *         name = {
- *             5: 'power0',
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_5Enemy_3play_sound, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Enemy_play_sound, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__19)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 111, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Enemy->tp_dict, __pyx_n_s_play_sound, __pyx_t_1) < 0) __PYX_ERR(0, 111, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Enemy);
-
-  /* "pytouhou/game/enemy.pyx":131
- * 
- * 
- *     cpdef set_hitbox(self, double width, double height):             # <<<<<<<<<<<<<<
- *         self.hitbox_half_size[:] = [width / 2, height / 2]
- * 
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_5Enemy_5set_hitbox, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Enemy_set_hitbox, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__21)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 131, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Enemy->tp_dict, __pyx_n_s_set_hitbox, __pyx_t_1) < 0) __PYX_ERR(0, 131, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Enemy);
-
-  /* "pytouhou/game/enemy.pyx":135
- * 
- * 
- *     cpdef set_bullet_attributes(self, type_, anim, sprite_idx_offset,             # <<<<<<<<<<<<<<
- *                                 unsigned long bullets_per_shot,
- *                                 unsigned long number_of_shots, double speed,
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_5Enemy_7set_bullet_attributes, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Enemy_set_bullet_attributes, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__23)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 135, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Enemy->tp_dict, __pyx_n_s_set_bullet_attributes, __pyx_t_1) < 0) __PYX_ERR(0, 135, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Enemy);
-
-  /* "pytouhou/game/enemy.pyx":158
- * 
- * 
- *     cpdef set_bullet_launch_interval(self, long value, unsigned long start=0):             # <<<<<<<<<<<<<<
- *         # Apply difficulty-specific modifiers:
- *         #TODO: check every value possible! Look around 102h.exe@0x408720
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_5Enemy_9set_bullet_launch_interval, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Enemy_set_bullet_launch_interval, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__25)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 158, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Enemy->tp_dict, __pyx_n_s_set_bullet_launch_interval, __pyx_t_1) < 0) __PYX_ERR(0, 158, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Enemy);
-
-  /* "pytouhou/game/enemy.pyx":167
- * 
- * 
- *     cpdef fire(self, offset=None, bullet_attributes=None, tuple launch_pos=None):             # <<<<<<<<<<<<<<
- *         cdef unsigned long type_, bullets_per_shot, number_of_shots
- *         cdef double speed, speed2, launch_angle, angle
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_5Enemy_11fire, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Enemy_fire, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__27)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 167, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Enemy->tp_dict, __pyx_n_s_fire, __pyx_t_1) < 0) __PYX_ERR(0, 167, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Enemy);
-
-  /* "pytouhou/game/enemy.pyx":223
- * 
- * 
- *     cpdef new_laser(self, unsigned long variant, laser_type, sprite_idx_offset,             # <<<<<<<<<<<<<<
- *                     double angle, speed, start_offset, end_offset, max_length,
- *                     width, start_duration, duration, end_duration,
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_5Enemy_13new_laser, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Enemy_new_laser, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__29)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 223, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Enemy->tp_dict, __pyx_n_s_new_laser, __pyx_t_1) < 0) __PYX_ERR(0, 223, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Enemy);
-
-  /* "pytouhou/game/enemy.pyx":246
- * 
- * 
- *     cpdef Player select_player(self, list players=None):             # <<<<<<<<<<<<<<
- *         if players is None:
- *             players = self._game.players
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_5Enemy_15select_player, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Enemy_select_player, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__31)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 246, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Enemy->tp_dict, __pyx_n_s_select_player, __pyx_t_1) < 0) __PYX_ERR(0, 246, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Enemy);
-
-  /* "pytouhou/game/enemy.pyx":252
- * 
- * 
- *     cpdef double get_angle(self, Element target, tuple pos=None) except 42:             # <<<<<<<<<<<<<<
- *         cdef double x, y
- *         x, y = pos or (self.x, self.y)
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_5Enemy_17get_angle, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Enemy_get_angle, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__33)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 252, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Enemy->tp_dict, __pyx_n_s_get_angle, __pyx_t_1) < 0) __PYX_ERR(0, 252, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Enemy);
-
-  /* "pytouhou/game/enemy.pyx":258
- * 
- * 
- *     cpdef set_anim(self, index):             # <<<<<<<<<<<<<<
- *         entry = 0 if index in self._anms[0].scripts else 1
- *         self.sprite = Sprite()
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_5Enemy_19set_anim, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Enemy_set_anim, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__35)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 258, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Enemy->tp_dict, __pyx_n_s_set_anim, __pyx_t_1) < 0) __PYX_ERR(0, 258, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Enemy);
-
-  /* "pytouhou/game/enemy.pyx":279
- * 
- * 
- *     cpdef set_aux_anm(self, long number, long index):             # <<<<<<<<<<<<<<
- *         entry = 0 if index in self._anms[0].scripts else 1
- *         self.aux_anm[number] = Effect((self.x, self.y), index, self._anms[entry])
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_5Enemy_21set_aux_anm, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Enemy_set_aux_anm, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__37)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 279, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Enemy->tp_dict, __pyx_n_s_set_aux_anm, __pyx_t_1) < 0) __PYX_ERR(0, 279, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Enemy);
-
-  /* "pytouhou/game/enemy.pyx":284
- * 
- * 
- *     cpdef set_pos(self, double x, double y, double z):             # <<<<<<<<<<<<<<
- *         self.x, self.y = x, y
- *         self.update_mode = 1
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_5Enemy_23set_pos, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Enemy_set_pos, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__39)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 284, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Enemy->tp_dict, __pyx_n_s_set_pos, __pyx_t_1) < 0) __PYX_ERR(0, 284, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Enemy);
-
-  /* "pytouhou/game/enemy.pyx":290
- * 
- * 
- *     cpdef move_to(self, unsigned long duration, double x, double y, double z,             # <<<<<<<<<<<<<<
- *                   formula):
- *         frame = self._game.frame
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_5Enemy_25move_to, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Enemy_move_to, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__41)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 290, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Enemy->tp_dict, __pyx_n_s_move_to, __pyx_t_1) < 0) __PYX_ERR(0, 290, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Enemy);
-
-  /* "pytouhou/game/enemy.pyx":302
- * 
- * 
- *     cpdef stop_in(self, unsigned long duration, formula):             # <<<<<<<<<<<<<<
- *         frame = self._game.frame
- *         self.interpolator = None
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_5Enemy_27stop_in, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Enemy_stop_in, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__43)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 302, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Enemy->tp_dict, __pyx_n_s_stop_in, __pyx_t_1) < 0) __PYX_ERR(0, 302, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Enemy);
-
-  /* "pytouhou/game/enemy.pyx":311
- * 
- * 
- *     cpdef set_boss(self, bint enable):             # <<<<<<<<<<<<<<
- *         if enable:
- *             self.boss = True
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_5Enemy_29set_boss, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Enemy_set_boss, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__45)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 311, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Enemy->tp_dict, __pyx_n_s_set_boss, __pyx_t_1) < 0) __PYX_ERR(0, 311, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Enemy);
-
-  /* "pytouhou/game/enemy.pyx":588
- * 
- * 
- *     def select_player_key(self, player):             # <<<<<<<<<<<<<<
- *         return ((player.x - self.x) ** 2 + (player.y - self.y) ** 2, player.character)
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_5Enemy_31select_player_key, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Enemy_select_player_key, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__47)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 588, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Enemy->tp_dict, __pyx_n_s_select_player_key, __pyx_t_1) < 0) __PYX_ERR(0, 588, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Enemy);
-
-  /* "(tree fragment)":1
- * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
- *     cdef tuple state
- *     cdef object _dict
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_5Enemy_33__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Enemy___reduce_cython, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__49)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Enemy->tp_dict, __pyx_n_s_reduce_cython, __pyx_t_1) < 0) __PYX_ERR(2, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Enemy);
-
-  /* "(tree fragment)":16
- *     else:
- *         return __pyx_unpickle_Enemy, (type(self), 0x2d3b8c7, state)
- * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
- *     __pyx_unpickle_Enemy__set_state(self, __pyx_state)
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_5Enemy_35__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Enemy___setstate_cython, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__51)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_5enemy_Enemy->tp_dict, __pyx_n_s_setstate_cython, __pyx_t_1) < 0) __PYX_ERR(2, 16, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_5enemy_Enemy);
-
   /* "(tree fragment)":1
  * def __pyx_unpickle_Callback(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_1__pyx_unpickle_Callback, 0, __pyx_n_s_pyx_unpickle_Callback, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__53)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8pytouhou_4game_5enemy_1__pyx_unpickle_Callback, NULL, __pyx_n_s_pytouhou_game_enemy); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_Callback, __pyx_t_1) < 0) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -23406,7 +22727,7 @@ if (!__Pyx_RefNanny) {
  *     __pyx_result.args = __pyx_state[0]; __pyx_result.function = __pyx_state[1]
  *     if len(__pyx_state) > 2 and hasattr(__pyx_result, '__dict__'):
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_5enemy_3__pyx_unpickle_Enemy, 0, __pyx_n_s_pyx_unpickle_Enemy, NULL, __pyx_n_s_pytouhou_game_enemy, __pyx_d, ((PyObject *)__pyx_codeobj__55)); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8pytouhou_4game_5enemy_3__pyx_unpickle_Enemy, NULL, __pyx_n_s_pytouhou_game_enemy); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_Enemy, __pyx_t_1) < 0) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -24527,6 +23848,130 @@ static CYTHON_INLINE int __Pyx_PyObject_SetAttrStr(PyObject* obj, PyObject* attr
 }
 #endif
 
+/* PyIntBinop */
+#if !CYTHON_COMPILING_IN_PYPY
+static PyObject* __Pyx_PyInt_AddObjC(PyObject *op1, PyObject *op2, CYTHON_UNUSED long intval, int inplace, int zerodivision_check) {
+    (void)inplace;
+    (void)zerodivision_check;
+    #if PY_MAJOR_VERSION < 3
+    if (likely(PyInt_CheckExact(op1))) {
+        const long b = intval;
+        long x;
+        long a = PyInt_AS_LONG(op1);
+            x = (long)((unsigned long)a + b);
+            if (likely((x^a) >= 0 || (x^b) >= 0))
+                return PyInt_FromLong(x);
+            return PyLong_Type.tp_as_number->nb_add(op1, op2);
+    }
+    #endif
+    #if CYTHON_USE_PYLONG_INTERNALS
+    if (likely(PyLong_CheckExact(op1))) {
+        const long b = intval;
+        long a, x;
+#ifdef HAVE_LONG_LONG
+        const PY_LONG_LONG llb = intval;
+        PY_LONG_LONG lla, llx;
+#endif
+        const digit* digits = ((PyLongObject*)op1)->ob_digit;
+        const Py_ssize_t size = Py_SIZE(op1);
+        if (likely(__Pyx_sst_abs(size) <= 1)) {
+            a = likely(size) ? digits[0] : 0;
+            if (size == -1) a = -a;
+        } else {
+            switch (size) {
+                case -2:
+                    if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
+                        a = -(long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+#ifdef HAVE_LONG_LONG
+                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 2 * PyLong_SHIFT) {
+                        lla = -(PY_LONG_LONG) (((((unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                        goto long_long;
+#endif
+                    }
+                    CYTHON_FALLTHROUGH;
+                case 2:
+                    if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
+                        a = (long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+#ifdef HAVE_LONG_LONG
+                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 2 * PyLong_SHIFT) {
+                        lla = (PY_LONG_LONG) (((((unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                        goto long_long;
+#endif
+                    }
+                    CYTHON_FALLTHROUGH;
+                case -3:
+                    if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
+                        a = -(long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+#ifdef HAVE_LONG_LONG
+                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 3 * PyLong_SHIFT) {
+                        lla = -(PY_LONG_LONG) (((((((unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                        goto long_long;
+#endif
+                    }
+                    CYTHON_FALLTHROUGH;
+                case 3:
+                    if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
+                        a = (long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+#ifdef HAVE_LONG_LONG
+                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 3 * PyLong_SHIFT) {
+                        lla = (PY_LONG_LONG) (((((((unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                        goto long_long;
+#endif
+                    }
+                    CYTHON_FALLTHROUGH;
+                case -4:
+                    if (8 * sizeof(long) - 1 > 4 * PyLong_SHIFT) {
+                        a = -(long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+#ifdef HAVE_LONG_LONG
+                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 4 * PyLong_SHIFT) {
+                        lla = -(PY_LONG_LONG) (((((((((unsigned PY_LONG_LONG)digits[3]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                        goto long_long;
+#endif
+                    }
+                    CYTHON_FALLTHROUGH;
+                case 4:
+                    if (8 * sizeof(long) - 1 > 4 * PyLong_SHIFT) {
+                        a = (long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+#ifdef HAVE_LONG_LONG
+                    } else if (8 * sizeof(PY_LONG_LONG) - 1 > 4 * PyLong_SHIFT) {
+                        lla = (PY_LONG_LONG) (((((((((unsigned PY_LONG_LONG)digits[3]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[1]) << PyLong_SHIFT) | (unsigned PY_LONG_LONG)digits[0]));
+                        goto long_long;
+#endif
+                    }
+                    CYTHON_FALLTHROUGH;
+                default: return PyLong_Type.tp_as_number->nb_add(op1, op2);
+            }
+        }
+                x = a + b;
+            return PyLong_FromLong(x);
+#ifdef HAVE_LONG_LONG
+        long_long:
+                llx = lla + llb;
+            return PyLong_FromLongLong(llx);
+#endif
+        
+        
+    }
+    #endif
+    if (PyFloat_CheckExact(op1)) {
+        const long b = intval;
+        double a = PyFloat_AS_DOUBLE(op1);
+            double result;
+            PyFPE_START_PROTECT("add", return NULL)
+            result = ((double)a) + (double)b;
+            PyFPE_END_PROTECT(result)
+            return PyFloat_FromDouble(result);
+    }
+    return (inplace ? PyNumber_InPlaceAdd : PyNumber_Add)(op1, op2);
+}
+#endif
+
 /* DivInt[Py_ssize_t] */
 static CYTHON_INLINE Py_ssize_t __Pyx_div_Py_ssize_t(Py_ssize_t a, Py_ssize_t b) {
     Py_ssize_t q = a / b;
@@ -24995,674 +24440,6 @@ static void* __Pyx_GetVtable(PyObject *dict) {
 bad:
     Py_XDECREF(ob);
     return NULL;
-}
-
-/* FetchCommonType */
-static PyTypeObject* __Pyx_FetchCommonType(PyTypeObject* type) {
-    PyObject* fake_module;
-    PyTypeObject* cached_type = NULL;
-    fake_module = PyImport_AddModule((char*) "_cython_" CYTHON_ABI);
-    if (!fake_module) return NULL;
-    Py_INCREF(fake_module);
-    cached_type = (PyTypeObject*) PyObject_GetAttrString(fake_module, type->tp_name);
-    if (cached_type) {
-        if (!PyType_Check((PyObject*)cached_type)) {
-            PyErr_Format(PyExc_TypeError,
-                "Shared Cython type %.200s is not a type object",
-                type->tp_name);
-            goto bad;
-        }
-        if (cached_type->tp_basicsize != type->tp_basicsize) {
-            PyErr_Format(PyExc_TypeError,
-                "Shared Cython type %.200s has the wrong size, try recompiling",
-                type->tp_name);
-            goto bad;
-        }
-    } else {
-        if (!PyErr_ExceptionMatches(PyExc_AttributeError)) goto bad;
-        PyErr_Clear();
-        if (PyType_Ready(type) < 0) goto bad;
-        if (PyObject_SetAttrString(fake_module, type->tp_name, (PyObject*) type) < 0)
-            goto bad;
-        Py_INCREF(type);
-        cached_type = type;
-    }
-done:
-    Py_DECREF(fake_module);
-    return cached_type;
-bad:
-    Py_XDECREF(cached_type);
-    cached_type = NULL;
-    goto done;
-}
-
-/* CythonFunctionShared */
-#include <structmember.h>
-static PyObject *
-__Pyx_CyFunction_get_doc(__pyx_CyFunctionObject *op, CYTHON_UNUSED void *closure)
-{
-    if (unlikely(op->func_doc == NULL)) {
-        if (op->func.m_ml->ml_doc) {
-#if PY_MAJOR_VERSION >= 3
-            op->func_doc = PyUnicode_FromString(op->func.m_ml->ml_doc);
-#else
-            op->func_doc = PyString_FromString(op->func.m_ml->ml_doc);
-#endif
-            if (unlikely(op->func_doc == NULL))
-                return NULL;
-        } else {
-            Py_INCREF(Py_None);
-            return Py_None;
-        }
-    }
-    Py_INCREF(op->func_doc);
-    return op->func_doc;
-}
-static int
-__Pyx_CyFunction_set_doc(__pyx_CyFunctionObject *op, PyObject *value, CYTHON_UNUSED void *context)
-{
-    PyObject *tmp = op->func_doc;
-    if (value == NULL) {
-        value = Py_None;
-    }
-    Py_INCREF(value);
-    op->func_doc = value;
-    Py_XDECREF(tmp);
-    return 0;
-}
-static PyObject *
-__Pyx_CyFunction_get_name(__pyx_CyFunctionObject *op, CYTHON_UNUSED void *context)
-{
-    if (unlikely(op->func_name == NULL)) {
-#if PY_MAJOR_VERSION >= 3
-        op->func_name = PyUnicode_InternFromString(op->func.m_ml->ml_name);
-#else
-        op->func_name = PyString_InternFromString(op->func.m_ml->ml_name);
-#endif
-        if (unlikely(op->func_name == NULL))
-            return NULL;
-    }
-    Py_INCREF(op->func_name);
-    return op->func_name;
-}
-static int
-__Pyx_CyFunction_set_name(__pyx_CyFunctionObject *op, PyObject *value, CYTHON_UNUSED void *context)
-{
-    PyObject *tmp;
-#if PY_MAJOR_VERSION >= 3
-    if (unlikely(value == NULL || !PyUnicode_Check(value)))
-#else
-    if (unlikely(value == NULL || !PyString_Check(value)))
-#endif
-    {
-        PyErr_SetString(PyExc_TypeError,
-                        "__name__ must be set to a string object");
-        return -1;
-    }
-    tmp = op->func_name;
-    Py_INCREF(value);
-    op->func_name = value;
-    Py_XDECREF(tmp);
-    return 0;
-}
-static PyObject *
-__Pyx_CyFunction_get_qualname(__pyx_CyFunctionObject *op, CYTHON_UNUSED void *context)
-{
-    Py_INCREF(op->func_qualname);
-    return op->func_qualname;
-}
-static int
-__Pyx_CyFunction_set_qualname(__pyx_CyFunctionObject *op, PyObject *value, CYTHON_UNUSED void *context)
-{
-    PyObject *tmp;
-#if PY_MAJOR_VERSION >= 3
-    if (unlikely(value == NULL || !PyUnicode_Check(value)))
-#else
-    if (unlikely(value == NULL || !PyString_Check(value)))
-#endif
-    {
-        PyErr_SetString(PyExc_TypeError,
-                        "__qualname__ must be set to a string object");
-        return -1;
-    }
-    tmp = op->func_qualname;
-    Py_INCREF(value);
-    op->func_qualname = value;
-    Py_XDECREF(tmp);
-    return 0;
-}
-static PyObject *
-__Pyx_CyFunction_get_self(__pyx_CyFunctionObject *m, CYTHON_UNUSED void *closure)
-{
-    PyObject *self;
-    self = m->func_closure;
-    if (self == NULL)
-        self = Py_None;
-    Py_INCREF(self);
-    return self;
-}
-static PyObject *
-__Pyx_CyFunction_get_dict(__pyx_CyFunctionObject *op, CYTHON_UNUSED void *context)
-{
-    if (unlikely(op->func_dict == NULL)) {
-        op->func_dict = PyDict_New();
-        if (unlikely(op->func_dict == NULL))
-            return NULL;
-    }
-    Py_INCREF(op->func_dict);
-    return op->func_dict;
-}
-static int
-__Pyx_CyFunction_set_dict(__pyx_CyFunctionObject *op, PyObject *value, CYTHON_UNUSED void *context)
-{
-    PyObject *tmp;
-    if (unlikely(value == NULL)) {
-        PyErr_SetString(PyExc_TypeError,
-               "function's dictionary may not be deleted");
-        return -1;
-    }
-    if (unlikely(!PyDict_Check(value))) {
-        PyErr_SetString(PyExc_TypeError,
-               "setting function's dictionary to a non-dict");
-        return -1;
-    }
-    tmp = op->func_dict;
-    Py_INCREF(value);
-    op->func_dict = value;
-    Py_XDECREF(tmp);
-    return 0;
-}
-static PyObject *
-__Pyx_CyFunction_get_globals(__pyx_CyFunctionObject *op, CYTHON_UNUSED void *context)
-{
-    Py_INCREF(op->func_globals);
-    return op->func_globals;
-}
-static PyObject *
-__Pyx_CyFunction_get_closure(CYTHON_UNUSED __pyx_CyFunctionObject *op, CYTHON_UNUSED void *context)
-{
-    Py_INCREF(Py_None);
-    return Py_None;
-}
-static PyObject *
-__Pyx_CyFunction_get_code(__pyx_CyFunctionObject *op, CYTHON_UNUSED void *context)
-{
-    PyObject* result = (op->func_code) ? op->func_code : Py_None;
-    Py_INCREF(result);
-    return result;
-}
-static int
-__Pyx_CyFunction_init_defaults(__pyx_CyFunctionObject *op) {
-    int result = 0;
-    PyObject *res = op->defaults_getter((PyObject *) op);
-    if (unlikely(!res))
-        return -1;
-    #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    op->defaults_tuple = PyTuple_GET_ITEM(res, 0);
-    Py_INCREF(op->defaults_tuple);
-    op->defaults_kwdict = PyTuple_GET_ITEM(res, 1);
-    Py_INCREF(op->defaults_kwdict);
-    #else
-    op->defaults_tuple = PySequence_ITEM(res, 0);
-    if (unlikely(!op->defaults_tuple)) result = -1;
-    else {
-        op->defaults_kwdict = PySequence_ITEM(res, 1);
-        if (unlikely(!op->defaults_kwdict)) result = -1;
-    }
-    #endif
-    Py_DECREF(res);
-    return result;
-}
-static int
-__Pyx_CyFunction_set_defaults(__pyx_CyFunctionObject *op, PyObject* value, CYTHON_UNUSED void *context) {
-    PyObject* tmp;
-    if (!value) {
-        value = Py_None;
-    } else if (value != Py_None && !PyTuple_Check(value)) {
-        PyErr_SetString(PyExc_TypeError,
-                        "__defaults__ must be set to a tuple object");
-        return -1;
-    }
-    Py_INCREF(value);
-    tmp = op->defaults_tuple;
-    op->defaults_tuple = value;
-    Py_XDECREF(tmp);
-    return 0;
-}
-static PyObject *
-__Pyx_CyFunction_get_defaults(__pyx_CyFunctionObject *op, CYTHON_UNUSED void *context) {
-    PyObject* result = op->defaults_tuple;
-    if (unlikely(!result)) {
-        if (op->defaults_getter) {
-            if (__Pyx_CyFunction_init_defaults(op) < 0) return NULL;
-            result = op->defaults_tuple;
-        } else {
-            result = Py_None;
-        }
-    }
-    Py_INCREF(result);
-    return result;
-}
-static int
-__Pyx_CyFunction_set_kwdefaults(__pyx_CyFunctionObject *op, PyObject* value, CYTHON_UNUSED void *context) {
-    PyObject* tmp;
-    if (!value) {
-        value = Py_None;
-    } else if (value != Py_None && !PyDict_Check(value)) {
-        PyErr_SetString(PyExc_TypeError,
-                        "__kwdefaults__ must be set to a dict object");
-        return -1;
-    }
-    Py_INCREF(value);
-    tmp = op->defaults_kwdict;
-    op->defaults_kwdict = value;
-    Py_XDECREF(tmp);
-    return 0;
-}
-static PyObject *
-__Pyx_CyFunction_get_kwdefaults(__pyx_CyFunctionObject *op, CYTHON_UNUSED void *context) {
-    PyObject* result = op->defaults_kwdict;
-    if (unlikely(!result)) {
-        if (op->defaults_getter) {
-            if (__Pyx_CyFunction_init_defaults(op) < 0) return NULL;
-            result = op->defaults_kwdict;
-        } else {
-            result = Py_None;
-        }
-    }
-    Py_INCREF(result);
-    return result;
-}
-static int
-__Pyx_CyFunction_set_annotations(__pyx_CyFunctionObject *op, PyObject* value, CYTHON_UNUSED void *context) {
-    PyObject* tmp;
-    if (!value || value == Py_None) {
-        value = NULL;
-    } else if (!PyDict_Check(value)) {
-        PyErr_SetString(PyExc_TypeError,
-                        "__annotations__ must be set to a dict object");
-        return -1;
-    }
-    Py_XINCREF(value);
-    tmp = op->func_annotations;
-    op->func_annotations = value;
-    Py_XDECREF(tmp);
-    return 0;
-}
-static PyObject *
-__Pyx_CyFunction_get_annotations(__pyx_CyFunctionObject *op, CYTHON_UNUSED void *context) {
-    PyObject* result = op->func_annotations;
-    if (unlikely(!result)) {
-        result = PyDict_New();
-        if (unlikely(!result)) return NULL;
-        op->func_annotations = result;
-    }
-    Py_INCREF(result);
-    return result;
-}
-static PyGetSetDef __pyx_CyFunction_getsets[] = {
-    {(char *) "func_doc", (getter)__Pyx_CyFunction_get_doc, (setter)__Pyx_CyFunction_set_doc, 0, 0},
-    {(char *) "__doc__",  (getter)__Pyx_CyFunction_get_doc, (setter)__Pyx_CyFunction_set_doc, 0, 0},
-    {(char *) "func_name", (getter)__Pyx_CyFunction_get_name, (setter)__Pyx_CyFunction_set_name, 0, 0},
-    {(char *) "__name__", (getter)__Pyx_CyFunction_get_name, (setter)__Pyx_CyFunction_set_name, 0, 0},
-    {(char *) "__qualname__", (getter)__Pyx_CyFunction_get_qualname, (setter)__Pyx_CyFunction_set_qualname, 0, 0},
-    {(char *) "__self__", (getter)__Pyx_CyFunction_get_self, 0, 0, 0},
-    {(char *) "func_dict", (getter)__Pyx_CyFunction_get_dict, (setter)__Pyx_CyFunction_set_dict, 0, 0},
-    {(char *) "__dict__", (getter)__Pyx_CyFunction_get_dict, (setter)__Pyx_CyFunction_set_dict, 0, 0},
-    {(char *) "func_globals", (getter)__Pyx_CyFunction_get_globals, 0, 0, 0},
-    {(char *) "__globals__", (getter)__Pyx_CyFunction_get_globals, 0, 0, 0},
-    {(char *) "func_closure", (getter)__Pyx_CyFunction_get_closure, 0, 0, 0},
-    {(char *) "__closure__", (getter)__Pyx_CyFunction_get_closure, 0, 0, 0},
-    {(char *) "func_code", (getter)__Pyx_CyFunction_get_code, 0, 0, 0},
-    {(char *) "__code__", (getter)__Pyx_CyFunction_get_code, 0, 0, 0},
-    {(char *) "func_defaults", (getter)__Pyx_CyFunction_get_defaults, (setter)__Pyx_CyFunction_set_defaults, 0, 0},
-    {(char *) "__defaults__", (getter)__Pyx_CyFunction_get_defaults, (setter)__Pyx_CyFunction_set_defaults, 0, 0},
-    {(char *) "__kwdefaults__", (getter)__Pyx_CyFunction_get_kwdefaults, (setter)__Pyx_CyFunction_set_kwdefaults, 0, 0},
-    {(char *) "__annotations__", (getter)__Pyx_CyFunction_get_annotations, (setter)__Pyx_CyFunction_set_annotations, 0, 0},
-    {0, 0, 0, 0, 0}
-};
-static PyMemberDef __pyx_CyFunction_members[] = {
-    {(char *) "__module__", T_OBJECT, offsetof(PyCFunctionObject, m_module), PY_WRITE_RESTRICTED, 0},
-    {0, 0, 0,  0, 0}
-};
-static PyObject *
-__Pyx_CyFunction_reduce(__pyx_CyFunctionObject *m, CYTHON_UNUSED PyObject *args)
-{
-#if PY_MAJOR_VERSION >= 3
-    Py_INCREF(m->func_qualname);
-    return m->func_qualname;
-#else
-    return PyString_FromString(m->func.m_ml->ml_name);
-#endif
-}
-static PyMethodDef __pyx_CyFunction_methods[] = {
-    {"__reduce__", (PyCFunction)__Pyx_CyFunction_reduce, METH_VARARGS, 0},
-    {0, 0, 0, 0}
-};
-#if PY_VERSION_HEX < 0x030500A0
-#define __Pyx_CyFunction_weakreflist(cyfunc) ((cyfunc)->func_weakreflist)
-#else
-#define __Pyx_CyFunction_weakreflist(cyfunc) ((cyfunc)->func.m_weakreflist)
-#endif
-static PyObject *__Pyx_CyFunction_Init(__pyx_CyFunctionObject *op, PyMethodDef *ml, int flags, PyObject* qualname,
-                                       PyObject *closure, PyObject *module, PyObject* globals, PyObject* code) {
-    if (unlikely(op == NULL))
-        return NULL;
-    op->flags = flags;
-    __Pyx_CyFunction_weakreflist(op) = NULL;
-    op->func.m_ml = ml;
-    op->func.m_self = (PyObject *) op;
-    Py_XINCREF(closure);
-    op->func_closure = closure;
-    Py_XINCREF(module);
-    op->func.m_module = module;
-    op->func_dict = NULL;
-    op->func_name = NULL;
-    Py_INCREF(qualname);
-    op->func_qualname = qualname;
-    op->func_doc = NULL;
-    op->func_classobj = NULL;
-    op->func_globals = globals;
-    Py_INCREF(op->func_globals);
-    Py_XINCREF(code);
-    op->func_code = code;
-    op->defaults_pyobjects = 0;
-    op->defaults_size = 0;
-    op->defaults = NULL;
-    op->defaults_tuple = NULL;
-    op->defaults_kwdict = NULL;
-    op->defaults_getter = NULL;
-    op->func_annotations = NULL;
-    return (PyObject *) op;
-}
-static int
-__Pyx_CyFunction_clear(__pyx_CyFunctionObject *m)
-{
-    Py_CLEAR(m->func_closure);
-    Py_CLEAR(m->func.m_module);
-    Py_CLEAR(m->func_dict);
-    Py_CLEAR(m->func_name);
-    Py_CLEAR(m->func_qualname);
-    Py_CLEAR(m->func_doc);
-    Py_CLEAR(m->func_globals);
-    Py_CLEAR(m->func_code);
-    Py_CLEAR(m->func_classobj);
-    Py_CLEAR(m->defaults_tuple);
-    Py_CLEAR(m->defaults_kwdict);
-    Py_CLEAR(m->func_annotations);
-    if (m->defaults) {
-        PyObject **pydefaults = __Pyx_CyFunction_Defaults(PyObject *, m);
-        int i;
-        for (i = 0; i < m->defaults_pyobjects; i++)
-            Py_XDECREF(pydefaults[i]);
-        PyObject_Free(m->defaults);
-        m->defaults = NULL;
-    }
-    return 0;
-}
-static void __Pyx__CyFunction_dealloc(__pyx_CyFunctionObject *m)
-{
-    if (__Pyx_CyFunction_weakreflist(m) != NULL)
-        PyObject_ClearWeakRefs((PyObject *) m);
-    __Pyx_CyFunction_clear(m);
-    PyObject_GC_Del(m);
-}
-static void __Pyx_CyFunction_dealloc(__pyx_CyFunctionObject *m)
-{
-    PyObject_GC_UnTrack(m);
-    __Pyx__CyFunction_dealloc(m);
-}
-static int __Pyx_CyFunction_traverse(__pyx_CyFunctionObject *m, visitproc visit, void *arg)
-{
-    Py_VISIT(m->func_closure);
-    Py_VISIT(m->func.m_module);
-    Py_VISIT(m->func_dict);
-    Py_VISIT(m->func_name);
-    Py_VISIT(m->func_qualname);
-    Py_VISIT(m->func_doc);
-    Py_VISIT(m->func_globals);
-    Py_VISIT(m->func_code);
-    Py_VISIT(m->func_classobj);
-    Py_VISIT(m->defaults_tuple);
-    Py_VISIT(m->defaults_kwdict);
-    if (m->defaults) {
-        PyObject **pydefaults = __Pyx_CyFunction_Defaults(PyObject *, m);
-        int i;
-        for (i = 0; i < m->defaults_pyobjects; i++)
-            Py_VISIT(pydefaults[i]);
-    }
-    return 0;
-}
-static PyObject *__Pyx_CyFunction_descr_get(PyObject *func, PyObject *obj, PyObject *type)
-{
-#if PY_MAJOR_VERSION < 3
-    __pyx_CyFunctionObject *m = (__pyx_CyFunctionObject *) func;
-    if (m->flags & __Pyx_CYFUNCTION_STATICMETHOD) {
-        Py_INCREF(func);
-        return func;
-    }
-    if (m->flags & __Pyx_CYFUNCTION_CLASSMETHOD) {
-        if (type == NULL)
-            type = (PyObject *)(Py_TYPE(obj));
-        return __Pyx_PyMethod_New(func, type, (PyObject *)(Py_TYPE(type)));
-    }
-    if (obj == Py_None)
-        obj = NULL;
-#endif
-    return __Pyx_PyMethod_New(func, obj, type);
-}
-static PyObject*
-__Pyx_CyFunction_repr(__pyx_CyFunctionObject *op)
-{
-#if PY_MAJOR_VERSION >= 3
-    return PyUnicode_FromFormat("<cyfunction %U at %p>",
-                                op->func_qualname, (void *)op);
-#else
-    return PyString_FromFormat("<cyfunction %s at %p>",
-                               PyString_AsString(op->func_qualname), (void *)op);
-#endif
-}
-static PyObject * __Pyx_CyFunction_CallMethod(PyObject *func, PyObject *self, PyObject *arg, PyObject *kw) {
-    PyCFunctionObject* f = (PyCFunctionObject*)func;
-    PyCFunction meth = f->m_ml->ml_meth;
-    Py_ssize_t size;
-    switch (f->m_ml->ml_flags & (METH_VARARGS | METH_KEYWORDS | METH_NOARGS | METH_O)) {
-    case METH_VARARGS:
-        if (likely(kw == NULL || PyDict_Size(kw) == 0))
-            return (*meth)(self, arg);
-        break;
-    case METH_VARARGS | METH_KEYWORDS:
-        return (*(PyCFunctionWithKeywords)(void*)meth)(self, arg, kw);
-    case METH_NOARGS:
-        if (likely(kw == NULL || PyDict_Size(kw) == 0)) {
-            size = PyTuple_GET_SIZE(arg);
-            if (likely(size == 0))
-                return (*meth)(self, NULL);
-            PyErr_Format(PyExc_TypeError,
-                "%.200s() takes no arguments (%" CYTHON_FORMAT_SSIZE_T "d given)",
-                f->m_ml->ml_name, size);
-            return NULL;
-        }
-        break;
-    case METH_O:
-        if (likely(kw == NULL || PyDict_Size(kw) == 0)) {
-            size = PyTuple_GET_SIZE(arg);
-            if (likely(size == 1)) {
-                PyObject *result, *arg0;
-                #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-                arg0 = PyTuple_GET_ITEM(arg, 0);
-                #else
-                arg0 = PySequence_ITEM(arg, 0); if (unlikely(!arg0)) return NULL;
-                #endif
-                result = (*meth)(self, arg0);
-                #if !(CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS)
-                Py_DECREF(arg0);
-                #endif
-                return result;
-            }
-            PyErr_Format(PyExc_TypeError,
-                "%.200s() takes exactly one argument (%" CYTHON_FORMAT_SSIZE_T "d given)",
-                f->m_ml->ml_name, size);
-            return NULL;
-        }
-        break;
-    default:
-        PyErr_SetString(PyExc_SystemError, "Bad call flags in "
-                        "__Pyx_CyFunction_Call. METH_OLDARGS is no "
-                        "longer supported!");
-        return NULL;
-    }
-    PyErr_Format(PyExc_TypeError, "%.200s() takes no keyword arguments",
-                 f->m_ml->ml_name);
-    return NULL;
-}
-static CYTHON_INLINE PyObject *__Pyx_CyFunction_Call(PyObject *func, PyObject *arg, PyObject *kw) {
-    return __Pyx_CyFunction_CallMethod(func, ((PyCFunctionObject*)func)->m_self, arg, kw);
-}
-static PyObject *__Pyx_CyFunction_CallAsMethod(PyObject *func, PyObject *args, PyObject *kw) {
-    PyObject *result;
-    __pyx_CyFunctionObject *cyfunc = (__pyx_CyFunctionObject *) func;
-    if ((cyfunc->flags & __Pyx_CYFUNCTION_CCLASS) && !(cyfunc->flags & __Pyx_CYFUNCTION_STATICMETHOD)) {
-        Py_ssize_t argc;
-        PyObject *new_args;
-        PyObject *self;
-        argc = PyTuple_GET_SIZE(args);
-        new_args = PyTuple_GetSlice(args, 1, argc);
-        if (unlikely(!new_args))
-            return NULL;
-        self = PyTuple_GetItem(args, 0);
-        if (unlikely(!self)) {
-            Py_DECREF(new_args);
-#if PY_MAJOR_VERSION > 2
-            PyErr_Format(PyExc_TypeError,
-                         "unbound method %.200S() needs an argument",
-                         cyfunc->func_qualname);
-#else
-            PyErr_SetString(PyExc_TypeError,
-                            "unbound method needs an argument");
-#endif
-            return NULL;
-        }
-        result = __Pyx_CyFunction_CallMethod(func, self, new_args, kw);
-        Py_DECREF(new_args);
-    } else {
-        result = __Pyx_CyFunction_Call(func, args, kw);
-    }
-    return result;
-}
-static PyTypeObject __pyx_CyFunctionType_type = {
-    PyVarObject_HEAD_INIT(0, 0)
-    "cython_function_or_method",
-    sizeof(__pyx_CyFunctionObject),
-    0,
-    (destructor) __Pyx_CyFunction_dealloc,
-    0,
-    0,
-    0,
-#if PY_MAJOR_VERSION < 3
-    0,
-#else
-    0,
-#endif
-    (reprfunc) __Pyx_CyFunction_repr,
-    0,
-    0,
-    0,
-    0,
-    __Pyx_CyFunction_CallAsMethod,
-    0,
-    0,
-    0,
-    0,
-    Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC,
-    0,
-    (traverseproc) __Pyx_CyFunction_traverse,
-    (inquiry) __Pyx_CyFunction_clear,
-    0,
-#if PY_VERSION_HEX < 0x030500A0
-    offsetof(__pyx_CyFunctionObject, func_weakreflist),
-#else
-    offsetof(PyCFunctionObject, m_weakreflist),
-#endif
-    0,
-    0,
-    __pyx_CyFunction_methods,
-    __pyx_CyFunction_members,
-    __pyx_CyFunction_getsets,
-    0,
-    0,
-    __Pyx_CyFunction_descr_get,
-    0,
-    offsetof(__pyx_CyFunctionObject, func_dict),
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-#if PY_VERSION_HEX >= 0x030400a1
-    0,
-#endif
-#if PY_VERSION_HEX >= 0x030800b1 && (!CYTHON_COMPILING_IN_PYPY || PYPY_VERSION_NUM >= 0x07030800)
-    0,
-#endif
-#if PY_VERSION_HEX >= 0x030800b4 && PY_VERSION_HEX < 0x03090000
-    0,
-#endif
-#if CYTHON_COMPILING_IN_PYPY && PY_VERSION_HEX >= 0x03090000
-    0,
-#endif
-};
-static int __pyx_CyFunction_init(void) {
-    __pyx_CyFunctionType = __Pyx_FetchCommonType(&__pyx_CyFunctionType_type);
-    if (unlikely(__pyx_CyFunctionType == NULL)) {
-        return -1;
-    }
-    return 0;
-}
-static CYTHON_INLINE void *__Pyx_CyFunction_InitDefaults(PyObject *func, size_t size, int pyobjects) {
-    __pyx_CyFunctionObject *m = (__pyx_CyFunctionObject *) func;
-    m->defaults = PyObject_Malloc(size);
-    if (unlikely(!m->defaults))
-        return PyErr_NoMemory();
-    memset(m->defaults, 0, size);
-    m->defaults_pyobjects = pyobjects;
-    m->defaults_size = size;
-    return m->defaults;
-}
-static CYTHON_INLINE void __Pyx_CyFunction_SetDefaultsTuple(PyObject *func, PyObject *tuple) {
-    __pyx_CyFunctionObject *m = (__pyx_CyFunctionObject *) func;
-    m->defaults_tuple = tuple;
-    Py_INCREF(tuple);
-}
-static CYTHON_INLINE void __Pyx_CyFunction_SetDefaultsKwDict(PyObject *func, PyObject *dict) {
-    __pyx_CyFunctionObject *m = (__pyx_CyFunctionObject *) func;
-    m->defaults_kwdict = dict;
-    Py_INCREF(dict);
-}
-static CYTHON_INLINE void __Pyx_CyFunction_SetAnnotationsDict(PyObject *func, PyObject *dict) {
-    __pyx_CyFunctionObject *m = (__pyx_CyFunctionObject *) func;
-    m->func_annotations = dict;
-    Py_INCREF(dict);
-}
-
-/* CythonFunction */
-static PyObject *__Pyx_CyFunction_New(PyMethodDef *ml, int flags, PyObject* qualname,
-                                      PyObject *closure, PyObject *module, PyObject* globals, PyObject* code) {
-    PyObject *op = __Pyx_CyFunction_Init(
-        PyObject_GC_New(__pyx_CyFunctionObject, __pyx_CyFunctionType),
-        ml, flags, qualname, closure, module, globals, code
-    );
-    if (likely(op)) {
-        PyObject_GC_Track(op);
-    }
-    return op;
 }
 
 /* CLineInTraceback */

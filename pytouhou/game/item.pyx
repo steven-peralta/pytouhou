@@ -154,6 +154,8 @@ cdef class Item(Element):
 
         if score > 0:
             player.score += score
+            if player.death_time <= 0:
+                player.rewards += 1
             if label is None:
                 label = self._game.new_label((self.x, self.y), str(score).encode())
                 if color != 'white':

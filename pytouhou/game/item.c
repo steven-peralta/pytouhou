@@ -1344,6 +1344,7 @@ struct __pyx_obj_8pytouhou_4game_6player_Player {
   long lives;
   long bombs;
   long power;
+  long rewards;
   long graze;
   long points;
   long number;
@@ -2229,69 +2230,6 @@ static int __Pyx_setup_reduce(PyObject* type_obj);
 /* GetVTable.proto */
 static void* __Pyx_GetVtable(PyObject *dict);
 
-/* FetchCommonType.proto */
-static PyTypeObject* __Pyx_FetchCommonType(PyTypeObject* type);
-
-/* CythonFunctionShared.proto */
-#define __Pyx_CyFunction_USED 1
-#define __Pyx_CYFUNCTION_STATICMETHOD  0x01
-#define __Pyx_CYFUNCTION_CLASSMETHOD   0x02
-#define __Pyx_CYFUNCTION_CCLASS        0x04
-#define __Pyx_CyFunction_GetClosure(f)\
-    (((__pyx_CyFunctionObject *) (f))->func_closure)
-#define __Pyx_CyFunction_GetClassObj(f)\
-    (((__pyx_CyFunctionObject *) (f))->func_classobj)
-#define __Pyx_CyFunction_Defaults(type, f)\
-    ((type *)(((__pyx_CyFunctionObject *) (f))->defaults))
-#define __Pyx_CyFunction_SetDefaultsGetter(f, g)\
-    ((__pyx_CyFunctionObject *) (f))->defaults_getter = (g)
-typedef struct {
-    PyCFunctionObject func;
-#if PY_VERSION_HEX < 0x030500A0
-    PyObject *func_weakreflist;
-#endif
-    PyObject *func_dict;
-    PyObject *func_name;
-    PyObject *func_qualname;
-    PyObject *func_doc;
-    PyObject *func_globals;
-    PyObject *func_code;
-    PyObject *func_closure;
-    PyObject *func_classobj;
-    void *defaults;
-    int defaults_pyobjects;
-    size_t defaults_size;  // used by FusedFunction for copying defaults
-    int flags;
-    PyObject *defaults_tuple;
-    PyObject *defaults_kwdict;
-    PyObject *(*defaults_getter)(PyObject *);
-    PyObject *func_annotations;
-} __pyx_CyFunctionObject;
-static PyTypeObject *__pyx_CyFunctionType = 0;
-#define __Pyx_CyFunction_Check(obj)  (__Pyx_TypeCheck(obj, __pyx_CyFunctionType))
-static PyObject *__Pyx_CyFunction_Init(__pyx_CyFunctionObject* op, PyMethodDef *ml,
-                                      int flags, PyObject* qualname,
-                                      PyObject *self,
-                                      PyObject *module, PyObject *globals,
-                                      PyObject* code);
-static CYTHON_INLINE void *__Pyx_CyFunction_InitDefaults(PyObject *m,
-                                                         size_t size,
-                                                         int pyobjects);
-static CYTHON_INLINE void __Pyx_CyFunction_SetDefaultsTuple(PyObject *m,
-                                                            PyObject *tuple);
-static CYTHON_INLINE void __Pyx_CyFunction_SetDefaultsKwDict(PyObject *m,
-                                                             PyObject *dict);
-static CYTHON_INLINE void __Pyx_CyFunction_SetAnnotationsDict(PyObject *m,
-                                                              PyObject *dict);
-static int __pyx_CyFunction_init(void);
-
-/* CythonFunction.proto */
-static PyObject *__Pyx_CyFunction_New(PyMethodDef *ml,
-                                      int flags, PyObject* qualname,
-                                      PyObject *closure,
-                                      PyObject *module, PyObject *globals,
-                                      PyObject* code);
-
 /* CLineInTraceback.proto */
 #ifdef CYTHON_CLINE_IN_TRACEBACK
 #define __Pyx_CLineForTraceback(tstate, c_line)  (((CYTHON_CLINE_IN_TRACEBACK)) ? c_line : 0)
@@ -2424,13 +2362,10 @@ static const char __pyx_k_init[] = "__init__";
 static const char __pyx_k_item[] = "item";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_name[] = "__name__";
-static const char __pyx_k_self[] = "self";
 static const char __pyx_k_test[] = "__test__";
 static const char __pyx_k_type[] = "_type";
 static const char __pyx_k_angle[] = "angle";
-static const char __pyx_k_state[] = "state";
 static const char __pyx_k_white[] = "white";
-static const char __pyx_k_dict_2[] = "_dict";
 static const char __pyx_k_extend[] = "extend";
 static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_item00[] = "item00";
@@ -2452,11 +2387,9 @@ static const char __pyx_k_reduce_ex[] = "__reduce_ex__";
 static const char __pyx_k_start_pos[] = "start_pos";
 static const char __pyx_k_pyx_result[] = "__pyx_result";
 static const char __pyx_k_pyx_vtable[] = "__pyx_vtable__";
-static const char __pyx_k_Item_update[] = "Item.update";
 static const char __pyx_k_PickleError[] = "PickleError";
 static const char __pyx_k_pyx_checksum[] = "__pyx_checksum";
 static const char __pyx_k_stringsource[] = "stringsource";
-static const char __pyx_k_use_setstate[] = "use_setstate";
 static const char __pyx_k_reduce_cython[] = "__reduce_cython__";
 static const char __pyx_k_pyx_PickleError[] = "__pyx_PickleError";
 static const char __pyx_k_setstate_cython[] = "__setstate_cython__";
@@ -2464,24 +2397,14 @@ static const char __pyx_k_pyx_unpickle_Item[] = "__pyx_unpickle_Item";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_pytouhou_game_item[] = "pytouhou.game.item";
 static const char __pyx_k_point_of_collection[] = "point_of_collection";
-static const char __pyx_k_Item___reduce_cython[] = "Item.__reduce_cython__";
 static const char __pyx_k_autocollection_speed[] = "autocollection_speed";
-static const char __pyx_k_Item___setstate_cython[] = "Item.__setstate_cython__";
-static const char __pyx_k_pytouhou_game_item_pyx[] = "pytouhou/game/item.pyx";
 static const char __pyx_k_pyx_unpickle_Indicator[] = "__pyx_unpickle_Indicator";
-static const char __pyx_k_Indicator___reduce_cython[] = "Indicator.__reduce_cython__";
-static const char __pyx_k_Indicator___setstate_cython[] = "Indicator.__setstate_cython__";
 static const char __pyx_k_Incompatible_checksums_0x_x_vs_0[] = "Incompatible checksums (0x%x vs (0x2ee082e, 0x05aff0f, 0xe01e1dc) = (_item, anmrunner, objects, removed, sprite, x, y))";
 static const char __pyx_k_Incompatible_checksums_0x_x_vs_0_2[] = "Incompatible checksums (0x%x vs (0xb824a13, 0x3152a13, 0x27a98f8) = (_game, _item_type, _type, angle, anmrunner, frame, indicator, objects, player, pos_interpolator, removed, speed, speed_interpolator, sprite, target, x, y))";
 static PyObject *__pyx_kp_s_Incompatible_checksums_0x_x_vs_0;
 static PyObject *__pyx_kp_s_Incompatible_checksums_0x_x_vs_0_2;
 static PyObject *__pyx_n_s_Indicator;
-static PyObject *__pyx_n_s_Indicator___reduce_cython;
-static PyObject *__pyx_n_s_Indicator___setstate_cython;
 static PyObject *__pyx_n_s_Item;
-static PyObject *__pyx_n_s_Item___reduce_cython;
-static PyObject *__pyx_n_s_Item___setstate_cython;
-static PyObject *__pyx_n_s_Item_update;
 static PyObject *__pyx_n_s_PickleError;
 static PyObject *__pyx_kp_b__6;
 static PyObject *__pyx_n_s_angle;
@@ -2489,7 +2412,6 @@ static PyObject *__pyx_n_s_autocollection_speed;
 static PyObject *__pyx_n_u_blue;
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_dict;
-static PyObject *__pyx_n_s_dict_2;
 static PyObject *__pyx_n_s_end_pos;
 static PyObject *__pyx_n_u_extend;
 static PyObject *__pyx_n_s_game;
@@ -2506,7 +2428,6 @@ static PyObject *__pyx_n_s_pickle;
 static PyObject *__pyx_n_s_player;
 static PyObject *__pyx_n_s_point_of_collection;
 static PyObject *__pyx_n_s_pytouhou_game_item;
-static PyObject *__pyx_kp_s_pytouhou_game_item_pyx;
 static PyObject *__pyx_n_s_pyx_PickleError;
 static PyObject *__pyx_n_s_pyx_checksum;
 static PyObject *__pyx_n_s_pyx_result;
@@ -2518,18 +2439,15 @@ static PyObject *__pyx_n_s_pyx_vtable;
 static PyObject *__pyx_n_s_reduce;
 static PyObject *__pyx_n_s_reduce_cython;
 static PyObject *__pyx_n_s_reduce_ex;
-static PyObject *__pyx_n_s_self;
 static PyObject *__pyx_n_s_setstate;
 static PyObject *__pyx_n_s_setstate_cython;
 static PyObject *__pyx_n_s_sht;
 static PyObject *__pyx_n_s_start_pos;
-static PyObject *__pyx_n_s_state;
 static PyObject *__pyx_kp_s_stringsource;
 static PyObject *__pyx_n_s_target;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_type;
 static PyObject *__pyx_n_s_update;
-static PyObject *__pyx_n_s_use_setstate;
 static PyObject *__pyx_n_s_values;
 static PyObject *__pyx_n_u_white;
 static PyObject *__pyx_n_u_yellow;
@@ -2577,18 +2495,8 @@ static PyObject *__pyx_tuple__9;
 static PyObject *__pyx_tuple__10;
 static PyObject *__pyx_tuple__11;
 static PyObject *__pyx_tuple__13;
-static PyObject *__pyx_tuple__15;
-static PyObject *__pyx_tuple__17;
-static PyObject *__pyx_tuple__19;
-static PyObject *__pyx_tuple__21;
-static PyObject *__pyx_tuple__23;
 static PyObject *__pyx_codeobj__12;
 static PyObject *__pyx_codeobj__14;
-static PyObject *__pyx_codeobj__16;
-static PyObject *__pyx_codeobj__18;
-static PyObject *__pyx_codeobj__20;
-static PyObject *__pyx_codeobj__22;
-static PyObject *__pyx_codeobj__24;
 /* Late includes */
 
 /* "pytouhou/game/item.pyx":19
@@ -2804,7 +2712,6 @@ static void __pyx_f_8pytouhou_4game_4item_9Indicator_update(struct __pyx_obj_8py
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_4item_9Indicator_3__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_4item_9Indicator_3__reduce_cython__ = {"__reduce_cython__", (PyCFunction)__pyx_pw_8pytouhou_4game_4item_9Indicator_3__reduce_cython__, METH_NOARGS, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_4item_9Indicator_3__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -3091,7 +2998,6 @@ static PyObject *__pyx_pf_8pytouhou_4game_4item_9Indicator_2__reduce_cython__(st
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_4item_9Indicator_5__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_4item_9Indicator_5__setstate_cython__ = {"__setstate_cython__", (PyCFunction)__pyx_pw_8pytouhou_4game_4item_9Indicator_5__setstate_cython__, METH_O, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_4item_9Indicator_5__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -4674,7 +4580,7 @@ static int __pyx_f_8pytouhou_4game_4item_4Item_on_collect(struct __pyx_obj_8pyto
  * 
  *         if score > 0:             # <<<<<<<<<<<<<<
  *             player.score += score
- *             if label is None:
+ *             if player.death_time <= 0:
  */
   __pyx_t_2 = ((__pyx_v_score > 0) != 0);
   if (__pyx_t_2) {
@@ -4683,14 +4589,42 @@ static int __pyx_f_8pytouhou_4game_4item_4Item_on_collect(struct __pyx_obj_8pyto
  * 
  *         if score > 0:
  *             player.score += score             # <<<<<<<<<<<<<<
- *             if label is None:
- *                 label = self._game.new_label((self.x, self.y), str(score).encode())
+ *             if player.death_time <= 0:
+ *                 player.rewards += 1
  */
     __pyx_v_player->score = (__pyx_v_player->score + __pyx_v_score);
 
     /* "pytouhou/game/item.pyx":157
  *         if score > 0:
  *             player.score += score
+ *             if player.death_time <= 0:             # <<<<<<<<<<<<<<
+ *                 player.rewards += 1
+ *             if label is None:
+ */
+    __pyx_t_2 = ((__pyx_v_player->death_time <= 0) != 0);
+    if (__pyx_t_2) {
+
+      /* "pytouhou/game/item.pyx":158
+ *             player.score += score
+ *             if player.death_time <= 0:
+ *                 player.rewards += 1             # <<<<<<<<<<<<<<
+ *             if label is None:
+ *                 label = self._game.new_label((self.x, self.y), str(score).encode())
+ */
+      __pyx_v_player->rewards = (__pyx_v_player->rewards + 1);
+
+      /* "pytouhou/game/item.pyx":157
+ *         if score > 0:
+ *             player.score += score
+ *             if player.death_time <= 0:             # <<<<<<<<<<<<<<
+ *                 player.rewards += 1
+ *             if label is None:
+ */
+    }
+
+    /* "pytouhou/game/item.pyx":159
+ *             if player.death_time <= 0:
+ *                 player.rewards += 1
  *             if label is None:             # <<<<<<<<<<<<<<
  *                 label = self._game.new_label((self.x, self.y), str(score).encode())
  *                 if color != 'white':
@@ -4699,18 +4633,18 @@ static int __pyx_f_8pytouhou_4game_4item_4Item_on_collect(struct __pyx_obj_8pyto
     __pyx_t_1 = (__pyx_t_2 != 0);
     if (__pyx_t_1) {
 
-      /* "pytouhou/game/item.pyx":158
- *             player.score += score
+      /* "pytouhou/game/item.pyx":160
+ *                 player.rewards += 1
  *             if label is None:
  *                 label = self._game.new_label((self.x, self.y), str(score).encode())             # <<<<<<<<<<<<<<
  *                 if color != 'white':
  *                     label.set_color(color)
  */
-      __pyx_t_8 = PyFloat_FromDouble(__pyx_v_self->__pyx_base.x); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 158, __pyx_L1_error)
+      __pyx_t_8 = PyFloat_FromDouble(__pyx_v_self->__pyx_base.x); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 160, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_5 = PyFloat_FromDouble(__pyx_v_self->__pyx_base.y); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 158, __pyx_L1_error)
+      __pyx_t_5 = PyFloat_FromDouble(__pyx_v_self->__pyx_base.y); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 160, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_9 = PyTuple_New(2); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 158, __pyx_L1_error)
+      __pyx_t_9 = PyTuple_New(2); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 160, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
       __Pyx_GIVEREF(__pyx_t_8);
       PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_8);
@@ -4718,33 +4652,33 @@ static int __pyx_f_8pytouhou_4game_4item_4Item_on_collect(struct __pyx_obj_8pyto
       PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_t_5);
       __pyx_t_8 = 0;
       __pyx_t_5 = 0;
-      __pyx_t_5 = __Pyx_PyInt_From_long(__pyx_v_score); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 158, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyInt_From_long(__pyx_v_score); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 160, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_8 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_t_5); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 158, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_t_5); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 160, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_5 = PyUnicode_AsEncodedString(((PyObject*)__pyx_t_8), NULL, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 158, __pyx_L1_error)
+      __pyx_t_5 = PyUnicode_AsEncodedString(((PyObject*)__pyx_t_8), NULL, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 160, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __pyx_t_8 = ((PyObject *)((struct __pyx_vtabstruct_8pytouhou_4game_4game_Game *)__pyx_v_self->_game->__pyx_vtab)->new_label(__pyx_v_self->_game, ((PyObject*)__pyx_t_9), ((PyObject*)__pyx_t_5))); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 158, __pyx_L1_error)
+      __pyx_t_8 = ((PyObject *)((struct __pyx_vtabstruct_8pytouhou_4game_4game_Game *)__pyx_v_self->_game->__pyx_vtab)->new_label(__pyx_v_self->_game, ((PyObject*)__pyx_t_9), ((PyObject*)__pyx_t_5))); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 160, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF_SET(__pyx_v_label, ((struct __pyx_obj_8pytouhou_4game_4text_Text *)__pyx_t_8));
       __pyx_t_8 = 0;
 
-      /* "pytouhou/game/item.pyx":159
+      /* "pytouhou/game/item.pyx":161
  *             if label is None:
  *                 label = self._game.new_label((self.x, self.y), str(score).encode())
  *                 if color != 'white':             # <<<<<<<<<<<<<<
  *                     label.set_color(color)
  * 
  */
-      __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_color, __pyx_n_u_white, Py_NE)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 159, __pyx_L1_error)
+      __pyx_t_1 = (__Pyx_PyUnicode_Equals(__pyx_v_color, __pyx_n_u_white, Py_NE)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 161, __pyx_L1_error)
       __pyx_t_2 = (__pyx_t_1 != 0);
       if (__pyx_t_2) {
 
-        /* "pytouhou/game/item.pyx":160
+        /* "pytouhou/game/item.pyx":162
  *                 label = self._game.new_label((self.x, self.y), str(score).encode())
  *                 if color != 'white':
  *                     label.set_color(color)             # <<<<<<<<<<<<<<
@@ -4753,11 +4687,11 @@ static int __pyx_f_8pytouhou_4game_4item_4Item_on_collect(struct __pyx_obj_8pyto
  */
         __pyx_t_10.__pyx_n = 1;
         __pyx_t_10.text = __pyx_v_color;
-        __pyx_t_8 = ((struct __pyx_vtabstruct_8pytouhou_4game_4text_Text *)__pyx_v_label->__pyx_base.__pyx_vtab)->__pyx_base.set_color(((struct __pyx_obj_8pytouhou_4game_4text_GlyphCollection *)__pyx_v_label), 0, &__pyx_t_10); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 160, __pyx_L1_error)
+        __pyx_t_8 = ((struct __pyx_vtabstruct_8pytouhou_4game_4text_Text *)__pyx_v_label->__pyx_base.__pyx_vtab)->__pyx_base.set_color(((struct __pyx_obj_8pytouhou_4game_4text_GlyphCollection *)__pyx_v_label), 0, &__pyx_t_10); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 162, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-        /* "pytouhou/game/item.pyx":159
+        /* "pytouhou/game/item.pyx":161
  *             if label is None:
  *                 label = self._game.new_label((self.x, self.y), str(score).encode())
  *                 if color != 'white':             # <<<<<<<<<<<<<<
@@ -4766,9 +4700,9 @@ static int __pyx_f_8pytouhou_4game_4item_4Item_on_collect(struct __pyx_obj_8pyto
  */
       }
 
-      /* "pytouhou/game/item.pyx":157
- *         if score > 0:
- *             player.score += score
+      /* "pytouhou/game/item.pyx":159
+ *             if player.death_time <= 0:
+ *                 player.rewards += 1
  *             if label is None:             # <<<<<<<<<<<<<<
  *                 label = self._game.new_label((self.x, self.y), str(score).encode())
  *                 if color != 'white':
@@ -4780,11 +4714,11 @@ static int __pyx_f_8pytouhou_4game_4item_4Item_on_collect(struct __pyx_obj_8pyto
  * 
  *         if score > 0:             # <<<<<<<<<<<<<<
  *             player.score += score
- *             if label is None:
+ *             if player.death_time <= 0:
  */
   }
 
-  /* "pytouhou/game/item.pyx":162
+  /* "pytouhou/game/item.pyx":164
  *                     label.set_color(color)
  * 
  *         self.removed = True             # <<<<<<<<<<<<<<
@@ -4819,7 +4753,7 @@ static int __pyx_f_8pytouhou_4game_4item_4Item_on_collect(struct __pyx_obj_8pyto
   return __pyx_r;
 }
 
-/* "pytouhou/game/item.pyx":165
+/* "pytouhou/game/item.pyx":167
  * 
  * 
  *     cpdef update(self):             # <<<<<<<<<<<<<<
@@ -4856,7 +4790,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
     if (unlikely(!__Pyx_object_dict_version_matches(((PyObject *)__pyx_v_self), __pyx_tp_dict_version, __pyx_obj_dict_version))) {
       PY_UINT64_T __pyx_type_dict_guard = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
       #endif
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_update); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 165, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_update); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 167, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)(void*)__pyx_pw_8pytouhou_4game_4item_4Item_3update)) {
         __Pyx_XDECREF(__pyx_r);
@@ -4873,7 +4807,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
         }
         __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
         __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 165, __pyx_L1_error)
+        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 167, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __pyx_r = __pyx_t_2;
@@ -4894,7 +4828,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
     #endif
   }
 
-  /* "pytouhou/game/item.pyx":168
+  /* "pytouhou/game/item.pyx":170
  *         cdef bint offscreen
  * 
  *         if self.frame == 60:             # <<<<<<<<<<<<<<
@@ -4904,14 +4838,14 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
   __pyx_t_5 = ((__pyx_v_self->frame == 60) != 0);
   if (__pyx_t_5) {
 
-    /* "pytouhou/game/item.pyx":169
+    /* "pytouhou/game/item.pyx":171
  * 
  *         if self.frame == 60:
  *             self.speed_interpolator = Interpolator((0.,), 60,             # <<<<<<<<<<<<<<
  *                                                    (3.,), 180)
  * 
  */
-    __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_8pytouhou_5utils_12interpolator_Interpolator), __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 169, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_8pytouhou_5utils_12interpolator_Interpolator), __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 171, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_GIVEREF(__pyx_t_1);
     __Pyx_GOTREF(__pyx_v_self->speed_interpolator);
@@ -4919,7 +4853,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
     __pyx_v_self->speed_interpolator = ((struct __pyx_obj_8pytouhou_5utils_12interpolator_Interpolator *)__pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "pytouhou/game/item.pyx":168
+    /* "pytouhou/game/item.pyx":170
  *         cdef bint offscreen
  * 
  *         if self.frame == 60:             # <<<<<<<<<<<<<<
@@ -4928,7 +4862,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
  */
   }
 
-  /* "pytouhou/game/item.pyx":172
+  /* "pytouhou/game/item.pyx":174
  *                                                    (3.,), 180)
  * 
  *         if self.target is not None:             # <<<<<<<<<<<<<<
@@ -4939,7 +4873,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
   __pyx_t_6 = (__pyx_t_5 != 0);
   if (__pyx_t_6) {
 
-    /* "pytouhou/game/item.pyx":173
+    /* "pytouhou/game/item.pyx":175
  * 
  *         if self.target is not None:
  *             self.angle = atan2(self.target.y - self.y, self.target.x - self.x)             # <<<<<<<<<<<<<<
@@ -4948,7 +4882,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
  */
     __pyx_v_self->angle = atan2((__pyx_v_self->target->y - __pyx_v_self->__pyx_base.y), (__pyx_v_self->target->x - __pyx_v_self->__pyx_base.x));
 
-    /* "pytouhou/game/item.pyx":174
+    /* "pytouhou/game/item.pyx":176
  *         if self.target is not None:
  *             self.angle = atan2(self.target.y - self.y, self.target.x - self.x)
  *             self.x += cos(self.angle) * self.speed             # <<<<<<<<<<<<<<
@@ -4957,7 +4891,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
  */
     __pyx_v_self->__pyx_base.x = (__pyx_v_self->__pyx_base.x + (cos(__pyx_v_self->angle) * __pyx_v_self->speed));
 
-    /* "pytouhou/game/item.pyx":175
+    /* "pytouhou/game/item.pyx":177
  *             self.angle = atan2(self.target.y - self.y, self.target.x - self.x)
  *             self.x += cos(self.angle) * self.speed
  *             self.y += sin(self.angle) * self.speed             # <<<<<<<<<<<<<<
@@ -4966,7 +4900,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
  */
     __pyx_v_self->__pyx_base.y = (__pyx_v_self->__pyx_base.y + (sin(__pyx_v_self->angle) * __pyx_v_self->speed));
 
-    /* "pytouhou/game/item.pyx":172
+    /* "pytouhou/game/item.pyx":174
  *                                                    (3.,), 180)
  * 
  *         if self.target is not None:             # <<<<<<<<<<<<<<
@@ -4976,7 +4910,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
     goto __pyx_L4;
   }
 
-  /* "pytouhou/game/item.pyx":176
+  /* "pytouhou/game/item.pyx":178
  *             self.x += cos(self.angle) * self.speed
  *             self.y += sin(self.angle) * self.speed
  *         elif self.speed_interpolator is None:             # <<<<<<<<<<<<<<
@@ -4987,25 +4921,25 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
   __pyx_t_5 = (__pyx_t_6 != 0);
   if (__pyx_t_5) {
 
-    /* "pytouhou/game/item.pyx":177
+    /* "pytouhou/game/item.pyx":179
  *             self.y += sin(self.angle) * self.speed
  *         elif self.speed_interpolator is None:
  *             self.pos_interpolator.update(self.frame)             # <<<<<<<<<<<<<<
  *             self.x, self.y = self.pos_interpolator.values
  *         else:
  */
-    __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_5utils_12interpolator_Interpolator *)__pyx_v_self->pos_interpolator->__pyx_vtab)->update(__pyx_v_self->pos_interpolator, __pyx_v_self->frame, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 177, __pyx_L1_error)
+    __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_5utils_12interpolator_Interpolator *)__pyx_v_self->pos_interpolator->__pyx_vtab)->update(__pyx_v_self->pos_interpolator, __pyx_v_self->frame, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 179, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "pytouhou/game/item.pyx":178
+    /* "pytouhou/game/item.pyx":180
  *         elif self.speed_interpolator is None:
  *             self.pos_interpolator.update(self.frame)
  *             self.x, self.y = self.pos_interpolator.values             # <<<<<<<<<<<<<<
  *         else:
  *             self.speed_interpolator.update(self.frame)
  */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->pos_interpolator), __pyx_n_s_values); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 178, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->pos_interpolator), __pyx_n_s_values); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 180, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     if ((likely(PyTuple_CheckExact(__pyx_t_1))) || (PyList_CheckExact(__pyx_t_1))) {
       PyObject* sequence = __pyx_t_1;
@@ -5013,7 +4947,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
       if (unlikely(size != 2)) {
         if (size > 2) __Pyx_RaiseTooManyValuesError(2);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 178, __pyx_L1_error)
+        __PYX_ERR(0, 180, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -5026,15 +4960,15 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
       __Pyx_INCREF(__pyx_t_2);
       __Pyx_INCREF(__pyx_t_3);
       #else
-      __pyx_t_2 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 178, __pyx_L1_error)
+      __pyx_t_2 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 180, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_3 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 178, __pyx_L1_error)
+      __pyx_t_3 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 180, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       #endif
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_4 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 178, __pyx_L1_error)
+      __pyx_t_4 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 180, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __pyx_t_7 = Py_TYPE(__pyx_t_4)->tp_iternext;
@@ -5042,7 +4976,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
       __Pyx_GOTREF(__pyx_t_2);
       index = 1; __pyx_t_3 = __pyx_t_7(__pyx_t_4); if (unlikely(!__pyx_t_3)) goto __pyx_L5_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_3);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_7(__pyx_t_4), 2) < 0) __PYX_ERR(0, 178, __pyx_L1_error)
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_7(__pyx_t_4), 2) < 0) __PYX_ERR(0, 180, __pyx_L1_error)
       __pyx_t_7 = NULL;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       goto __pyx_L6_unpacking_done;
@@ -5050,17 +4984,17 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __pyx_t_7 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 178, __pyx_L1_error)
+      __PYX_ERR(0, 180, __pyx_L1_error)
       __pyx_L6_unpacking_done:;
     }
-    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 178, __pyx_L1_error)
+    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 180, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 178, __pyx_L1_error)
+    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 180, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_v_self->__pyx_base.x = __pyx_t_8;
     __pyx_v_self->__pyx_base.y = __pyx_t_9;
 
-    /* "pytouhou/game/item.pyx":176
+    /* "pytouhou/game/item.pyx":178
  *             self.x += cos(self.angle) * self.speed
  *             self.y += sin(self.angle) * self.speed
  *         elif self.speed_interpolator is None:             # <<<<<<<<<<<<<<
@@ -5070,7 +5004,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
     goto __pyx_L4;
   }
 
-  /* "pytouhou/game/item.pyx":180
+  /* "pytouhou/game/item.pyx":182
  *             self.x, self.y = self.pos_interpolator.values
  *         else:
  *             self.speed_interpolator.update(self.frame)             # <<<<<<<<<<<<<<
@@ -5078,18 +5012,18 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
  *             dx, dy = cos(self.angle) * self.speed, sin(self.angle) * self.speed
  */
   /*else*/ {
-    __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_5utils_12interpolator_Interpolator *)__pyx_v_self->speed_interpolator->__pyx_vtab)->update(__pyx_v_self->speed_interpolator, __pyx_v_self->frame, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 180, __pyx_L1_error)
+    __pyx_t_1 = ((struct __pyx_vtabstruct_8pytouhou_5utils_12interpolator_Interpolator *)__pyx_v_self->speed_interpolator->__pyx_vtab)->update(__pyx_v_self->speed_interpolator, __pyx_v_self->frame, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "pytouhou/game/item.pyx":181
+    /* "pytouhou/game/item.pyx":183
  *         else:
  *             self.speed_interpolator.update(self.frame)
  *             self.speed, = self.speed_interpolator.values             # <<<<<<<<<<<<<<
  *             dx, dy = cos(self.angle) * self.speed, sin(self.angle) * self.speed
  *             self.x += dx
  */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->speed_interpolator), __pyx_n_s_values); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 181, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self->speed_interpolator), __pyx_n_s_values); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 183, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     if ((likely(PyTuple_CheckExact(__pyx_t_1))) || (PyList_CheckExact(__pyx_t_1))) {
       PyObject* sequence = __pyx_t_1;
@@ -5097,7 +5031,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
       if (unlikely(size != 1)) {
         if (size > 1) __Pyx_RaiseTooManyValuesError(1);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 181, __pyx_L1_error)
+        __PYX_ERR(0, 183, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -5107,19 +5041,19 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
       }
       __Pyx_INCREF(__pyx_t_3);
       #else
-      __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 181, __pyx_L1_error)
+      __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 183, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       #endif
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_2 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 181, __pyx_L1_error)
+      __pyx_t_2 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 183, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __pyx_t_7 = Py_TYPE(__pyx_t_2)->tp_iternext;
       index = 0; __pyx_t_3 = __pyx_t_7(__pyx_t_2); if (unlikely(!__pyx_t_3)) goto __pyx_L7_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_3);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_7(__pyx_t_2), 1) < 0) __PYX_ERR(0, 181, __pyx_L1_error)
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_7(__pyx_t_2), 1) < 0) __PYX_ERR(0, 183, __pyx_L1_error)
       __pyx_t_7 = NULL;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       goto __pyx_L8_unpacking_done;
@@ -5127,14 +5061,14 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_t_7 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 181, __pyx_L1_error)
+      __PYX_ERR(0, 183, __pyx_L1_error)
       __pyx_L8_unpacking_done:;
     }
-    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 181, __pyx_L1_error)
+    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 183, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_v_self->speed = __pyx_t_9;
 
-    /* "pytouhou/game/item.pyx":182
+    /* "pytouhou/game/item.pyx":184
  *             self.speed_interpolator.update(self.frame)
  *             self.speed, = self.speed_interpolator.values
  *             dx, dy = cos(self.angle) * self.speed, sin(self.angle) * self.speed             # <<<<<<<<<<<<<<
@@ -5146,7 +5080,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
     __pyx_v_dx = __pyx_t_9;
     __pyx_v_dy = __pyx_t_8;
 
-    /* "pytouhou/game/item.pyx":183
+    /* "pytouhou/game/item.pyx":185
  *             self.speed, = self.speed_interpolator.values
  *             dx, dy = cos(self.angle) * self.speed, sin(self.angle) * self.speed
  *             self.x += dx             # <<<<<<<<<<<<<<
@@ -5155,7 +5089,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
  */
     __pyx_v_self->__pyx_base.x = (__pyx_v_self->__pyx_base.x + __pyx_v_dx);
 
-    /* "pytouhou/game/item.pyx":184
+    /* "pytouhou/game/item.pyx":186
  *             dx, dy = cos(self.angle) * self.speed, sin(self.angle) * self.speed
  *             self.x += dx
  *             self.y += dy             # <<<<<<<<<<<<<<
@@ -5166,7 +5100,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
   }
   __pyx_L4:;
 
-  /* "pytouhou/game/item.pyx":186
+  /* "pytouhou/game/item.pyx":188
  *             self.y += dy
  * 
  *         offscreen = self.y < -self.sprite._texcoords[3] / 2.             # <<<<<<<<<<<<<<
@@ -5175,7 +5109,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
  */
   __pyx_v_offscreen = (__pyx_v_self->__pyx_base.y < (((double)(-(__pyx_v_self->__pyx_base.sprite->_texcoords[3]))) / 2.));
 
-  /* "pytouhou/game/item.pyx":187
+  /* "pytouhou/game/item.pyx":189
  * 
  *         offscreen = self.y < -self.sprite._texcoords[3] / 2.
  *         if offscreen:             # <<<<<<<<<<<<<<
@@ -5185,7 +5119,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
   __pyx_t_5 = (__pyx_v_offscreen != 0);
   if (__pyx_t_5) {
 
-    /* "pytouhou/game/item.pyx":188
+    /* "pytouhou/game/item.pyx":190
  *         offscreen = self.y < -self.sprite._texcoords[3] / 2.
  *         if offscreen:
  *             if self.indicator is None:             # <<<<<<<<<<<<<<
@@ -5196,14 +5130,14 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
     __pyx_t_6 = (__pyx_t_5 != 0);
     if (__pyx_t_6) {
 
-      /* "pytouhou/game/item.pyx":189
+      /* "pytouhou/game/item.pyx":191
  *         if offscreen:
  *             if self.indicator is None:
  *                 self.indicator = Indicator(self)             # <<<<<<<<<<<<<<
  *             self.indicator.update()
  *         else:
  */
-      __pyx_t_1 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_8pytouhou_4game_4item_Indicator), ((PyObject *)__pyx_v_self)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 189, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_8pytouhou_4game_4item_Indicator), ((PyObject *)__pyx_v_self)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 191, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_GIVEREF(__pyx_t_1);
       __Pyx_GOTREF(__pyx_v_self->indicator);
@@ -5211,7 +5145,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
       __pyx_v_self->indicator = ((struct __pyx_obj_8pytouhou_4game_4item_Indicator *)__pyx_t_1);
       __pyx_t_1 = 0;
 
-      /* "pytouhou/game/item.pyx":188
+      /* "pytouhou/game/item.pyx":190
  *         offscreen = self.y < -self.sprite._texcoords[3] / 2.
  *         if offscreen:
  *             if self.indicator is None:             # <<<<<<<<<<<<<<
@@ -5220,7 +5154,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
  */
     }
 
-    /* "pytouhou/game/item.pyx":190
+    /* "pytouhou/game/item.pyx":192
  *             if self.indicator is None:
  *                 self.indicator = Indicator(self)
  *             self.indicator.update()             # <<<<<<<<<<<<<<
@@ -5229,7 +5163,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
  */
     ((struct __pyx_vtabstruct_8pytouhou_4game_4item_Indicator *)__pyx_v_self->indicator->__pyx_vtab)->update(__pyx_v_self->indicator);
 
-    /* "pytouhou/game/item.pyx":187
+    /* "pytouhou/game/item.pyx":189
  * 
  *         offscreen = self.y < -self.sprite._texcoords[3] / 2.
  *         if offscreen:             # <<<<<<<<<<<<<<
@@ -5239,7 +5173,7 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
     goto __pyx_L9;
   }
 
-  /* "pytouhou/game/item.pyx":192
+  /* "pytouhou/game/item.pyx":194
  *             self.indicator.update()
  *         else:
  *             self.indicator = None             # <<<<<<<<<<<<<<
@@ -5255,14 +5189,14 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
   }
   __pyx_L9:;
 
-  /* "pytouhou/game/item.pyx":194
+  /* "pytouhou/game/item.pyx":196
  *             self.indicator = None
  * 
  *         self.frame += 1             # <<<<<<<<<<<<<<
  */
   __pyx_v_self->frame = (__pyx_v_self->frame + 1);
 
-  /* "pytouhou/game/item.pyx":165
+  /* "pytouhou/game/item.pyx":167
  * 
  * 
  *     cpdef update(self):             # <<<<<<<<<<<<<<
@@ -5288,7 +5222,6 @@ static PyObject *__pyx_f_8pytouhou_4game_4item_4Item_update(struct __pyx_obj_8py
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_4item_4Item_3update(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_4item_4Item_3update = {"update", (PyCFunction)__pyx_pw_8pytouhou_4game_4item_4Item_3update, METH_NOARGS, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_4item_4Item_3update(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -5309,7 +5242,7 @@ static PyObject *__pyx_pf_8pytouhou_4game_4item_4Item_2update(struct __pyx_obj_8
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("update", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_8pytouhou_4game_4item_4Item_update(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 165, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_8pytouhou_4game_4item_4Item_update(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 167, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5442,7 +5375,6 @@ static int __pyx_pf_8pytouhou_4game_4item_4Item_10_item_type_4__del__(struct __p
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_4item_4Item_5__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_4item_4Item_5__reduce_cython__ = {"__reduce_cython__", (PyCFunction)__pyx_pw_8pytouhou_4game_4item_4Item_5__reduce_cython__, METH_NOARGS, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_4item_4Item_5__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -5817,7 +5749,6 @@ static PyObject *__pyx_pf_8pytouhou_4game_4item_4Item_4__reduce_cython__(struct 
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pytouhou_4game_4item_4Item_7__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyMethodDef __pyx_mdef_8pytouhou_4game_4item_4Item_7__setstate_cython__ = {"__setstate_cython__", (PyCFunction)__pyx_pw_8pytouhou_4game_4item_4Item_7__setstate_cython__, METH_O, 0};
 static PyObject *__pyx_pw_8pytouhou_4game_4item_4Item_7__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -7140,6 +7071,7 @@ static int __pyx_setprop_8pytouhou_4game_4item_4Item__item_type(PyObject *o, PyO
 }
 
 static PyMethodDef __pyx_methods_8pytouhou_4game_4item_Item[] = {
+  {"update", (PyCFunction)__pyx_pw_8pytouhou_4game_4item_4Item_3update, METH_NOARGS, 0},
   {"__reduce_cython__", (PyCFunction)__pyx_pw_8pytouhou_4game_4item_4Item_5__reduce_cython__, METH_NOARGS, 0},
   {"__setstate_cython__", (PyCFunction)__pyx_pw_8pytouhou_4game_4item_4Item_7__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
@@ -7272,12 +7204,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_Incompatible_checksums_0x_x_vs_0, __pyx_k_Incompatible_checksums_0x_x_vs_0, sizeof(__pyx_k_Incompatible_checksums_0x_x_vs_0), 0, 0, 1, 0},
   {&__pyx_kp_s_Incompatible_checksums_0x_x_vs_0_2, __pyx_k_Incompatible_checksums_0x_x_vs_0_2, sizeof(__pyx_k_Incompatible_checksums_0x_x_vs_0_2), 0, 0, 1, 0},
   {&__pyx_n_s_Indicator, __pyx_k_Indicator, sizeof(__pyx_k_Indicator), 0, 0, 1, 1},
-  {&__pyx_n_s_Indicator___reduce_cython, __pyx_k_Indicator___reduce_cython, sizeof(__pyx_k_Indicator___reduce_cython), 0, 0, 1, 1},
-  {&__pyx_n_s_Indicator___setstate_cython, __pyx_k_Indicator___setstate_cython, sizeof(__pyx_k_Indicator___setstate_cython), 0, 0, 1, 1},
   {&__pyx_n_s_Item, __pyx_k_Item, sizeof(__pyx_k_Item), 0, 0, 1, 1},
-  {&__pyx_n_s_Item___reduce_cython, __pyx_k_Item___reduce_cython, sizeof(__pyx_k_Item___reduce_cython), 0, 0, 1, 1},
-  {&__pyx_n_s_Item___setstate_cython, __pyx_k_Item___setstate_cython, sizeof(__pyx_k_Item___setstate_cython), 0, 0, 1, 1},
-  {&__pyx_n_s_Item_update, __pyx_k_Item_update, sizeof(__pyx_k_Item_update), 0, 0, 1, 1},
   {&__pyx_n_s_PickleError, __pyx_k_PickleError, sizeof(__pyx_k_PickleError), 0, 0, 1, 1},
   {&__pyx_kp_b__6, __pyx_k__6, sizeof(__pyx_k__6), 0, 0, 0, 0},
   {&__pyx_n_s_angle, __pyx_k_angle, sizeof(__pyx_k_angle), 0, 0, 1, 1},
@@ -7285,7 +7212,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_u_blue, __pyx_k_blue, sizeof(__pyx_k_blue), 0, 1, 0, 1},
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_n_s_dict, __pyx_k_dict, sizeof(__pyx_k_dict), 0, 0, 1, 1},
-  {&__pyx_n_s_dict_2, __pyx_k_dict_2, sizeof(__pyx_k_dict_2), 0, 0, 1, 1},
   {&__pyx_n_s_end_pos, __pyx_k_end_pos, sizeof(__pyx_k_end_pos), 0, 0, 1, 1},
   {&__pyx_n_u_extend, __pyx_k_extend, sizeof(__pyx_k_extend), 0, 1, 0, 1},
   {&__pyx_n_s_game, __pyx_k_game, sizeof(__pyx_k_game), 0, 0, 1, 1},
@@ -7302,7 +7228,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_player, __pyx_k_player, sizeof(__pyx_k_player), 0, 0, 1, 1},
   {&__pyx_n_s_point_of_collection, __pyx_k_point_of_collection, sizeof(__pyx_k_point_of_collection), 0, 0, 1, 1},
   {&__pyx_n_s_pytouhou_game_item, __pyx_k_pytouhou_game_item, sizeof(__pyx_k_pytouhou_game_item), 0, 0, 1, 1},
-  {&__pyx_kp_s_pytouhou_game_item_pyx, __pyx_k_pytouhou_game_item_pyx, sizeof(__pyx_k_pytouhou_game_item_pyx), 0, 0, 1, 0},
   {&__pyx_n_s_pyx_PickleError, __pyx_k_pyx_PickleError, sizeof(__pyx_k_pyx_PickleError), 0, 0, 1, 1},
   {&__pyx_n_s_pyx_checksum, __pyx_k_pyx_checksum, sizeof(__pyx_k_pyx_checksum), 0, 0, 1, 1},
   {&__pyx_n_s_pyx_result, __pyx_k_pyx_result, sizeof(__pyx_k_pyx_result), 0, 0, 1, 1},
@@ -7314,18 +7239,15 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_reduce, __pyx_k_reduce, sizeof(__pyx_k_reduce), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_cython, __pyx_k_reduce_cython, sizeof(__pyx_k_reduce_cython), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_ex, __pyx_k_reduce_ex, sizeof(__pyx_k_reduce_ex), 0, 0, 1, 1},
-  {&__pyx_n_s_self, __pyx_k_self, sizeof(__pyx_k_self), 0, 0, 1, 1},
   {&__pyx_n_s_setstate, __pyx_k_setstate, sizeof(__pyx_k_setstate), 0, 0, 1, 1},
   {&__pyx_n_s_setstate_cython, __pyx_k_setstate_cython, sizeof(__pyx_k_setstate_cython), 0, 0, 1, 1},
   {&__pyx_n_s_sht, __pyx_k_sht, sizeof(__pyx_k_sht), 0, 0, 1, 1},
   {&__pyx_n_s_start_pos, __pyx_k_start_pos, sizeof(__pyx_k_start_pos), 0, 0, 1, 1},
-  {&__pyx_n_s_state, __pyx_k_state, sizeof(__pyx_k_state), 0, 0, 1, 1},
   {&__pyx_kp_s_stringsource, __pyx_k_stringsource, sizeof(__pyx_k_stringsource), 0, 0, 1, 0},
   {&__pyx_n_s_target, __pyx_k_target, sizeof(__pyx_k_target), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
   {&__pyx_n_s_type, __pyx_k_type, sizeof(__pyx_k_type), 0, 0, 1, 1},
   {&__pyx_n_s_update, __pyx_k_update, sizeof(__pyx_k_update), 0, 0, 1, 1},
-  {&__pyx_n_s_use_setstate, __pyx_k_use_setstate, sizeof(__pyx_k_use_setstate), 0, 0, 1, 1},
   {&__pyx_n_s_values, __pyx_k_values, sizeof(__pyx_k_values), 0, 0, 1, 1},
   {&__pyx_n_u_white, __pyx_k_white, sizeof(__pyx_k_white), 0, 1, 0, 1},
   {&__pyx_n_u_yellow, __pyx_k_yellow, sizeof(__pyx_k_yellow), 0, 1, 0, 1},
@@ -7383,25 +7305,25 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__5);
   __Pyx_GIVEREF(__pyx_tuple__5);
 
-  /* "pytouhou/game/item.pyx":170
+  /* "pytouhou/game/item.pyx":172
  *         if self.frame == 60:
  *             self.speed_interpolator = Interpolator((0.,), 60,
  *                                                    (3.,), 180)             # <<<<<<<<<<<<<<
  * 
  *         if self.target is not None:
  */
-  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_float_3_); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 170, __pyx_L1_error)
+  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_float_3_); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 172, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__7);
   __Pyx_GIVEREF(__pyx_tuple__7);
 
-  /* "pytouhou/game/item.pyx":169
+  /* "pytouhou/game/item.pyx":171
  * 
  *         if self.frame == 60:
  *             self.speed_interpolator = Interpolator((0.,), 60,             # <<<<<<<<<<<<<<
  *                                                    (3.,), 180)
  * 
  */
-  __pyx_tuple__8 = PyTuple_Pack(4, __pyx_tuple__3, __pyx_int_60, __pyx_tuple__7, __pyx_int_180); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 169, __pyx_L1_error)
+  __pyx_tuple__8 = PyTuple_Pack(4, __pyx_tuple__3, __pyx_int_60, __pyx_tuple__7, __pyx_int_180); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 171, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__8);
   __Pyx_GIVEREF(__pyx_tuple__8);
 
@@ -7420,72 +7342,18 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__10);
 
   /* "(tree fragment)":1
- * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
- *     cdef tuple state
- *     cdef object _dict
- */
-  __pyx_tuple__11 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_state, __pyx_n_s_dict_2, __pyx_n_s_use_setstate); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__11);
-  __Pyx_GIVEREF(__pyx_tuple__11);
-  __pyx_codeobj__12 = (PyObject*)__Pyx_PyCode_New(1, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__11, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__12)) __PYX_ERR(1, 1, __pyx_L1_error)
-
-  /* "(tree fragment)":16
- *     else:
- *         return __pyx_unpickle_Indicator, (type(self), 0x2ee082e, state)
- * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
- *     __pyx_unpickle_Indicator__set_state(self, __pyx_state)
- */
-  __pyx_tuple__13 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_pyx_state); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(1, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__13);
-  __Pyx_GIVEREF(__pyx_tuple__13);
-  __pyx_codeobj__14 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__13, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 16, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__14)) __PYX_ERR(1, 16, __pyx_L1_error)
-
-  /* "pytouhou/game/item.pyx":165
- * 
- * 
- *     cpdef update(self):             # <<<<<<<<<<<<<<
- *         cdef bint offscreen
- * 
- */
-  __pyx_tuple__15 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__15)) __PYX_ERR(0, 165, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__15);
-  __Pyx_GIVEREF(__pyx_tuple__15);
-  __pyx_codeobj__16 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__15, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pytouhou_game_item_pyx, __pyx_n_s_update, 165, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__16)) __PYX_ERR(0, 165, __pyx_L1_error)
-
-  /* "(tree fragment)":1
- * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
- *     cdef tuple state
- *     cdef object _dict
- */
-  __pyx_tuple__17 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_state, __pyx_n_s_dict_2, __pyx_n_s_use_setstate); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__17);
-  __Pyx_GIVEREF(__pyx_tuple__17);
-  __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(1, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__17, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) __PYX_ERR(1, 1, __pyx_L1_error)
-
-  /* "(tree fragment)":16
- *     else:
- *         return __pyx_unpickle_Item, (type(self), 0xb824a13, state)
- * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
- *     __pyx_unpickle_Item__set_state(self, __pyx_state)
- */
-  __pyx_tuple__19 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_pyx_state); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(1, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__19);
-  __Pyx_GIVEREF(__pyx_tuple__19);
-  __pyx_codeobj__20 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__19, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 16, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__20)) __PYX_ERR(1, 16, __pyx_L1_error)
-
-  /* "(tree fragment)":1
  * def __pyx_unpickle_Indicator(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_tuple__21 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__21)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__21);
-  __Pyx_GIVEREF(__pyx_tuple__21);
-  __pyx_codeobj__22 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__21, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Indicator, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__22)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __pyx_tuple__23 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__23)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__23);
-  __Pyx_GIVEREF(__pyx_tuple__23);
-  __pyx_codeobj__24 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__23, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Item, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__24)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_tuple__11 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__11);
+  __Pyx_GIVEREF(__pyx_tuple__11);
+  __pyx_codeobj__12 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__11, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Indicator, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__12)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_tuple__13 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__13);
+  __Pyx_GIVEREF(__pyx_tuple__13);
+  __pyx_codeobj__14 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__13, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Item, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__14)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -7907,29 +7775,6 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "(tree fragment)":1
- * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
- *     cdef tuple state
- *     cdef object _dict
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_4item_9Indicator_3__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Indicator___reduce_cython, NULL, __pyx_n_s_pytouhou_game_item, __pyx_d, ((PyObject *)__pyx_codeobj__12)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_4item_Indicator->tp_dict, __pyx_n_s_reduce_cython, __pyx_t_1) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_4item_Indicator);
-
-  /* "(tree fragment)":16
- *     else:
- *         return __pyx_unpickle_Indicator, (type(self), 0x2ee082e, state)
- * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
- *     __pyx_unpickle_Indicator__set_state(self, __pyx_state)
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_4item_9Indicator_5__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Indicator___setstate_cython, NULL, __pyx_n_s_pytouhou_game_item, __pyx_d, ((PyObject *)__pyx_codeobj__14)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_4item_Indicator->tp_dict, __pyx_n_s_setstate_cython, __pyx_t_1) < 0) __PYX_ERR(1, 16, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_4item_Indicator);
-
   /* "pytouhou/game/item.pyx":37
  * cdef class Item(Element):
  *     def __init__(self, start_pos, long _type, ItemType item_type, Game game,
@@ -7939,48 +7784,12 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_k_ = (((double)M_PI) / 2.0);
 
-  /* "pytouhou/game/item.pyx":165
- * 
- * 
- *     cpdef update(self):             # <<<<<<<<<<<<<<
- *         cdef bint offscreen
- * 
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_4item_4Item_3update, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Item_update, NULL, __pyx_n_s_pytouhou_game_item, __pyx_d, ((PyObject *)__pyx_codeobj__16)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 165, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_4item_Item->tp_dict, __pyx_n_s_update, __pyx_t_1) < 0) __PYX_ERR(0, 165, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_4item_Item);
-
-  /* "(tree fragment)":1
- * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
- *     cdef tuple state
- *     cdef object _dict
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_4item_4Item_5__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Item___reduce_cython, NULL, __pyx_n_s_pytouhou_game_item, __pyx_d, ((PyObject *)__pyx_codeobj__18)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_4item_Item->tp_dict, __pyx_n_s_reduce_cython, __pyx_t_1) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_4item_Item);
-
-  /* "(tree fragment)":16
- *     else:
- *         return __pyx_unpickle_Item, (type(self), 0xb824a13, state)
- * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
- *     __pyx_unpickle_Item__set_state(self, __pyx_state)
- */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_4item_4Item_7__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Item___setstate_cython, NULL, __pyx_n_s_pytouhou_game_item, __pyx_d, ((PyObject *)__pyx_codeobj__20)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_8pytouhou_4game_4item_Item->tp_dict, __pyx_n_s_setstate_cython, __pyx_t_1) < 0) __PYX_ERR(1, 16, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  PyType_Modified(__pyx_ptype_8pytouhou_4game_4item_Item);
-
   /* "(tree fragment)":1
  * def __pyx_unpickle_Indicator(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_4item_1__pyx_unpickle_Indicator, 0, __pyx_n_s_pyx_unpickle_Indicator, NULL, __pyx_n_s_pytouhou_game_item, __pyx_d, ((PyObject *)__pyx_codeobj__22)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8pytouhou_4game_4item_1__pyx_unpickle_Indicator, NULL, __pyx_n_s_pytouhou_game_item); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_Indicator, __pyx_t_1) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -7992,7 +7801,7 @@ if (!__Pyx_RefNanny) {
  *     __pyx_result._item = __pyx_state[0]; __pyx_result.anmrunner = __pyx_state[1]; __pyx_result.objects = __pyx_state[2]; __pyx_result.removed = __pyx_state[3]; __pyx_result.sprite = __pyx_state[4]; __pyx_result.x = __pyx_state[5]; __pyx_result.y = __pyx_state[6]
  *     if len(__pyx_state) > 7 and hasattr(__pyx_result, '__dict__'):
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_8pytouhou_4game_4item_3__pyx_unpickle_Item, 0, __pyx_n_s_pyx_unpickle_Item, NULL, __pyx_n_s_pytouhou_game_item, __pyx_d, ((PyObject *)__pyx_codeobj__24)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8pytouhou_4game_4item_3__pyx_unpickle_Item, NULL, __pyx_n_s_pytouhou_game_item); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_Item, __pyx_t_1) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -9521,674 +9330,6 @@ static void* __Pyx_GetVtable(PyObject *dict) {
 bad:
     Py_XDECREF(ob);
     return NULL;
-}
-
-/* FetchCommonType */
-static PyTypeObject* __Pyx_FetchCommonType(PyTypeObject* type) {
-    PyObject* fake_module;
-    PyTypeObject* cached_type = NULL;
-    fake_module = PyImport_AddModule((char*) "_cython_" CYTHON_ABI);
-    if (!fake_module) return NULL;
-    Py_INCREF(fake_module);
-    cached_type = (PyTypeObject*) PyObject_GetAttrString(fake_module, type->tp_name);
-    if (cached_type) {
-        if (!PyType_Check((PyObject*)cached_type)) {
-            PyErr_Format(PyExc_TypeError,
-                "Shared Cython type %.200s is not a type object",
-                type->tp_name);
-            goto bad;
-        }
-        if (cached_type->tp_basicsize != type->tp_basicsize) {
-            PyErr_Format(PyExc_TypeError,
-                "Shared Cython type %.200s has the wrong size, try recompiling",
-                type->tp_name);
-            goto bad;
-        }
-    } else {
-        if (!PyErr_ExceptionMatches(PyExc_AttributeError)) goto bad;
-        PyErr_Clear();
-        if (PyType_Ready(type) < 0) goto bad;
-        if (PyObject_SetAttrString(fake_module, type->tp_name, (PyObject*) type) < 0)
-            goto bad;
-        Py_INCREF(type);
-        cached_type = type;
-    }
-done:
-    Py_DECREF(fake_module);
-    return cached_type;
-bad:
-    Py_XDECREF(cached_type);
-    cached_type = NULL;
-    goto done;
-}
-
-/* CythonFunctionShared */
-#include <structmember.h>
-static PyObject *
-__Pyx_CyFunction_get_doc(__pyx_CyFunctionObject *op, CYTHON_UNUSED void *closure)
-{
-    if (unlikely(op->func_doc == NULL)) {
-        if (op->func.m_ml->ml_doc) {
-#if PY_MAJOR_VERSION >= 3
-            op->func_doc = PyUnicode_FromString(op->func.m_ml->ml_doc);
-#else
-            op->func_doc = PyString_FromString(op->func.m_ml->ml_doc);
-#endif
-            if (unlikely(op->func_doc == NULL))
-                return NULL;
-        } else {
-            Py_INCREF(Py_None);
-            return Py_None;
-        }
-    }
-    Py_INCREF(op->func_doc);
-    return op->func_doc;
-}
-static int
-__Pyx_CyFunction_set_doc(__pyx_CyFunctionObject *op, PyObject *value, CYTHON_UNUSED void *context)
-{
-    PyObject *tmp = op->func_doc;
-    if (value == NULL) {
-        value = Py_None;
-    }
-    Py_INCREF(value);
-    op->func_doc = value;
-    Py_XDECREF(tmp);
-    return 0;
-}
-static PyObject *
-__Pyx_CyFunction_get_name(__pyx_CyFunctionObject *op, CYTHON_UNUSED void *context)
-{
-    if (unlikely(op->func_name == NULL)) {
-#if PY_MAJOR_VERSION >= 3
-        op->func_name = PyUnicode_InternFromString(op->func.m_ml->ml_name);
-#else
-        op->func_name = PyString_InternFromString(op->func.m_ml->ml_name);
-#endif
-        if (unlikely(op->func_name == NULL))
-            return NULL;
-    }
-    Py_INCREF(op->func_name);
-    return op->func_name;
-}
-static int
-__Pyx_CyFunction_set_name(__pyx_CyFunctionObject *op, PyObject *value, CYTHON_UNUSED void *context)
-{
-    PyObject *tmp;
-#if PY_MAJOR_VERSION >= 3
-    if (unlikely(value == NULL || !PyUnicode_Check(value)))
-#else
-    if (unlikely(value == NULL || !PyString_Check(value)))
-#endif
-    {
-        PyErr_SetString(PyExc_TypeError,
-                        "__name__ must be set to a string object");
-        return -1;
-    }
-    tmp = op->func_name;
-    Py_INCREF(value);
-    op->func_name = value;
-    Py_XDECREF(tmp);
-    return 0;
-}
-static PyObject *
-__Pyx_CyFunction_get_qualname(__pyx_CyFunctionObject *op, CYTHON_UNUSED void *context)
-{
-    Py_INCREF(op->func_qualname);
-    return op->func_qualname;
-}
-static int
-__Pyx_CyFunction_set_qualname(__pyx_CyFunctionObject *op, PyObject *value, CYTHON_UNUSED void *context)
-{
-    PyObject *tmp;
-#if PY_MAJOR_VERSION >= 3
-    if (unlikely(value == NULL || !PyUnicode_Check(value)))
-#else
-    if (unlikely(value == NULL || !PyString_Check(value)))
-#endif
-    {
-        PyErr_SetString(PyExc_TypeError,
-                        "__qualname__ must be set to a string object");
-        return -1;
-    }
-    tmp = op->func_qualname;
-    Py_INCREF(value);
-    op->func_qualname = value;
-    Py_XDECREF(tmp);
-    return 0;
-}
-static PyObject *
-__Pyx_CyFunction_get_self(__pyx_CyFunctionObject *m, CYTHON_UNUSED void *closure)
-{
-    PyObject *self;
-    self = m->func_closure;
-    if (self == NULL)
-        self = Py_None;
-    Py_INCREF(self);
-    return self;
-}
-static PyObject *
-__Pyx_CyFunction_get_dict(__pyx_CyFunctionObject *op, CYTHON_UNUSED void *context)
-{
-    if (unlikely(op->func_dict == NULL)) {
-        op->func_dict = PyDict_New();
-        if (unlikely(op->func_dict == NULL))
-            return NULL;
-    }
-    Py_INCREF(op->func_dict);
-    return op->func_dict;
-}
-static int
-__Pyx_CyFunction_set_dict(__pyx_CyFunctionObject *op, PyObject *value, CYTHON_UNUSED void *context)
-{
-    PyObject *tmp;
-    if (unlikely(value == NULL)) {
-        PyErr_SetString(PyExc_TypeError,
-               "function's dictionary may not be deleted");
-        return -1;
-    }
-    if (unlikely(!PyDict_Check(value))) {
-        PyErr_SetString(PyExc_TypeError,
-               "setting function's dictionary to a non-dict");
-        return -1;
-    }
-    tmp = op->func_dict;
-    Py_INCREF(value);
-    op->func_dict = value;
-    Py_XDECREF(tmp);
-    return 0;
-}
-static PyObject *
-__Pyx_CyFunction_get_globals(__pyx_CyFunctionObject *op, CYTHON_UNUSED void *context)
-{
-    Py_INCREF(op->func_globals);
-    return op->func_globals;
-}
-static PyObject *
-__Pyx_CyFunction_get_closure(CYTHON_UNUSED __pyx_CyFunctionObject *op, CYTHON_UNUSED void *context)
-{
-    Py_INCREF(Py_None);
-    return Py_None;
-}
-static PyObject *
-__Pyx_CyFunction_get_code(__pyx_CyFunctionObject *op, CYTHON_UNUSED void *context)
-{
-    PyObject* result = (op->func_code) ? op->func_code : Py_None;
-    Py_INCREF(result);
-    return result;
-}
-static int
-__Pyx_CyFunction_init_defaults(__pyx_CyFunctionObject *op) {
-    int result = 0;
-    PyObject *res = op->defaults_getter((PyObject *) op);
-    if (unlikely(!res))
-        return -1;
-    #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    op->defaults_tuple = PyTuple_GET_ITEM(res, 0);
-    Py_INCREF(op->defaults_tuple);
-    op->defaults_kwdict = PyTuple_GET_ITEM(res, 1);
-    Py_INCREF(op->defaults_kwdict);
-    #else
-    op->defaults_tuple = PySequence_ITEM(res, 0);
-    if (unlikely(!op->defaults_tuple)) result = -1;
-    else {
-        op->defaults_kwdict = PySequence_ITEM(res, 1);
-        if (unlikely(!op->defaults_kwdict)) result = -1;
-    }
-    #endif
-    Py_DECREF(res);
-    return result;
-}
-static int
-__Pyx_CyFunction_set_defaults(__pyx_CyFunctionObject *op, PyObject* value, CYTHON_UNUSED void *context) {
-    PyObject* tmp;
-    if (!value) {
-        value = Py_None;
-    } else if (value != Py_None && !PyTuple_Check(value)) {
-        PyErr_SetString(PyExc_TypeError,
-                        "__defaults__ must be set to a tuple object");
-        return -1;
-    }
-    Py_INCREF(value);
-    tmp = op->defaults_tuple;
-    op->defaults_tuple = value;
-    Py_XDECREF(tmp);
-    return 0;
-}
-static PyObject *
-__Pyx_CyFunction_get_defaults(__pyx_CyFunctionObject *op, CYTHON_UNUSED void *context) {
-    PyObject* result = op->defaults_tuple;
-    if (unlikely(!result)) {
-        if (op->defaults_getter) {
-            if (__Pyx_CyFunction_init_defaults(op) < 0) return NULL;
-            result = op->defaults_tuple;
-        } else {
-            result = Py_None;
-        }
-    }
-    Py_INCREF(result);
-    return result;
-}
-static int
-__Pyx_CyFunction_set_kwdefaults(__pyx_CyFunctionObject *op, PyObject* value, CYTHON_UNUSED void *context) {
-    PyObject* tmp;
-    if (!value) {
-        value = Py_None;
-    } else if (value != Py_None && !PyDict_Check(value)) {
-        PyErr_SetString(PyExc_TypeError,
-                        "__kwdefaults__ must be set to a dict object");
-        return -1;
-    }
-    Py_INCREF(value);
-    tmp = op->defaults_kwdict;
-    op->defaults_kwdict = value;
-    Py_XDECREF(tmp);
-    return 0;
-}
-static PyObject *
-__Pyx_CyFunction_get_kwdefaults(__pyx_CyFunctionObject *op, CYTHON_UNUSED void *context) {
-    PyObject* result = op->defaults_kwdict;
-    if (unlikely(!result)) {
-        if (op->defaults_getter) {
-            if (__Pyx_CyFunction_init_defaults(op) < 0) return NULL;
-            result = op->defaults_kwdict;
-        } else {
-            result = Py_None;
-        }
-    }
-    Py_INCREF(result);
-    return result;
-}
-static int
-__Pyx_CyFunction_set_annotations(__pyx_CyFunctionObject *op, PyObject* value, CYTHON_UNUSED void *context) {
-    PyObject* tmp;
-    if (!value || value == Py_None) {
-        value = NULL;
-    } else if (!PyDict_Check(value)) {
-        PyErr_SetString(PyExc_TypeError,
-                        "__annotations__ must be set to a dict object");
-        return -1;
-    }
-    Py_XINCREF(value);
-    tmp = op->func_annotations;
-    op->func_annotations = value;
-    Py_XDECREF(tmp);
-    return 0;
-}
-static PyObject *
-__Pyx_CyFunction_get_annotations(__pyx_CyFunctionObject *op, CYTHON_UNUSED void *context) {
-    PyObject* result = op->func_annotations;
-    if (unlikely(!result)) {
-        result = PyDict_New();
-        if (unlikely(!result)) return NULL;
-        op->func_annotations = result;
-    }
-    Py_INCREF(result);
-    return result;
-}
-static PyGetSetDef __pyx_CyFunction_getsets[] = {
-    {(char *) "func_doc", (getter)__Pyx_CyFunction_get_doc, (setter)__Pyx_CyFunction_set_doc, 0, 0},
-    {(char *) "__doc__",  (getter)__Pyx_CyFunction_get_doc, (setter)__Pyx_CyFunction_set_doc, 0, 0},
-    {(char *) "func_name", (getter)__Pyx_CyFunction_get_name, (setter)__Pyx_CyFunction_set_name, 0, 0},
-    {(char *) "__name__", (getter)__Pyx_CyFunction_get_name, (setter)__Pyx_CyFunction_set_name, 0, 0},
-    {(char *) "__qualname__", (getter)__Pyx_CyFunction_get_qualname, (setter)__Pyx_CyFunction_set_qualname, 0, 0},
-    {(char *) "__self__", (getter)__Pyx_CyFunction_get_self, 0, 0, 0},
-    {(char *) "func_dict", (getter)__Pyx_CyFunction_get_dict, (setter)__Pyx_CyFunction_set_dict, 0, 0},
-    {(char *) "__dict__", (getter)__Pyx_CyFunction_get_dict, (setter)__Pyx_CyFunction_set_dict, 0, 0},
-    {(char *) "func_globals", (getter)__Pyx_CyFunction_get_globals, 0, 0, 0},
-    {(char *) "__globals__", (getter)__Pyx_CyFunction_get_globals, 0, 0, 0},
-    {(char *) "func_closure", (getter)__Pyx_CyFunction_get_closure, 0, 0, 0},
-    {(char *) "__closure__", (getter)__Pyx_CyFunction_get_closure, 0, 0, 0},
-    {(char *) "func_code", (getter)__Pyx_CyFunction_get_code, 0, 0, 0},
-    {(char *) "__code__", (getter)__Pyx_CyFunction_get_code, 0, 0, 0},
-    {(char *) "func_defaults", (getter)__Pyx_CyFunction_get_defaults, (setter)__Pyx_CyFunction_set_defaults, 0, 0},
-    {(char *) "__defaults__", (getter)__Pyx_CyFunction_get_defaults, (setter)__Pyx_CyFunction_set_defaults, 0, 0},
-    {(char *) "__kwdefaults__", (getter)__Pyx_CyFunction_get_kwdefaults, (setter)__Pyx_CyFunction_set_kwdefaults, 0, 0},
-    {(char *) "__annotations__", (getter)__Pyx_CyFunction_get_annotations, (setter)__Pyx_CyFunction_set_annotations, 0, 0},
-    {0, 0, 0, 0, 0}
-};
-static PyMemberDef __pyx_CyFunction_members[] = {
-    {(char *) "__module__", T_OBJECT, offsetof(PyCFunctionObject, m_module), PY_WRITE_RESTRICTED, 0},
-    {0, 0, 0,  0, 0}
-};
-static PyObject *
-__Pyx_CyFunction_reduce(__pyx_CyFunctionObject *m, CYTHON_UNUSED PyObject *args)
-{
-#if PY_MAJOR_VERSION >= 3
-    Py_INCREF(m->func_qualname);
-    return m->func_qualname;
-#else
-    return PyString_FromString(m->func.m_ml->ml_name);
-#endif
-}
-static PyMethodDef __pyx_CyFunction_methods[] = {
-    {"__reduce__", (PyCFunction)__Pyx_CyFunction_reduce, METH_VARARGS, 0},
-    {0, 0, 0, 0}
-};
-#if PY_VERSION_HEX < 0x030500A0
-#define __Pyx_CyFunction_weakreflist(cyfunc) ((cyfunc)->func_weakreflist)
-#else
-#define __Pyx_CyFunction_weakreflist(cyfunc) ((cyfunc)->func.m_weakreflist)
-#endif
-static PyObject *__Pyx_CyFunction_Init(__pyx_CyFunctionObject *op, PyMethodDef *ml, int flags, PyObject* qualname,
-                                       PyObject *closure, PyObject *module, PyObject* globals, PyObject* code) {
-    if (unlikely(op == NULL))
-        return NULL;
-    op->flags = flags;
-    __Pyx_CyFunction_weakreflist(op) = NULL;
-    op->func.m_ml = ml;
-    op->func.m_self = (PyObject *) op;
-    Py_XINCREF(closure);
-    op->func_closure = closure;
-    Py_XINCREF(module);
-    op->func.m_module = module;
-    op->func_dict = NULL;
-    op->func_name = NULL;
-    Py_INCREF(qualname);
-    op->func_qualname = qualname;
-    op->func_doc = NULL;
-    op->func_classobj = NULL;
-    op->func_globals = globals;
-    Py_INCREF(op->func_globals);
-    Py_XINCREF(code);
-    op->func_code = code;
-    op->defaults_pyobjects = 0;
-    op->defaults_size = 0;
-    op->defaults = NULL;
-    op->defaults_tuple = NULL;
-    op->defaults_kwdict = NULL;
-    op->defaults_getter = NULL;
-    op->func_annotations = NULL;
-    return (PyObject *) op;
-}
-static int
-__Pyx_CyFunction_clear(__pyx_CyFunctionObject *m)
-{
-    Py_CLEAR(m->func_closure);
-    Py_CLEAR(m->func.m_module);
-    Py_CLEAR(m->func_dict);
-    Py_CLEAR(m->func_name);
-    Py_CLEAR(m->func_qualname);
-    Py_CLEAR(m->func_doc);
-    Py_CLEAR(m->func_globals);
-    Py_CLEAR(m->func_code);
-    Py_CLEAR(m->func_classobj);
-    Py_CLEAR(m->defaults_tuple);
-    Py_CLEAR(m->defaults_kwdict);
-    Py_CLEAR(m->func_annotations);
-    if (m->defaults) {
-        PyObject **pydefaults = __Pyx_CyFunction_Defaults(PyObject *, m);
-        int i;
-        for (i = 0; i < m->defaults_pyobjects; i++)
-            Py_XDECREF(pydefaults[i]);
-        PyObject_Free(m->defaults);
-        m->defaults = NULL;
-    }
-    return 0;
-}
-static void __Pyx__CyFunction_dealloc(__pyx_CyFunctionObject *m)
-{
-    if (__Pyx_CyFunction_weakreflist(m) != NULL)
-        PyObject_ClearWeakRefs((PyObject *) m);
-    __Pyx_CyFunction_clear(m);
-    PyObject_GC_Del(m);
-}
-static void __Pyx_CyFunction_dealloc(__pyx_CyFunctionObject *m)
-{
-    PyObject_GC_UnTrack(m);
-    __Pyx__CyFunction_dealloc(m);
-}
-static int __Pyx_CyFunction_traverse(__pyx_CyFunctionObject *m, visitproc visit, void *arg)
-{
-    Py_VISIT(m->func_closure);
-    Py_VISIT(m->func.m_module);
-    Py_VISIT(m->func_dict);
-    Py_VISIT(m->func_name);
-    Py_VISIT(m->func_qualname);
-    Py_VISIT(m->func_doc);
-    Py_VISIT(m->func_globals);
-    Py_VISIT(m->func_code);
-    Py_VISIT(m->func_classobj);
-    Py_VISIT(m->defaults_tuple);
-    Py_VISIT(m->defaults_kwdict);
-    if (m->defaults) {
-        PyObject **pydefaults = __Pyx_CyFunction_Defaults(PyObject *, m);
-        int i;
-        for (i = 0; i < m->defaults_pyobjects; i++)
-            Py_VISIT(pydefaults[i]);
-    }
-    return 0;
-}
-static PyObject *__Pyx_CyFunction_descr_get(PyObject *func, PyObject *obj, PyObject *type)
-{
-#if PY_MAJOR_VERSION < 3
-    __pyx_CyFunctionObject *m = (__pyx_CyFunctionObject *) func;
-    if (m->flags & __Pyx_CYFUNCTION_STATICMETHOD) {
-        Py_INCREF(func);
-        return func;
-    }
-    if (m->flags & __Pyx_CYFUNCTION_CLASSMETHOD) {
-        if (type == NULL)
-            type = (PyObject *)(Py_TYPE(obj));
-        return __Pyx_PyMethod_New(func, type, (PyObject *)(Py_TYPE(type)));
-    }
-    if (obj == Py_None)
-        obj = NULL;
-#endif
-    return __Pyx_PyMethod_New(func, obj, type);
-}
-static PyObject*
-__Pyx_CyFunction_repr(__pyx_CyFunctionObject *op)
-{
-#if PY_MAJOR_VERSION >= 3
-    return PyUnicode_FromFormat("<cyfunction %U at %p>",
-                                op->func_qualname, (void *)op);
-#else
-    return PyString_FromFormat("<cyfunction %s at %p>",
-                               PyString_AsString(op->func_qualname), (void *)op);
-#endif
-}
-static PyObject * __Pyx_CyFunction_CallMethod(PyObject *func, PyObject *self, PyObject *arg, PyObject *kw) {
-    PyCFunctionObject* f = (PyCFunctionObject*)func;
-    PyCFunction meth = f->m_ml->ml_meth;
-    Py_ssize_t size;
-    switch (f->m_ml->ml_flags & (METH_VARARGS | METH_KEYWORDS | METH_NOARGS | METH_O)) {
-    case METH_VARARGS:
-        if (likely(kw == NULL || PyDict_Size(kw) == 0))
-            return (*meth)(self, arg);
-        break;
-    case METH_VARARGS | METH_KEYWORDS:
-        return (*(PyCFunctionWithKeywords)(void*)meth)(self, arg, kw);
-    case METH_NOARGS:
-        if (likely(kw == NULL || PyDict_Size(kw) == 0)) {
-            size = PyTuple_GET_SIZE(arg);
-            if (likely(size == 0))
-                return (*meth)(self, NULL);
-            PyErr_Format(PyExc_TypeError,
-                "%.200s() takes no arguments (%" CYTHON_FORMAT_SSIZE_T "d given)",
-                f->m_ml->ml_name, size);
-            return NULL;
-        }
-        break;
-    case METH_O:
-        if (likely(kw == NULL || PyDict_Size(kw) == 0)) {
-            size = PyTuple_GET_SIZE(arg);
-            if (likely(size == 1)) {
-                PyObject *result, *arg0;
-                #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-                arg0 = PyTuple_GET_ITEM(arg, 0);
-                #else
-                arg0 = PySequence_ITEM(arg, 0); if (unlikely(!arg0)) return NULL;
-                #endif
-                result = (*meth)(self, arg0);
-                #if !(CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS)
-                Py_DECREF(arg0);
-                #endif
-                return result;
-            }
-            PyErr_Format(PyExc_TypeError,
-                "%.200s() takes exactly one argument (%" CYTHON_FORMAT_SSIZE_T "d given)",
-                f->m_ml->ml_name, size);
-            return NULL;
-        }
-        break;
-    default:
-        PyErr_SetString(PyExc_SystemError, "Bad call flags in "
-                        "__Pyx_CyFunction_Call. METH_OLDARGS is no "
-                        "longer supported!");
-        return NULL;
-    }
-    PyErr_Format(PyExc_TypeError, "%.200s() takes no keyword arguments",
-                 f->m_ml->ml_name);
-    return NULL;
-}
-static CYTHON_INLINE PyObject *__Pyx_CyFunction_Call(PyObject *func, PyObject *arg, PyObject *kw) {
-    return __Pyx_CyFunction_CallMethod(func, ((PyCFunctionObject*)func)->m_self, arg, kw);
-}
-static PyObject *__Pyx_CyFunction_CallAsMethod(PyObject *func, PyObject *args, PyObject *kw) {
-    PyObject *result;
-    __pyx_CyFunctionObject *cyfunc = (__pyx_CyFunctionObject *) func;
-    if ((cyfunc->flags & __Pyx_CYFUNCTION_CCLASS) && !(cyfunc->flags & __Pyx_CYFUNCTION_STATICMETHOD)) {
-        Py_ssize_t argc;
-        PyObject *new_args;
-        PyObject *self;
-        argc = PyTuple_GET_SIZE(args);
-        new_args = PyTuple_GetSlice(args, 1, argc);
-        if (unlikely(!new_args))
-            return NULL;
-        self = PyTuple_GetItem(args, 0);
-        if (unlikely(!self)) {
-            Py_DECREF(new_args);
-#if PY_MAJOR_VERSION > 2
-            PyErr_Format(PyExc_TypeError,
-                         "unbound method %.200S() needs an argument",
-                         cyfunc->func_qualname);
-#else
-            PyErr_SetString(PyExc_TypeError,
-                            "unbound method needs an argument");
-#endif
-            return NULL;
-        }
-        result = __Pyx_CyFunction_CallMethod(func, self, new_args, kw);
-        Py_DECREF(new_args);
-    } else {
-        result = __Pyx_CyFunction_Call(func, args, kw);
-    }
-    return result;
-}
-static PyTypeObject __pyx_CyFunctionType_type = {
-    PyVarObject_HEAD_INIT(0, 0)
-    "cython_function_or_method",
-    sizeof(__pyx_CyFunctionObject),
-    0,
-    (destructor) __Pyx_CyFunction_dealloc,
-    0,
-    0,
-    0,
-#if PY_MAJOR_VERSION < 3
-    0,
-#else
-    0,
-#endif
-    (reprfunc) __Pyx_CyFunction_repr,
-    0,
-    0,
-    0,
-    0,
-    __Pyx_CyFunction_CallAsMethod,
-    0,
-    0,
-    0,
-    0,
-    Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC,
-    0,
-    (traverseproc) __Pyx_CyFunction_traverse,
-    (inquiry) __Pyx_CyFunction_clear,
-    0,
-#if PY_VERSION_HEX < 0x030500A0
-    offsetof(__pyx_CyFunctionObject, func_weakreflist),
-#else
-    offsetof(PyCFunctionObject, m_weakreflist),
-#endif
-    0,
-    0,
-    __pyx_CyFunction_methods,
-    __pyx_CyFunction_members,
-    __pyx_CyFunction_getsets,
-    0,
-    0,
-    __Pyx_CyFunction_descr_get,
-    0,
-    offsetof(__pyx_CyFunctionObject, func_dict),
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-#if PY_VERSION_HEX >= 0x030400a1
-    0,
-#endif
-#if PY_VERSION_HEX >= 0x030800b1 && (!CYTHON_COMPILING_IN_PYPY || PYPY_VERSION_NUM >= 0x07030800)
-    0,
-#endif
-#if PY_VERSION_HEX >= 0x030800b4 && PY_VERSION_HEX < 0x03090000
-    0,
-#endif
-#if CYTHON_COMPILING_IN_PYPY && PY_VERSION_HEX >= 0x03090000
-    0,
-#endif
-};
-static int __pyx_CyFunction_init(void) {
-    __pyx_CyFunctionType = __Pyx_FetchCommonType(&__pyx_CyFunctionType_type);
-    if (unlikely(__pyx_CyFunctionType == NULL)) {
-        return -1;
-    }
-    return 0;
-}
-static CYTHON_INLINE void *__Pyx_CyFunction_InitDefaults(PyObject *func, size_t size, int pyobjects) {
-    __pyx_CyFunctionObject *m = (__pyx_CyFunctionObject *) func;
-    m->defaults = PyObject_Malloc(size);
-    if (unlikely(!m->defaults))
-        return PyErr_NoMemory();
-    memset(m->defaults, 0, size);
-    m->defaults_pyobjects = pyobjects;
-    m->defaults_size = size;
-    return m->defaults;
-}
-static CYTHON_INLINE void __Pyx_CyFunction_SetDefaultsTuple(PyObject *func, PyObject *tuple) {
-    __pyx_CyFunctionObject *m = (__pyx_CyFunctionObject *) func;
-    m->defaults_tuple = tuple;
-    Py_INCREF(tuple);
-}
-static CYTHON_INLINE void __Pyx_CyFunction_SetDefaultsKwDict(PyObject *func, PyObject *dict) {
-    __pyx_CyFunctionObject *m = (__pyx_CyFunctionObject *) func;
-    m->defaults_kwdict = dict;
-    Py_INCREF(dict);
-}
-static CYTHON_INLINE void __Pyx_CyFunction_SetAnnotationsDict(PyObject *func, PyObject *dict) {
-    __pyx_CyFunctionObject *m = (__pyx_CyFunctionObject *) func;
-    m->func_annotations = dict;
-    Py_INCREF(dict);
-}
-
-/* CythonFunction */
-static PyObject *__Pyx_CyFunction_New(PyMethodDef *ml, int flags, PyObject* qualname,
-                                      PyObject *closure, PyObject *module, PyObject* globals, PyObject* code) {
-    PyObject *op = __Pyx_CyFunction_Init(
-        PyObject_GC_New(__pyx_CyFunctionObject, __pyx_CyFunctionType),
-        ml, flags, qualname, closure, module, globals, code
-    );
-    if (likely(op)) {
-        PyObject_GC_Track(op);
-    }
-    return op;
 }
 
 /* CLineInTraceback */

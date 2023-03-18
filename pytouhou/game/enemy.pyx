@@ -406,6 +406,8 @@ cdef class Enemy(Element):
         damages = min(70, damages)
         score = (damages // 5) * 10
         self._game.players[0].score += score #TODO: better distribution amongst the players.
+        if score > 0:
+            self._game.players[0].rewards += 1
 
         if self.damageable:
             if self._game.spellcard is not None:

@@ -1369,6 +1369,7 @@ struct __pyx_obj_8pytouhou_4game_6player_Player {
   long lives;
   long bombs;
   long power;
+  long rewards;
   long graze;
   long points;
   long number;

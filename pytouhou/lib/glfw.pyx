@@ -89,6 +89,7 @@ cdef class Window:
 
     cdef void create_gl_context(self) except *:
         glfwMakeContextCurrent(self.window)
+        glfwSwapInterval(0)
 
     cdef void present(self) nogil:
         glfwSwapBuffers(self.window)

@@ -5,7 +5,7 @@ cdef class Player(Element):
     cdef public Game _game
     cdef public long death_time
     cdef public bint touchable, focused
-    cdef public long character, score, effective_score, lives, bombs, power
+    cdef public long character, score, effective_score, lives, bombs, power, rewards
     cdef public long graze, points
 
     cdef long number

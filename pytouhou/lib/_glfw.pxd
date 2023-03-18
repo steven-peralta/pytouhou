@@ -44,6 +44,7 @@ cdef extern from "GLFW/glfw3.h" nogil:
 
     void glfwMakeContextCurrent(GLFWwindow* window)
     void glfwSwapBuffers(GLFWwindow* window)
+    void glfwSwapInterval(int interval)
 
     ctypedef enum:
         GLFW_DONT_CARE

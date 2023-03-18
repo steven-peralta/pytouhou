@@ -44,6 +44,7 @@ cdef class Player(Element):
 
         self.graze = 0
         self.points = 0
+        self.rewards = 0
 
         self.invulnerable_time = 240
         self.touchable = True
@@ -245,6 +246,7 @@ cdef class Player(Element):
 
                 self.miss += 1
                 self.lives -= 1
+                self.rewards -= 1
                 if self.lives < 0:
                     #TODO: display a menu to ask the players if they want to continue.
                     if self.continues == 0:

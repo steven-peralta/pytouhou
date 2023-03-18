@@ -1575,6 +1575,7 @@ struct __pyx_obj_8pytouhou_4game_6player_Player {
   long lives;
   long bombs;
   long power;
+  long rewards;
   long graze;
   long points;
   long number;
@@ -3491,7 +3492,6 @@ static const char __pyx_k_height[] = "height";
 static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_labels[] = "labels";
 static const char __pyx_k_reduce[] = "__reduce__";
-static const char __pyx_k_struct[] = "struct";
 static const char __pyx_k_values[] = "values";
 static const char __pyx_k_window[] = "window";
 static const char __pyx_k_fog_end[] = "fog_end";
@@ -3585,7 +3585,6 @@ static PyObject *__pyx_kp_s_self_elements_self_game_mvp_self;
 static PyObject *__pyx_n_s_setstate;
 static PyObject *__pyx_n_s_setstate_cython;
 static PyObject *__pyx_n_s_shaders_eosd;
-static PyObject *__pyx_n_s_struct;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_values;
 static PyObject *__pyx_n_s_visible;
@@ -8333,7 +8332,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_setstate, __pyx_k_setstate, sizeof(__pyx_k_setstate), 0, 0, 1, 1},
   {&__pyx_n_s_setstate_cython, __pyx_k_setstate_cython, sizeof(__pyx_k_setstate_cython), 0, 0, 1, 1},
   {&__pyx_n_s_shaders_eosd, __pyx_k_shaders_eosd, sizeof(__pyx_k_shaders_eosd), 0, 0, 1, 1},
-  {&__pyx_n_s_struct, __pyx_k_struct, sizeof(__pyx_k_struct), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
   {&__pyx_n_s_values, __pyx_k_values, sizeof(__pyx_k_values), 0, 0, 1, 1},
   {&__pyx_n_s_visible, __pyx_k_visible, sizeof(__pyx_k_visible), 0, 0, 1, 1},
@@ -9042,20 +9040,8 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "pytouhou/ui/opengl/gamerenderer.pyx":14
- * ## GNU General Public License for more details.
- * ##
- * import struct             # <<<<<<<<<<<<<<
- * from libc.stdlib cimport malloc, free
- * from itertools import chain
- */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_struct, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_struct, __pyx_t_1) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
   /* "pytouhou/ui/opengl/gamerenderer.pyx":16
- * import struct
+ * 
  * from libc.stdlib cimport malloc, free
  * from itertools import chain             # <<<<<<<<<<<<<<
  * 
